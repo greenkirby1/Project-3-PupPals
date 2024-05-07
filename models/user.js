@@ -17,6 +17,13 @@ const userSchema = new mongoose.Schema({
   age: { type: Number, required: true, min: 18 }
 })
 
+// virtual to show us the pup created by specific user
+userSchema.virtual('pupsCreated', {
+  ref: 'Pup',
+  localField: '_id',
+  foreignField: 'owner'
+})
+
 
 // ? Fields not defined on model
 // 1. Password confirmation
