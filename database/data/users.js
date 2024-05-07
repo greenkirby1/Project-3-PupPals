@@ -121,6 +121,7 @@ export default [
     lastName: 'Martinez',
     email: 'amelia@example.com',
     password: 'pass',
+    passwordConfirmation: 'pass',
     location: 'Brighton',
     age: 31
   },
