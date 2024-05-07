@@ -7,8 +7,6 @@ export default [
     bio: 'Max is a friendly and energetic Labrador Retriever. He loves playing fetch and going on long walks.',
     favorites: ['Squeaky toys', 'Peanut butter treats'],
     dislikes: ['Baths', 'Vacuum cleaners'],
-    bones: 10,
-    owner: '60a0c5f05c5b4a2b1c8d7e9a',
     gender: 'Male',
     neutered: true
   },
@@ -20,8 +18,6 @@ export default [
     bio: 'Luna is a gentle and affectionate Golden Retriever. She enjoys cuddling and being around people.',
     favorites: ['Soft blankets', 'Belly rubs'],
     dislikes: ['Loud noises', 'Being alone'],
-    bones: 5,
-    owner: '60a0c5f05c5b4a2b1c8d7e9b',
     gender: 'Female',
     neutered: false
   },
@@ -33,8 +29,6 @@ export default [
     bio: 'Charlie is a curious and playful Beagle. He loves exploring new scents and going on adventures.',
     favorites: ['Chasing squirrels', 'Digging holes'],
     dislikes: ['Thunderstorms', 'Being left alone'],
-    bones: 8,
-    owner: '60a0c5f05c5b4a2b1c8d7e9c',
     gender: 'Male',
     neutered: true
   },
@@ -46,8 +40,6 @@ export default [
     bio: 'Daisy is an intelligent and elegant Poodle. She loves learning new tricks and showing off her style.',
     favorites: ['Fancy collars', 'Grooming sessions'],
     dislikes: ['Getting dirty', 'Other dogs stealing her toys'],
-    bones: 3,
-    owner: '60a0c5f05c5b4a2b1c8d7e9d',
     gender: 'Female',
     neutered: true
   },
@@ -59,8 +51,6 @@ export default [
     bio: 'Rocky is a brave and loyal German Shepherd. He takes his job as a protector very seriously.',
     favorites: ['Playing tug-of-war', 'Going on patrol'],
     dislikes: ['Strangers', 'Loud noises'],
-    bones: 12,
-    owner: '60a0c5f05c5b4a2b1c8d7e9e',
     gender: 'Male',
     neutered: true
   },
@@ -72,8 +62,6 @@ export default [
     bio: 'Bella is a sassy and energetic Chihuahua. She may be small, but she has a big personality.',
     favorites: ['Cuddling in warm blankets', 'Chasing her tail'],
     dislikes: ['Cold weather', 'Being ignored'],
-    bones: 2,
-    owner: '60a0c5f05c5b4a2b1c8d7e9f',
     gender: 'Female',
     neutered: false
   },
@@ -85,8 +73,6 @@ export default [
     bio: 'Cooper is an intelligent and energetic Australian Shepherd. He loves herding and playing frisbee.',
     favorites: ['Chasing frisbees', 'Running in open fields'],
     dislikes: ['Being cooped up inside', 'Loud noises'],
-    bones: 9,
-    owner: '60a0c5f05c5b4a2b1c8d7e9g',
     gender: 'Male',
     neutered: true
   },
@@ -98,8 +84,6 @@ export default [
     bio: 'Sadie is a playful and friendly Boxer. She loves going on adventures and making new friends.',
     favorites: ['Playing with other dogs', 'Chewing on toys'],
     dislikes: ['Being left alone', 'Loud noises'],
-    bones: 6,
-    owner: '60a0c5f05c5b4a2b1c8d7e9h',
     gender: 'Female',
     neutered: true
   },
@@ -111,8 +95,6 @@ export default [
     bio: 'Duke is a strong and loyal Rottweiler. He may look intimidating, but he has a heart of gold.',
     favorites: ['Playing tug-of-war', 'Going on walks'],
     dislikes: ['Strangers', 'Being separated from his owner'],
-    bones: 11,
-    owner: '60a0c5f05c5b4a2b1c8d7e9i',
     gender: 'Male',
     neutered: true
   },
@@ -124,8 +106,6 @@ export default [
     bio: 'Lily is a beautiful and energetic Siberian Husky. She loves running and playing in the snow.',
     favorites: ['Running in the snow', 'Howling'],
     dislikes: ['Hot weather', 'Being alone'],
-    bones: 7,
-    owner: '60a0c5f05c5b4a2b1c8d7e9j',
     gender: 'Female',
     neutered: false
   },
@@ -137,8 +117,6 @@ export default [
     bio: 'Bear is a gentle giant. He may be big, but he has a calm and loving personality.',
     favorites: ['Swimming', 'Cuddling with his owner'],
     dislikes: ['Loud noises', 'Being away from water'],
-    bones: 13,
-    owner: '60a0c5f05c5b4a2b1c8d7e9k',
     gender: 'Male',
     neutered: true
   },
@@ -150,8 +128,6 @@ export default [
     bio: 'Molly is a sweet and gentle Cavalier King Charles Spaniel. She loves being pampered and cuddled.',
     favorites: ['Snuggling on the couch', 'Getting belly rubs'],
     dislikes: ['Being left alone', 'Loud noises'],
-    bones: 4,
-    owner: '60a0c5f05c5b4a2b1c8d7e9l',
     gender: 'Female',
     neutered: true
   },
@@ -163,8 +139,6 @@ export default [
     bio: 'Buddy is a friendly and outgoing Golden Retriever. He loves making new friends and playing fetch.',
     favorites: ['Playing fetch', 'Swimming in the lake'],
     dislikes: ['Being alone', 'Thunderstorms'],
-    bones: 9,
-    owner: '60a0c5f05c5b4a2b1c8d7e9m',
     gender: 'Male',
     neutered: true
   },
@@ -176,8 +150,6 @@ export default [
     bio: 'Lucy is a playful and energetic Corgi. She loves chasing balls and going on adventures.',
     favorites: ['Chasing balls', 'Exploring new places'],
     dislikes: ['Being ignored', 'Loud noises'],
-    bones: 6,
-    owner: '60a0c5f05c5b4a2b1c8d7e9n',
     gender: 'Female',
     neutered: false
   },
@@ -189,8 +161,6 @@ export default [
     bio: 'Jack is a smart and agile Border Collie. He loves herding and playing frisbee.',
     favorites: ['Herding sheep', 'Playing frisbee'],
     dislikes: ['Being cooped up inside', 'Loud noises'],
-    bones: 10,
-    owner: '60a0c5f05c5b4a2b1c8d7e9o',
     gender: 'Male',
     neutered: true
   },
@@ -202,8 +172,6 @@ export default [
     bio: 'Stella is a charming and playful French Bulldog. She loves being the center of attention.',
     favorites: ['Playing with squeaky toys', 'Cuddling with her owner'],
     dislikes: ['Being ignored', 'Hot weather'],
-    bones: 5,
-    owner: '60a0c5f05c5b4a2b1c8d7e9p',
     gender: 'Female',
     neutered: true
   },
@@ -215,8 +183,6 @@ export default [
     bio: 'Tucker is a gentle and friendly Bernese Mountain Dog. He loves being around people and other dogs.',
     favorites: ['Going on hikes', 'Playing in the snow'],
     dislikes: ['Being alone', 'Loud noises'],
-    bones: 8,
-    owner: '60a0c5f05c5b4a2b1c8d7e9q',
     gender: 'Male',
     neutered: true
   },
@@ -228,8 +194,6 @@ export default [
     bio: 'Roxy is an energetic and playful Boxer. She loves going on runs and playing with her toys.',
     favorites: ['Running with her owner', 'Playing tug-of-war'],
     dislikes: ['Being left alone', 'Loud noises'],
-    bones: 7,
-    owner: '60a0c5f05c5b4a2b1c8d7e9r',
     gender: 'Female',
     neutered: true
   },
@@ -241,8 +205,6 @@ export default [
     bio: 'Finn is a curious and friendly Labrador Retriever. He loves exploring new places and making friends.',
     favorites: ['Going on adventures', 'Playing with other dogs'],
     dislikes: ['Being alone', 'Thunderstorms'],
-    bones: 4,
-    owner: '60a0c5f05c5b4a2b1c8d7e9s',
     gender: 'Male',
     neutered: false
   },
@@ -254,8 +216,6 @@ export default [
     bio: 'Maggie is a beautiful and independent Siberian Husky. She loves running and exploring the great outdoors.',
     favorites: ['Running in open spaces', 'Howling'],
     dislikes: ['Being confined', 'Hot weather'],
-    bones: 9,
-    owner: '60a0c5f05c5b4a2b1c8d7e9t',
     gender: 'Female',
     neutered: true
   }

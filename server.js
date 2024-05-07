@@ -51,16 +51,37 @@ app.get('/api/pups', (req, res) => {
 // For: displaying All users chats
 // Method: GET
 // Path: /api/users/:userId/chats
+app.get('/api/users/:userId/chats', (req, res) => {
+  try {
+    console.log('showing all chats for this user')
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 // * Chat input (secureRoute)
 // For: Sending a message
 // Method: POST
 // Path: /api/users/:userId/chats/:chatId
+app.post('/api/users/:userId/chats/:chatId', (req, res) => {
+  try {
+    console.log('sending a message by specific user')                              
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 // * Single Chat view (secureRoute)
 // For: display single chat
 // Method: GET
 // Path: /api/users/:userId/chats/:chatId
+app.get('/api/users/:userId/chats/:chatId', (req, res) => {
+  try {
+    console.log('showing single chat log')                              
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 // * Login 
 // Method: POST
