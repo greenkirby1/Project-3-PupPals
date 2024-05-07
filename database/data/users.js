@@ -6,7 +6,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     location: 'London',
-    age: 25,
+    age: 25
   },
   {
     firstName: 'Alice',
@@ -15,7 +15,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     location: 'Manchester',
-    age: 30,
+    age: 30
   },
   {
     firstName: 'Bob',
@@ -24,7 +24,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     location: 'Birmingham',
-    age: 35,
+    age: 35
   },
   {
     firstName: 'Emma',
@@ -33,7 +33,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     location: 'Glasgow',
-    age: 28,
+    age: 28
   },
   {
     firstName: 'Michael',
@@ -42,7 +42,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     location: 'Edinburgh',
-    age: 40,
+    age: 40
   },
   {
     firstName: 'Olivia',
@@ -51,7 +51,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     location: 'Belfast',
-    age: 22,
+    age: 22
   },
   {
     firstName: 'William',
@@ -60,7 +60,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     location: 'Cardiff',
-    age: 33,
+    age: 33
   },
   {
     firstName: 'Sophia',
@@ -69,7 +69,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     location: 'Newcastle',
-    age: 27,
+    age: 27
   },
   {
     firstName: 'James',
@@ -78,7 +78,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     location: 'Liverpool',
-    age: 45,
+    age: 45
   },
   {
     firstName: 'Isabella',
@@ -87,7 +87,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     location: 'Leeds',
-    age: 29,
+    age: 29
   },
   {
     firstName: 'Benjamin',
@@ -96,7 +96,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     location: 'Sheffield',
-    age: 32,
+    age: 32
   },
   {
     firstName: 'Charlotte',
@@ -105,7 +105,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     location: 'Bristol',
-    age: 26,
+    age: 26
   },
   {
     firstName: 'Daniel',
@@ -114,7 +114,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     location: 'Leicester',
-    age: 38,
+    age: 38
   },
   {
     firstName: 'Amelia',
@@ -122,7 +122,7 @@ export default [
     email: 'amelia@example.com',
     password: 'pass',
     location: 'Brighton',
-    age: 31,
+    age: 31
   },
   {
     firstName: 'Liam',
@@ -131,7 +131,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     location: 'Nottingham',
-    age: 34,
+    age: 34
   },
   {
     firstName: 'Mia',
@@ -140,7 +140,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     location: 'Oxford',
-    age: 24,
+    age: 24
   },
   {
     firstName: 'Ethan',
@@ -149,7 +149,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     location: 'Cambridge',
-    age: 37,
+    age: 37
   },
   {
     firstName: 'Ava',
@@ -158,7 +158,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     location: 'Southampton',
-    age: 23,
+    age: 23
   },
   {
     firstName: 'Alexander',
@@ -167,7 +167,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     location: 'York',
-    age: 36,
+    age: 36
   },
   {
     firstName: 'Evelyn',
@@ -176,6 +176,6 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     location: 'Swansea',
-    age: 39,
+    age: 39
   }
 ]
