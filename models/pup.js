@@ -35,3 +35,5 @@ const pupSchema = new mongoose.Schema({
     required: true
   }
 })
+
+export default mongoose.model('Pup', pupSchema)
