@@ -13,23 +13,23 @@ const chatSchema = new mongoose.Schema({
 	users: {
 		type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 		validate: {
-			validator: function(arr) {
+			validator: function (arr) {
 				return arr.length === 2
 			},
 			message: 'The users field must conatin 2 unique user IDs.'
 		}
 	},
 	pups: {
-		type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pup'}],
+		type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pup' }],
 		validate: {
-			validator: function(arr) {
+			validator: function (arr) {
 				return arr.length === 2
 			},
 			message: 'The pups field must contain 2 unique pup IDs.'
 		}
 	}
 },
-	{ timestamps: true }
+{ timestamps: true }
 )
 
 export default mongoose.model('Chat', chatSchema)

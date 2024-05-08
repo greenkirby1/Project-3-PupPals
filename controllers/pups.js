@@ -1,5 +1,6 @@
 import Pup from '../models/pup.js'
-
+import { Error } from 'mongoose'
+import { sendError, sendUnauthorized } from '../lib/common.js'
 
 // * Pups Index 
 // For: Matches
@@ -10,23 +11,21 @@ export const pupIndex = async (req, res) => {
     const foundPups = await Pup.find()
     res.json(foundPups)
   } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: 'Internal server error' })
+    sendError(error, res)
   }
 }
 
-// * Pup by owner (secureRoute - profile)
-// For: Profile 
+// * Show Single Pup (secureRoute - profile)
+// For: Profile - showing the single pup and updating it
 // Method: GET
-// Path: /api/users/:userId/pups
+// Path: /api/pups/:pupId
 export const pupOwned = async (req, res) => {
   try {
-    const { userId } = req.params
-    const foundPups = await Pup.find({ owner: userId })
-    res.json(foundPups)
+    const { pupId } = req.params
+    const foundPup = await Pup.findById(pupId)
+    res.json(foundPup)
   } catch (error) {
-    console.log('Error retrieving pups:', error)
-    res.status(500).json({ error: 'Internal server error' })
+    sendError(error, res)
   }
 }
 
@@ -34,60 +33,59 @@ export const pupOwned = async (req, res) => {
 // * Pup Create (secureRoute - profile)
 // For: creating user pup
 // Method: POST
-// Path: /api/users/:userId/pups
+// Path: /api/pups
 export const pupCreate = async (req, res) => {
   try {
-    const { userId } = req.params
-    const pupData = await Pup.create(req.body)
-    pupData.owner = userId
-
-    return res.status(201).json(pupData)
+    req.body.owner = req.currentUser._id
+    const newPup = await Pup.create(req.body)
+    return res.status(201).json(newPup)
   } catch (error) {
-    console.log(error)
+    console.log('Error:', error)
+    sendError(error, res)
   }
 }
 
 // * Pup Update (secureRoute)
 // For: updating the users pup's details
 // Method: PUT
-// Path: /api/users/:userId/pups/:pupId
+// Path: /api/pups/:pupId
 export const pupUpdate = async (req, res) => {
   try {
-    const { userId, pupId } = req.params;
-    const updatedPupData = req.body;
-
-    const pup = await Pup.findOneAndUpdate(
-      { _id: pupId, owner: userId },
-      updatedPupData,
-      { new: true }
-    )
-
-    if (!pup) {
+    const { pupId } = req.params
+    const pupToUpdate = await Pup.findById(pupId)
+    if (!pupToUpdate) {
       return res.status(404).json({ error: 'Pup not found' })
     }
-
-    res.json(pup)
+    Object.assign(pupToUpdate, req.body)
+    await pupToUpdate.save()
+    return res.json(pupToUpdate)
   } catch (error) {
-    console.log(error)
+    sendError(error, res)
   }
 }
 
 // * Pup Delete (secureRoute)
 // For: deleting current pup
 // Method: DELETE
-// Path: /api/users/:userId/pups/:pupId
+// Path: /api/pups/:pupId
 export const pupDelete = async (req, res) => {
   try {
-    const { userId, pupId } = req.params
+    const { pupId } = req.params
 
-    const pup = await Pup.findOneAndDelete({ _id: pupId, owner: userId })
+    const pup = await Pup.findOneAndDelete({ _id: pupId })
 
     if (!pup) {
-      return res.status(404).json({ error: 'Pup not found' })
+      throw new Error.DocumentNotFoundError('Pup Not Found')
     }
+
+    if (!pup.owner.equals(req.currentUser._id)) {
+      throw new sendUnauthorized()
+    }
+
+    await pup.deleteOne()
 
     res.sendStatus(204)
   } catch (error) {
-    console.log(error)
+    sendError(error, res)
   }
 }

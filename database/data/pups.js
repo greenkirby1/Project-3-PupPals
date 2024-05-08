@@ -219,4 +219,4 @@ export default [
     gender: 'Female',
     neutered: true
   }
-];
+]
