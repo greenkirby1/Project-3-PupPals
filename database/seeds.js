@@ -23,12 +23,12 @@ async function seedData() {
 		const createdUsers = await User.create(userData)
 		console.log(`👤 ${createdUsers.length} users created`)
 
-		// remove pups
-		const deletedPups = await Pup.deleteMany()
-		console.log(`🐶 ${deletedPups.deletedCount} pups deleted`)
+    // remove pups
+    const deletedPups = await Pup.deleteMany()
+    console.log(`🐶 ${deletedPups.deletedCount} pups deleted`)
 
-		const deletedChats = await Chat.deleteMany()
-		console.log(`💬 ${deletedChats.deletedCount} chats deleted`)
+    const deletedChats = await Chat.deleteMany()
+    console.log(`💬 ${deletedChats.deletedCount} chats deleted`)
 
 		// adds random user id to owner field in each pup
 		const pupsWithOwners = pupData.map(pup => {
