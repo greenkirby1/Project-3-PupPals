@@ -1,4 +1,5 @@
 import Chat from '../models/chat.js'
+import Pup from '../models/pup.js'
 
 
 // * All Chat view (secureRoute)
@@ -8,9 +9,30 @@ import Chat from '../models/chat.js'
 export const chatIndex = async (req, res) => {
   try {
     console.log('showing all chats for this user')
-    req.body._id = req.currentUser._id
-    const foundChats = await Chat.find({ users: req.currentUser._id })
-    if (!foundChats)
+    const allChats = await Chat.find({ users: req.currentUser._id })
+    if (!allChats) {
+      return res.status(404).json({ message: 'Start chatting with your matches!' })
+    }
+    return res.json(allChats)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// * Single Chat view (secureRoute)
+// For: display single chat
+// Method: GET
+// Path: /api/chats/:chatId
+export const chatSingle = async (req, res) => {
+  try {
+    console.log('showing single chat log')
+    const { chatId } = req.params
+    console.log(chatId)
+    const foundChat = await Chat.findById(chatId)
+    if (!foundChat) {
+      return res.status(404).json({ message: 'Sorry! Chat not found.' })
+    }
+    return res.json(foundChat)
   } catch (error) {
     console.log(error)
   }
@@ -20,22 +42,38 @@ export const chatIndex = async (req, res) => {
 // For: Sending a message
 // Method: POST
 // Path: /api/chats/:chatId
-app.post('/api/users/:userId/chats/:chatId', (req, res) => {
+export const sendMessage = async (req, res) => {
   try {
     console.log('sending a message by specific user')
-  } catch (error) {
-    console.log(error)
-  }
-})
+    const { chatId } = req.params
+    const foundChat = await Chat.findById(chatId)
+    if (!foundChat) {
+      return res.status(404).json({ message: 'Sorry! Chat not found.' })
+    }
 
-// * Single Chat view (secureRoute)
-// For: display single chat
-// Method: GET
-// Path: /api/users/:userId/chats/:chatId
-app.get('/api/users/:userId/chats/:chatId', (req, res) => {
-  try {
-    console.log('showing single chat log')
+    const { pups } = foundChat
+    console.log(req.currentUser._id)
+    console.log(pups)
+
+    const foundPups = await Pup.find({ '_id': { $in: pups } })
+    console.log(foundPups)
+
+    const matchPupWithUser = foundPups.map(pup => {
+      const isEqual = pup.owner.equals(req.currentUser._id)
+      console.log(isEqual)
+      if (isEqual) {
+        // return res.json({ pup.image })
+        console.log(pup.image)
+      }
+      
+      // console.log('this is pup owner ->', pup.owner)
+      // console.log('this is current user ->', req.currentUser._id)
+      // console.log( req.currentUser._id === pup.owner)
+    })
+
+
+
   } catch (error) {
-    console.log(error)
+    console.log(error.message)
   }
-})
+}

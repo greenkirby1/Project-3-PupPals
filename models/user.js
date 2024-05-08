@@ -29,11 +29,6 @@ userSchema.virtual('pupsCreated', {
   foreignField: 'owner'
 })
 
-userSchema.virtual('allChats', {
-  ref: 'Chat',
-  localField: '_id',
-  foreignField: ''
-})
 
 
 // ? Fields not defined on model
