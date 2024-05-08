@@ -86,7 +86,7 @@ export const pupDelete = async (req, res) => {
     }
     
     if (!pup.owner.equals(req.currentUser._id)) {
-      throw new sendUnauthorised();
+      throw new sendUnauthorized();
     }
     
     await pup.deleteOne();
