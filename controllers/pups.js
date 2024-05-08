@@ -80,14 +80,19 @@ export const pupDelete = async (req, res) => {
   try {
     const { userId, pupId } = req.params
 
-    const pup = await Pup.findOneAndDelete({ _id: pupId, owner: userId })
-
+    const pup = await Pup.findOne({ _id: pupId, owner: userId });
     if (!pup) {
-      return res.status(404).json({ error: 'Pup not found' })
+      throw new Error.DocumentNotFoundError("Pup Not Found");
     }
-
-    res.sendStatus(204)
-  }catch (error) {
-    sendError(error)
+    
+    if (!pup.owner.equals(req.currentUser._id)) {
+      throw new sendUnauthorised();
+    }
+    
+    await pup.deleteOne();
+    
+    res.sendStatus(204);
+  } catch (error) {
+    sendError(error, res);
   }
-}
+};
