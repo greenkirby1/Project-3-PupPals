@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 import 'dotenv/config'
 // import router from './lib/router.js'
 import router from './lib/router.js'
-import {Error} from 'mongoose'
+import { Error } from 'mongoose'
 import { sendError, sendUnauthorized } from './lib/common.js'
 
 
@@ -27,9 +27,9 @@ app.get('/api/users/:userId/chats', (req, res) => {
   try {
     console.log('showing all chats for this user')
   }
-    catch (error){
-      sendError(error, res)
-    }
+  catch (error) {
+    sendError(error, res)
+  }
 })
 
 // * Chat input (secureRoute)
