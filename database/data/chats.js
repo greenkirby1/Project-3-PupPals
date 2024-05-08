@@ -1,6 +1,6 @@
 export default [
   {
-    chatLog: [
+    messages: [
       {
         message: "Hey I'm John! Glad we matched I hope our dogs will like each other 🐶",
       },
@@ -8,10 +8,9 @@ export default [
         message: "Me too!! Your labrador is so cute ❤️",
       },
     ],
-    betweenPups: []
   },
   {
-    chatLog: [
+    messages: [
       {
         message: "You suck",
       },
@@ -22,10 +21,9 @@ export default [
         message: "you heard me u suck",
       }
     ],
-    betweenPups: []
   },
   {
-    chatLog: [
+    messages: [
       {
         message: "Hey let's meet up at Hyde Park today 😉",
       },
@@ -33,14 +31,12 @@ export default [
         message: "um...idk how about we chat for a bit first",
       }
     ],
-    betweenPups: []
   },
   {
-    chatLog: [
+    messages: [
       {
         message: "heyyyyyy youuuuuuu",
       }
     ],
-    betweenPups: []
   }
 ]

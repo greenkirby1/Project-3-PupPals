@@ -5,8 +5,8 @@ import Pup from '../models/pup.js'
 import pupData from '../database/data/pups.js'
 import User from '../models/user.js'
 import userData from '../database/data/users.js'
-import Chat from '../models/chatLog.js'
-import chatData from '../database/data/chatLogs.js'
+import Chat from '../models/chat.js'
+import chatData from '../database/data/chats.js'
 
 
 async function seedData() {
@@ -44,19 +44,22 @@ async function seedData() {
 		// adds random pup id to betweenPups field in each chat and pup id to the messages
 		const chatsBetweenPups = chatData.map(chat => {
 			const pupIdArr = []
+			const userIdArr = []
 			for (let i = 0; i < 2; i++) {
-				const pupId = createdPups[Math.floor(Math.random() * createdPups.length)]._id
-				pupIdArr.push(pupId)
+				const randomPup = createdPups[Math.floor(Math.random() * createdPups.length)]
+				pupIdArr.push(randomPup._id)
+				const userId = randomPup.owner
+				userIdArr.push(userId)
 			}
-			// console.log(pupIdArr)
-			const { chatLog } = chat
+			// console.log(pupIdArr, userIdArr)
+			const { messages } = chat
 			// console.log(chatLog)
-			const messagesWithPupId = chatLog.map(msg => {
-				const randomId = pupIdArr[Math.floor(Math.random() * pupIdArr.length)]
+			const messagesWithPupId = messages.map(msg => {
+				const randomPupId = pupIdArr[Math.floor(Math.random() * pupIdArr.length)]
 				// console.log(randomId)
-				return { ...msg, pup: randomId }
+				return { ...msg, pup: randomPupId }
 			})
-			return { ...chat, chatLog: messagesWithPupId, betweenPups: pupIdArr }
+			return { ...chat, messages: messagesWithPupId, pups: pupIdArr, users: userIdArr }
 		})
 
 		// adds chat seed data into database
