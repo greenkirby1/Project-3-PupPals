@@ -2,7 +2,7 @@ import User from '../models/user.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
-
+import { sendError, sendUnauthorized } from '../lib/common.js'
 
 
 // * Register
@@ -14,8 +14,8 @@ export const register = async (req, res) => {
     const registeredUser = await User.create(req.body)
     console.log(req.body)
     return res.json({ message: `Welcome, ${registeredUser.firstName}` })
-  } catch (error) {
-    console.log(error)
+  } catch (error){
+    sendError(error, res)
   }
 }
 
@@ -30,12 +30,12 @@ export const login = async (req, res) => {
 
     // if user not found, throw unauthorized
     if (!foundUser) {
-      return (res, '401 unauthorized!, user not found')
+      return sendUnauthorized(res)
     }
 
     // if user is found - check password, if password incorrect send 401
     if (!bcrypt.compareSync(req.body.password, foundUser.password)) {
-      return (res, '401 unauthorized!, incorrect password')
+      return sendUnauthorized(res)
     }
 
     // generate jwt 
@@ -48,8 +48,8 @@ export const login = async (req, res) => {
       message: `Welcome back, ${foundUser.firstName}`,
       token: token
     })
-  } catch (error) {
-    console.log(error)
+  } catch (error){
+    sendError(error, res)
   }
 }
 
@@ -65,7 +65,7 @@ export const getProfile = async (req, res) => {
     )
     return res.json(profile)
   } catch (error) {
-    console.log(error)
+    sendError(error, res)
   }
 }
 
@@ -81,7 +81,7 @@ export const updateProfile = async (req, res) => {
     await profileToUpdate.save()
     return res.json(profileToUpdate)
   } catch (error) {
-    console.log(error)
+    sendError(error, res)
   }
 }
 

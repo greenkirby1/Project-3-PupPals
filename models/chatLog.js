@@ -3,8 +3,7 @@ import mongoose from 'mongoose'
 
 const messageSchema = new mongoose.Schema({
 	message: { type: String, required: true },
-	pup: { type: mongoose.ObjectId, ref: 'Pup', required: true },
-	pupIcon: { type: mongoose.ObjectId, ref: 'Pup', required: true }
+	pup: { type: mongoose.ObjectId, ref: 'Pup', required: true }
 },
 { timestamps: { createdAt: true, updatedAt: false } }
 )

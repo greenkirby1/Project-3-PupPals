@@ -4,6 +4,9 @@ import mongoose from 'mongoose'
 import 'dotenv/config'
 // import router from './lib/router.js'
 import router from './lib/router.js'
+import {Error} from 'mongoose'
+import { sendError, sendUnauthorized } from './lib/common.js'
+
 
 const app = express()
 
@@ -23,9 +26,10 @@ app.use('/api', router)
 app.get('/api/users/:userId/chats', (req, res) => {
   try {
     console.log('showing all chats for this user')
-  } catch (error) {
-    console.log(error)
   }
+    catch (error){
+      sendError(error, res)
+    }
 })
 
 // * Chat input (secureRoute)
@@ -36,7 +40,7 @@ app.post('/api/users/:userId/chats/:chatId', (req, res) => {
   try {
     console.log('sending a message by specific user')
   } catch (error) {
-    console.log(error)
+    sendError(error, res)
   }
 })
 
@@ -49,6 +53,7 @@ app.get('/api/users/:userId/chats/:chatId', (req, res) => {
     console.log('showing single chat log')
   } catch (error) {
     console.log(error)
+    sendError(error, res)
   }
 })
 

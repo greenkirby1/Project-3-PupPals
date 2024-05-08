@@ -1,5 +1,6 @@
 import Pup from '../models/pup.js'
-
+import {Error} from 'mongoose'
+import { sendError, sendUnauthorized } from '../lib/common.js'
 
 // * Pups Index 
 // For: Matches
@@ -10,8 +11,7 @@ export const pupIndex = async (req, res) => {
     const foundPups = await Pup.find()
     res.json(foundPups)
   } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: 'Internal server error' })
+    sendError(error, res)
   }
 }
 
@@ -25,8 +25,7 @@ export const pupOwned = async (req, res) => {
     const foundPup = await Pup.findById(pupId)
     res.json(foundPup)
   } catch (error) {
-    console.log('Error retrieving pups:', error)
-    res.status(500).json({ error: 'Internal server error' })
+      sendError(error, res)
   }
 }
 
@@ -41,7 +40,8 @@ export const pupCreate = async (req, res) => {
     const newPup = await Pup.create(req.body)
     return res.status(201).json(newPup)
   } catch (error) {
-    console.log(error)
+    console.log('Error:', error);
+    sendError(error, res)
   }
 }
 
@@ -60,7 +60,7 @@ export const pupUpdate = async (req, res) => {
     await pupToUpdate.save()
     return res.json(pupToUpdate)
   } catch (error) {
-    console.log(error)
+    sendError(error, res)
   }
 }
 
@@ -75,11 +75,17 @@ export const pupDelete = async (req, res) => {
     const pup = await Pup.findOneAndDelete({ _id: pupId })
 
     if (!pup) {
-      return res.status(404).json({ error: 'Pup not found' })
+      throw new Error.DocumentNotFoundError("Pup Not Found");
     }
-
-    res.sendStatus(204)
+    
+    if (!pup.owner.equals(req.currentUser._id)) {
+      throw new sendUnauthorized();
+    }
+    
+    await pup.deleteOne();
+    
+    res.sendStatus(204);
   } catch (error) {
-    console.log(error)
+    sendError(error, res);
   }
-}
+};
