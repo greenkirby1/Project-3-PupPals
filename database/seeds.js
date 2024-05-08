@@ -54,15 +54,12 @@ async function seedData() {
 		})
 
 		// adds seed data into database
-		const createdPups = await Pup.create(pupData)
-		console.log(`🌱 ${createdPups.length} pups added.`)
-
-		const createdChats = await Chat.create(chatData)
-		console.log(`🗣️ ${createdChats.length} chats added`)
-    // adds seed data into database
     const createdPups = await Pup.create(pupsWithOwners)
     console.log(`🌱 ${createdPups.length} pups added.`)
     console.log(createdPups)
+
+		const createdChats = await Chat.create(chatsBetweenPups)
+		console.log(`🗣️ ${createdChats.length} chats added`)
 
     // close connection after completion
     await mongoose.connection.close()
