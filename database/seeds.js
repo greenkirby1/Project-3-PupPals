@@ -47,24 +47,22 @@ async function seedData() {
 			for (let i = 0; i < 2; i++) {
 				const pupId = createdPups[Math.floor(Math.random() * createdPups.length)]._id
 				pupIdArr.push(pupId)
-				console.log(pupIdArr)
 			}
 			// console.log(pupIdArr)
 			const { chatLog } = chat
-			console.log(chatLog)
+			// console.log(chatLog)
 			const messagesWithPupId = chatLog.map(msg => {
 				const randomId = pupIdArr[Math.floor(Math.random() * pupIdArr.length)]
-				console.log(randomId)
-				// return { ...msg, pup: randomId }
+				// console.log(randomId)
+				return { ...msg, pup: randomId }
 			})
-			// return { ...chat, chatLog: pupMessages }
+			return { ...chat, chatLog: messagesWithPupId, betweenPups: pupIdArr }
 		})
 
-		// adds seed data into database
-		// console.log(createdPups)
-
+		// adds chat seed data into database
 		const createdChats = await Chat.create(chatsBetweenPups)
 		console.log(`🗣️ ${createdChats.length} chats added`)
+		console.log(createdChats)
 
 		// close connection after completion
 		await mongoose.connection.close()
