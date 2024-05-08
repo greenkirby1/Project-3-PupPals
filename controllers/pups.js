@@ -53,8 +53,8 @@ export const pupCreate = async (req, res) => {
 // Path: /api/users/:userId/pups/:pupId
 export const pupUpdate = async (req, res) => {
   try {
-    const { userId, pupId } = req.params;
-    const updatedPupData = req.body;
+    const { userId, pupId } = req.params
+    const updatedPupData = req.body
 
     const pup = await Pup.findOneAndUpdate(
       { _id: pupId, owner: userId },
