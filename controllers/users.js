@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 
 
+
 // * Register
 // Method: POST
 // Path: /api/register
@@ -55,7 +56,7 @@ export const login = async (req, res) => {
 // * Profile (secureRoute)
 // For: Displaying profile
 // Method: GET
-// Path: /api/users/profile
+// Path: /api/profile
 // app.get('/api/users/:userId'
 export const getProfile = async (req, res) => {
   try {

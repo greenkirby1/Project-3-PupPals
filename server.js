@@ -146,30 +146,6 @@ app.get('/api/users/:userId/chats/:chatId', (req, res) => {
 })
 
 
-// * Profile (secureRoute)
-// For: Displaying profile
-// Method: GET
-// Path: /api/users/:userId
-app.get('/api/users/:userId', (req, res) => {
-  try {
-    console.log('hit profile route')
-  } catch (error) {
-    console.log(error)
-  }
-})
-
-// * Update Profile (secureRoute)
-// For: updating user profile
-// Method: PUT
-// Path: /api/users/:userId
-app.put('/api/users/:userId', (req, res) => {
-  try {
-    console.log('hit update profile route')
-  } catch (error) {
-    console.log(error)
-  }
-})
-
 // * Server Startup
 async function startServers() {
   try {
