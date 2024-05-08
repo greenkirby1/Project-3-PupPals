@@ -4,20 +4,25 @@ import 'dotenv/config'
 import Pup from '../models/pup.js'
 import pupData from '../database/data/pups.js'
 import User from '../models/user.js'
-import createdUsers from '../database/data/users.js'
+import userData from '../database/data/users.js'
 import Chat from '../models/chatLog.js'
 import chatData from '../database/data/chatLogs.js'
 
 
 async function seedData() {
-	try {
-		// establish connection
-		await mongoose.connect(process.env.CONNECTION_STRING)
-		console.log('✅ database connection established')
+  try {
+    // establish connection
+    await mongoose.connect(process.env.CONNECTION_STRING)
+    console.log('✅ database connection established')
 
-		// remove users
-		const deletedUsers = await User.deleteMany()
-		console.log(`😵 ${deletedUsers.deletedCount} users deleted`)
+    // remove users
+    const deletedUsers = await User.deleteMany()
+    console.log(`😵 ${deletedUsers.deletedCount} users deleted`)
+
+    // add new users
+    const createdUsers = await User.create(userData)
+    console.log(`👤 ${createdUsers.length} users created`)
+    console.log(createdUsers)
 
 		// remove pups
 		const deletedPups = await Pup.deleteMany()
@@ -54,17 +59,21 @@ async function seedData() {
 
 		const createdChats = await Chat.create(chatData)
 		console.log(`🗣️ ${createdChats.length} chats added`)
+    // adds seed data into database
+    const createdPups = await Pup.create(pupsWithOwners)
+    console.log(`🌱 ${createdPups.length} pups added.`)
+    console.log(createdPups)
 
-		// close connection after completion
-		await mongoose.connection.close()
-		console.log('👍 successfully seeded data conncetion now closed')
-	} catch (error) {
-		console.log(error)
+    // close connection after completion
+    await mongoose.connection.close()
+    console.log('👍 successfully seeded data conncetion now closed')
+  } catch (error) {
+    console.log(error)
 
-		// close connection due to error
-		await mongoose.connection.close()
-		console.log('✂️ connection severed due to error')
-	}
+    // close connection due to error
+    await mongoose.connection.close()
+    console.log('✂️ connection severed due to error')
+  }
 }
 
 seedData()

@@ -15,7 +15,12 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   location: { type: String, required: true },
   age: { type: Number, required: true, min: 18 }
+}, {
+  toJSON: {
+    virtuals: true
+  }
 })
+// whenever we create a virutal field we need to set virtual to true to display. 
 
 // virtual to show us the pup created by specific user
 userSchema.virtual('pupsCreated', {

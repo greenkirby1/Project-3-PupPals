@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
 const pupSchema = new mongoose.Schema({
   pupName: { type: String, required: true },
