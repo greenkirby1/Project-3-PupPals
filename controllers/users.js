@@ -53,11 +53,11 @@ export const login = async (req, res) => {
   }
 }
 
-// * Profile (secureRoute)
+// * Profile Show (secureRoute)
 // For: Displaying profile
 // Method: GET
 // Path: /api/profile
-// app.get('/api/users/:userId'
+// app.get('/api/profile'
 export const getProfile = async (req, res) => {
   try {
     const profile = await User.findById(req.currentUser._id).populate(
@@ -73,13 +73,24 @@ export const getProfile = async (req, res) => {
 // For: updating user profile
 // Method: PUT
 // Path: /api/users/profile
-// app.put('/api/users/:userId' 
+// app.put('/api/profile' 
 export const updateProfile = async (req, res) => {
   try {
-    console.log('hit update profile route')
+    const profileToUpdate = await User.findById(req.currentUser._id)
+    Object.assign(profileToUpdate, req.body)
+    await profileToUpdate.save()
+    return res.json(profileToUpdate)
   } catch (error) {
     console.log(error)
   }
 }
 
 // Getting all Users for testing purposes - DELETE ONCE USED
+export const getUsers = async (req, res) => {
+  try {
+    const user = await User.find()
+    res.json(user)
+  } catch (error) {
+    console.log(error)
+  }
+}
