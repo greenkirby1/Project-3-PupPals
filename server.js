@@ -8,6 +8,9 @@ import User from './models/user.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import router from './lib/router.js'
+import {Error} from 'mongoose'
+import { sendError, sendUnauthorized } from './lib/common.js'
+
 
 const app = express()
 
@@ -29,8 +32,7 @@ app.get('/api/pups', async (req, res) => {
     const pups = await Pup.find()
     res.json(pups)
   } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: 'Internal server error' })
+    sendError(error, res)
   }
 })
 // * Pup by owner (secureRoute)
@@ -43,8 +45,7 @@ app.get('/api/users/:userId/pups', async (req, res) => {
     const pups = await Pup.find({ owner: userId })
     res.json(pups)
   } catch (error) {
-    console.log('Error retrieving pups:', error)
-    res.status(500).json({ error: 'Internal server error' })
+    sendError(error, res)
   }
 })
 
@@ -61,7 +62,8 @@ app.post('/api/users/:userId/pups', async (req, res) => {
 
     return res.status(201).json(pupData)
   } catch (error) {
-    console.log(error)
+    console.log('Error:', error);
+    sendError(error, res)
   }
 })
 // * Pup Update (secureRoute)
@@ -85,7 +87,7 @@ app.put('/api/users/:userId/pups/:pupId', async (req, res) => {
 
     res.json(pup)
   } catch (error) {
-    console.log(error)
+    sendError(error, res)
   }
 })
 // * Pup Delete (secureRoute)
@@ -104,7 +106,7 @@ app.delete('/api/users/:userId/pups/:pupId', async (req, res) => {
 
     res.sendStatus(204)
   } catch (error) {
-    console.log(error)
+    sendError(error)
   }
 })
 
@@ -116,9 +118,10 @@ app.delete('/api/users/:userId/pups/:pupId', async (req, res) => {
 app.get('/api/users/:userId/chats', (req, res) => {
   try {
     console.log('showing all chats for this user')
-  } catch (error) {
-    console.log(error)
   }
+    catch (error){
+      sendError(error, res)
+    }
 })
 
 // * Chat input (secureRoute)
@@ -129,7 +132,7 @@ app.post('/api/users/:userId/chats/:chatId', (req, res) => {
   try {
     console.log('sending a message by specific user')
   } catch (error) {
-    console.log(error)
+    sendError(error, res)
   }
 })
 
@@ -142,6 +145,7 @@ app.get('/api/users/:userId/chats/:chatId', (req, res) => {
     console.log('showing single chat log')
   } catch (error) {
     console.log(error)
+    sendError(error, res)
   }
 })
 
