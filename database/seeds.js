@@ -24,42 +24,42 @@ async function seedData() {
     console.log(`👤 ${createdUsers.length} users created`)
     console.log(createdUsers)
 
-		// remove pups
-		const deletedPups = await Pup.deleteMany()
-		console.log(`🐶 ${deletedPups.deletedCount} pups deleted`)
+    // remove pups
+    const deletedPups = await Pup.deleteMany()
+    console.log(`🐶 ${deletedPups.deletedCount} pups deleted`)
 
-		const deletedChats = await Chat.deleteMany()
-		console.log(`💬 ${deletedChats.deletedCount} chats deleted`)
+    const deletedChats = await Chat.deleteMany()
+    console.log(`💬 ${deletedChats.deletedCount} chats deleted`)
 
-		// adds random user id to owner field in each pup
-		const pupsWithOwners = pupData.map(pup => {
-			const userId = createdUsers[Math.floor(Math.random() * createdUsers.length)]._id
-			console.log(userId)
-			return { ...pup, owner: userId }
-		})
+    // adds random user id to owner field in each pup
+    const pupsWithOwners = pupData.map(pup => {
+      const userId = createdUsers[Math.floor(Math.random() * createdUsers.length)]._id
+      console.log(userId)
+      return { ...pup, owner: userId }
+    })
 
-		// adds random pup id to betweenPups field in each chat and pup id to the messages
-		const chatsBetweenPups = chatData.map(chat => {
-			const pupIdArr = []
-			for (i = 0; i < 2; i++) {
-				const pupId = pupData[Math.floor(Math.random() * pupData.length)]._id
-				pupIdArr.push(pupId)
-			}
-			const { chatLog } = chat
-			const pupMessages = chatLog.map(msg => {
-				const randomId = pupIdArr[Math.floor(Math.random() * pupIdArr.length)]
-				return { ...msg, pup: randomId }
-			})
-			return { ...chat, chatLog: pupMessages }
-		})
+    // adds random pup id to betweenPups field in each chat and pup id to the messages
+    const chatsBetweenPups = chatData.map(chat => {
+      const pupIdArr = []
+      for (i = 0; i < 2; i++) {
+        const pupId = pupData[Math.floor(Math.random() * pupData.length)]._id
+        pupIdArr.push(pupId)
+      }
+      const { chatLog } = chat
+      const pupMessages = chatLog.map(msg => {
+        const randomId = pupIdArr[Math.floor(Math.random() * pupIdArr.length)]
+        return { ...msg, pup: randomId }
+      })
+      return { ...chat, chatLog: pupMessages }
+    })
 
-		// adds seed data into database
+    // adds seed data into database
     const createdPups = await Pup.create(pupsWithOwners)
     console.log(`🌱 ${createdPups.length} pups added.`)
     console.log(createdPups)
 
-		const createdChats = await Chat.create(chatsBetweenPups)
-		console.log(`🗣️ ${createdChats.length} chats added`)
+    const createdChats = await Chat.create(chatsBetweenPups)
+    console.log(`🗣️ ${createdChats.length} chats added`)
 
     // close connection after completion
     await mongoose.connection.close()
