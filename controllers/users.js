@@ -91,6 +91,6 @@ export const getUsers = async (req, res) => {
     const user = await User.find()
     res.json(user)
   } catch (error) {
-    console.log(error)
+    sendError(error, res)
   }
 }

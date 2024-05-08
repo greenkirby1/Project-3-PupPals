@@ -1,5 +1,5 @@
 import Pup from '../models/pup.js'
-import {Error} from 'mongoose'
+import { Error } from 'mongoose'
 import { sendError, sendUnauthorized } from '../lib/common.js'
 
 // * Pups Index 
@@ -25,7 +25,7 @@ export const pupOwned = async (req, res) => {
     const foundPup = await Pup.findById(pupId)
     res.json(foundPup)
   } catch (error) {
-      sendError(error, res)
+    sendError(error, res)
   }
 }
 
@@ -40,7 +40,7 @@ export const pupCreate = async (req, res) => {
     const newPup = await Pup.create(req.body)
     return res.status(201).json(newPup)
   } catch (error) {
-    console.log('Error:', error);
+    console.log('Error:', error)
     sendError(error, res)
   }
 }
@@ -75,17 +75,17 @@ export const pupDelete = async (req, res) => {
     const pup = await Pup.findOneAndDelete({ _id: pupId })
 
     if (!pup) {
-      throw new Error.DocumentNotFoundError("Pup Not Found");
+      throw new Error.DocumentNotFoundError('Pup Not Found')
     }
-    
+
     if (!pup.owner.equals(req.currentUser._id)) {
-      throw new sendUnauthorized();
+      throw new sendUnauthorized()
     }
-    
-    await pup.deleteOne();
-    
-    res.sendStatus(204);
+
+    await pup.deleteOne()
+
+    res.sendStatus(204)
   } catch (error) {
-    sendError(error, res);
+    sendError(error, res)
   }
-};
+}
