@@ -35,18 +35,17 @@ async function seedData() {
 
 		// adds random pup id to betweenPups field in each chat and pup id to the messages
 		const chatsBetweenPups = chatData.map(chat => {
-			const pupId = pupData[Math.floor(Math.random() * pupData.length)]._id
+			const pupIdArr = []
 			for (i = 0; i < 2; i++) {
-				pupIdArr = []
+				const pupId = pupData[Math.floor(Math.random() * pupData.length)]._id
 				pupIdArr.push(pupId)
-				const { chatLog: [messages] } = chat
-				const pupMessage = messages.map(msg => {
-					const randomId = pupIdArr[Math.floor(Math.random() * pupIdArr.length)]
-					const pupIcon = pupData[randomId].image
-					return { ...msg, pup: randomId, pupIcon: pupIcon }
-				})
-				return { ...chat, betweenPups: pupIdArr }
 			}
+			const { chatLog } = chat
+			const pupMessages = chatLog.map(msg => {
+				const randomId = pupIdArr[Math.floor(Math.random() * pupIdArr.length)]
+				return { ...msg, pup: randomId }
+			})
+			return { ...chat, chatLog: pupMessages }
 		})
 
 		// adds seed data into database
