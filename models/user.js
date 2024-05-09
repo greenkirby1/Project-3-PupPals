@@ -16,11 +16,21 @@ const userSchema = new mongoose.Schema({
   location: { type: String, required: true },
   age: { type: Number, required: true, min: 18 }
 }, {
-  toJSON: {
-    virtuals: true
-  }
+  // toJSON: {
+  //   virtuals: true
+  // }
 })
 // whenever we create a virutal field we need to set virtual to true to display. 
+
+// remove password and JSON id from the response.
+userSchema.set('toJSON', {
+  virtuals: true,
+  transform(_doc, json) {
+    delete json.password
+    delete json.id
+  }
+})
+
 
 // virtual to show us the pup created by specific user
 userSchema.virtual('pupsCreated', {
