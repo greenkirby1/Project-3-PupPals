@@ -65,12 +65,15 @@ export const sendMessage = async (req, res) => {
       if (isEqual) {
         req.body.pup = pup._id
         image = pup.image
+        // console.log(image)
       }
     })
 
-    foundChat.messages.push({ ...req.body, pupIcon: image })
+    foundChat.messages.push(req.body)
 
     await foundChat.save()
+
+    foundChat.messages.pupIcon = image
     
     return res.json(foundChat)
 
