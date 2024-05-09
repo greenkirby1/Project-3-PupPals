@@ -1,6 +1,6 @@
 import Form from '../subcomponents/Form.jsx'
 import axios from 'axios'
-import { setToken } from '/Users/mollygregson/PROJECTS/project-3-puppals/Project-3---PupPals/client/src/lib/auth.js'
+import { setToken } from '../../lib/auth.js'
 import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
