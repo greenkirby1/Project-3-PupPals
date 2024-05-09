@@ -47,31 +47,32 @@ export const sendMessage = async (req, res) => {
     console.log('sending a message by specific user')
     const { chatId } = req.params
     const foundChat = await Chat.findById(chatId)
+
     if (!foundChat) {
       return res.status(404).json({ message: 'Sorry! Chat not found.' })
     }
 
     const { pups } = foundChat
-    console.log(req.currentUser._id)
-    console.log(pups)
-
+    
     const foundPups = await Pup.find({ '_id': { $in: pups } })
     console.log(foundPups)
 
+    let image
+    
     const matchPupWithUser = foundPups.map(pup => {
       const isEqual = pup.owner.equals(req.currentUser._id)
       console.log(isEqual)
       if (isEqual) {
-        // return res.json({ pup.image })
-        console.log(pup.image)
+        req.body.pup = pup._id
+        image = pup.image
       }
-      
-      // console.log('this is pup owner ->', pup.owner)
-      // console.log('this is current user ->', req.currentUser._id)
-      // console.log( req.currentUser._id === pup.owner)
     })
 
+    foundChat.messages.push({ ...req.body, pupIcon: image })
 
+    await foundChat.save()
+    
+    return res.json(foundChat)
 
   } catch (error) {
     console.log(error.message)

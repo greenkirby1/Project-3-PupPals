@@ -4,8 +4,7 @@ import mongoose from 'mongoose'
 import 'dotenv/config'
 // import router from './lib/router.js'
 import router from './lib/router.js'
-import { Error } from 'mongoose'
-import { sendError, sendUnauthorized } from './lib/common.js'
+
 
 
 const app = express()
