@@ -1,22 +1,17 @@
-import axios from 'axios'
-import { useEffect } from 'react'
+import {Outlet} from 'react-router-dom'
 
-function App() {
+import Navbar from './components/subcomponents/Navbar'
+import Footer from './components/subcomponents/Footer'
 
-  useEffect(() => {
-    async function getUsers() {
-      try {
-        const res = await axios.get('/api/users')
-        console.log(res)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    getUsers()
-  }, [])
+export default function Root(){
+
   return (
-    <h1>Hello World</h1>
+    <div className="d-flex flex-column min-vh-100">
+      <Navbar />
+      <main className="flex-grow-1">
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
   )
 }
-
-export default App
