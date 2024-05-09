@@ -40,7 +40,7 @@ export const login = async (req, res) => {
 
     // generate jwt 
     const token = jwt.sign({ sub: foundUser._id }, process.env.SECRET, {
-      expiresIn: '24h'
+      expiresIn: '7d'
     })
 
     // send token back in response

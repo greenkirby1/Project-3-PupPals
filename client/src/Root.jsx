@@ -1,14 +1,14 @@
-import {Outlet} from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 
 import Navbar from './components/subcomponents/Navbar'
 import Footer from './components/subcomponents/Footer'
 
-export default function Root(){
+export default function Root() {
 
   return (
-    <div className="d-flex flex-column min-vh-100">
+    <div>
       <Navbar />
-      <main className="flex-grow-1">
+      <main>
         <Outlet />
       </main>
       <Footer />
