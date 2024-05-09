@@ -25,10 +25,10 @@ export const chatIndex = async (req, res) => {
 // Path: /api/chats/:chatId
 export const chatSingle = async (req, res) => {
   try {
-    console.log('showing single chat log')
+    console.log('showing single chat for user')
     const { chatId } = req.params
     console.log(chatId)
-    const foundChat = await Chat.findById(chatId)
+    const foundChat = await Chat.findById(chatId).populate('messages.pup', 'image')
     if (!foundChat) {
       return res.status(404).json({ message: 'Sorry! Chat not found.' })
     }
@@ -44,39 +44,18 @@ export const chatSingle = async (req, res) => {
 // Path: /api/chats/:chatId
 export const sendMessage = async (req, res) => {
   try {
-    console.log('sending a message by specific user')
+    console.log('📩 user is sending a message')
     const { chatId } = req.params
     const foundChat = await Chat.findById(chatId)
-
     if (!foundChat) {
       return res.status(404).json({ message: 'Sorry! Chat not found.' })
     }
 
-    const { pups } = foundChat
-    
-    const foundPups = await Pup.find({ '_id': { $in: pups } })
-    console.log(foundPups)
-
-    let image
-    
-    const matchPupWithUser = foundPups.map(pup => {
-      const isEqual = pup.owner.equals(req.currentUser._id)
-      console.log(isEqual)
-      if (isEqual) {
-        req.body.pup = pup._id
-        image = pup.image
-        // console.log(image)
-      }
-    })
-
     foundChat.messages.push(req.body)
 
     await foundChat.save()
-
-    foundChat.messages.pupIcon = image
     
     return res.json(foundChat)
-
   } catch (error) {
     sendError(error, res)
   }

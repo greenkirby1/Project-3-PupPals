@@ -7,9 +7,9 @@ export default function Profile() {
   const [userProfile, setUserProfile] = useState()
   const [error, setError] = useState('')
 
-  const { VITE_BASE_URL } = import.meta.env
+  const { VITE_ACCESS_TOKEN } = import.meta.env
 
-  console.log(VITE_BASE_URL)
+  console.log(VITE_ACCESS_TOKEN)
 
   // API Calls
   // api/profile
@@ -17,14 +17,18 @@ export default function Profile() {
   useEffect(() => {
     async function getUserProfile() {
       try {
-        const { data } = await axios.get(``)
+        const { data } = await axios.get(`/api/profile`, {
+          headers: {
+            'Authorization': `Bearer ${VITE_ACCESS_TOKEN}`
+          }
+        })
         console.log(data)
       } catch (error) {
-        console.log(error)
+        console.log(error.message)
       }
     }
-    getUserData()
-  }, [userProfile])
+    getUserProfile()
+  })
 
   return <h1>Profile</h1>
 }
