@@ -1,6 +1,6 @@
 import Chat from '../models/chat.js'
 import Pup from '../models/pup.js'
-
+import { sendError } from '../lib/common.js'
 
 // * All Chat view (secureRoute)
 // For: displaying All users chats
@@ -15,7 +15,7 @@ export const chatIndex = async (req, res) => {
     }
     return res.json(allChats)
   } catch (error) {
-    console.log(error)
+    sendError(error, res)
   }
 }
 
@@ -34,7 +34,7 @@ export const chatSingle = async (req, res) => {
     }
     return res.json(foundChat)
   } catch (error) {
-    console.log(error)
+    sendError(error, res)
   }
 }
 
@@ -75,6 +75,6 @@ export const sendMessage = async (req, res) => {
     return res.json(foundChat)
 
   } catch (error) {
-    console.log(error.message)
+    sendError(error, res)
   }
 }
