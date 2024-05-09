@@ -48,9 +48,10 @@ export default function Form({ submit, fields, request, onLoad }) {
   return (
     <form onSubmit={handleSubmit}>
       {Object.entries(fields).map(([fieldName, fieldType]) => {
+        const fieldNameCaps = fieldName[0].toUpperCase() + fieldName.slice(1)
         return (
           <Fragment key={fieldName}>
-            <label htmlFor={fieldName}>{fieldName}</label>
+            <label htmlFor={fieldName}>{fieldNameCaps}</label>
             <input
               type={fieldType}
               id={fieldName}
