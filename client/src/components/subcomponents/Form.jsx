@@ -15,9 +15,9 @@ export default function Form({ submit, fields, request, onLoad }) {
   async function handleSubmit(e) {
     // prevents default form submit behaviour
     e.preventDefault()
+    console.log('handle submit:', formData)
     try {
       await request(formData)
-      console.log(typeof {formData})
     } catch (error) {
       console.log(error)
       console.log(error.response.data)
@@ -27,10 +27,14 @@ export default function Form({ submit, fields, request, onLoad }) {
 
   const handleChange = (fieldName) => {
     return (event) => {
-      const { value } = event.target;
+      const { value } = event.target
+      let parsedValue = value
+      if (fieldName === 'neutered') {
+        parsedValue = value === 'yes' ? true : false
+      }
       setFormData((prevFormData) => ({
         ...prevFormData,
-        [fieldName]: value,
+        [fieldName]: parsedValue,
       }))
       setError('')
     }
@@ -86,7 +90,7 @@ export default function Form({ submit, fields, request, onLoad }) {
               <select
                 name={fieldName}
                 id={fieldName}
-                value={formData[fieldName] || ''}
+                value={formData[fieldName] ? 'yes' : 'no'}
                 onChange={(e) => handleChange(fieldName)(e)}
               >
                 <option value="">{fieldNameCaps}</option>

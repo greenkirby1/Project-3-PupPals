@@ -11,7 +11,7 @@ export default function CreatePup(){
     placeholder: 'your pups name here'
   },
   image: {
-    type: 'file',
+    type: 'text',
     placeholder: 'upload an image'
   },
   birthday: {
@@ -20,16 +20,19 @@ export default function CreatePup(){
   },
   breed: 'text',
   bio: 'text',
+  //string
   gender: {
     type: 'select',
     placeholder: 'select gender',
     options: ['bitch', 'dog']
   },
+  //string needs to be boolean
   neutered: {
     type: 'select',
     placeholder: 'select yes or no',
     options: ['yes', 'no']
   },
+  // favorite and dislike are objects
   favorites: { 
     type: 'multi',
     placeholder: 'select multi options'
@@ -42,13 +45,21 @@ export default function CreatePup(){
   
 
   async function handleCreate(formData){
-    const { data } = await axios.post('/pups', formData, {
+    console.log('handle create:', formData)
+    console.log('Type of name:', typeof formData.pupName)
+    console.log('Type of bio:', typeof formData.bio)
+    console.log('Type of breed:', typeof formData.breed)
+    console.log('Type of birthday:', typeof formData.birthday)
+    console.log('Type of favorites:', typeof formData.favorites)
+    console.log('Type of dislikes:', typeof formData.dislikes)
+    console.log('Type of image:', typeof formData.image)
+    console.log('Type of gender:', typeof formData.gender)
+    console.log('Type of neuted:', typeof formData.neutered)
+    await axios.post('/api/pups', formData, {
       headers: {
         Authorization: `Bearer ${getToken()}`
       }
     })
-    console.log(data)
-    console.log(formData)
   }
 
   return (
