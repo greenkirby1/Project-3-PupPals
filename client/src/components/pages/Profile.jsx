@@ -1,5 +1,6 @@
 import CreatePup from '../subcomponents/CreatePup.jsx'
 import UpdatePup from '../subcomponents/UpdatePup.jsx'
+import UpdateProfile from '../subcomponents/UpdateProfile.jsx'
 
 export default function Profile() {
 
@@ -12,6 +13,7 @@ export default function Profile() {
     <>
       <CreatePup />
       <UpdatePup />
+      <UpdateProfile />
     </>
   )
 }

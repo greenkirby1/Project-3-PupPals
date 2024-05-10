@@ -1,30 +1,16 @@
 import Form from './Form.jsx'
 import { getToken } from '../../lib/auth'
+import { useParams } from 'react-router-dom'
 import axios from 'axios'
 
 export default function UpdatePup(){
 
   const fields = {
-    pupName: { 
-      type: 'text',
-      placeholder: 'your pups name here'
-    },
     image: {
       type: 'text',
       placeholder: 'upload an image'
     },
-    birthday: {
-      type: 'date',
-      placeholder: 'puppy b-day'
-    },
-    breed: 'text',
     bio: 'text',
-    //string
-    gender: {
-      type: 'select',
-      placeholder: 'select gender',
-      options: ['bitch', 'dog']
-    },
     //string needs to be boolean
     neutered: {
       type: 'select',
@@ -41,6 +27,8 @@ export default function UpdatePup(){
       placeholder: 'select multi options'
     }
     }
+    
+    const { pupId } = useParams()
 
     async function handleUpdate(formData){
       console.log('handle create:', formData)
@@ -53,13 +41,23 @@ export default function UpdatePup(){
       console.log('Type of image:', typeof formData.image)
       console.log('Type of gender:', typeof formData.gender)
       console.log('Type of neuted:', typeof formData.neutered)
-      await axios.put('/api/pups', formData, {
+      await axios.put(`/api/pups/${pupId}`, formData, {
         headers: {
           Authorization: `Bearer ${getToken()}`
         }
       })
     }
+    
+
+    // function loadFields(){
+    //   return axios.get(`/api/profile`)
+    // }
 
 
-  return (<h1>Hello World</h1>)
+  return (
+    <div className="form-page">
+    <h1>Update your pup</h1>
+    <Form request={handleUpdate} fields={fields} submit="Update Pup" />
+  </div>
+  )
 }
