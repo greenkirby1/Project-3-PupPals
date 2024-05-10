@@ -4,6 +4,7 @@ import { getToken } from "../../lib/auth"
 import Form from "../subcomponents/Form"
 import ReactCardFlip from 'react-card-flip'
 import ReactFlipCard from 'reactjs-flip-card'
+import e from "express"
 
 export default function Profile() {
 
@@ -35,6 +36,7 @@ export default function Profile() {
     try {
       const { data } = await axios.get('/api/chats', {
         headers: {
+          
           Authorization: `Bearer ${getToken()}`
         }
       })
@@ -50,8 +52,9 @@ export default function Profile() {
     getUserChat()
   }, [])
 
-  function handlePupFlip() {
-    console.log('hello')
+  function handlePupFlip(e) {
+    e.preventDefault()
+    setFlipPupCard(!flipPupCard)
   }
 
   console.log(userChat)
