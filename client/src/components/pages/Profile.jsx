@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import axios from 'axios'
+import { getToken } from "../../lib/auth"
+import Form from "../subcomponents/Form"
 import ReactCardFlip from 'react-card-flip'
-import UserProfile from "../subcomponents/UserProfile"
 import ReactFlipCard from 'reactjs-flip-card'
 
 export default function Profile() {
@@ -11,103 +12,109 @@ export default function Profile() {
   const [userChat, setUserChat] = useState()
   const [profileError, setProfileError] = useState('')
   const [chatError, setChatError] = useState('')
-  const [isFlipped, setIsFlipped] = useState(false)
-  const [optionalToggle, setOptionalToggle] = useState(false)
-
-  const { VITE_ACCESS_TOKEN } = import.meta.env
-
-  const styles = {
-    card: {background: 'pink', color: 'white', borderRadis: 20}
-  }
+  const [flipUserCard, setFlipUserCard] = useState(false)
+  const [flipPupCard, setFlipPupCard] = useState(false)
+  const [flipChatCard, setFlipChatCard] = useState(false)
 
   // * API Calls
-  useEffect(() => {
-    async function getUserProfile() {
-      try {
-        const { data } = await axios.get('/api/profile', {
-          headers: {
-            Authorization: `Bearer ${VITE_ACCESS_TOKEN}`
-          }
-        })
-        setUserProfile(data)
-        console.log(data)
-      } catch (error) {
-        setProfileError(error.message)
-      }
+  async function getUserProfile() {
+    try {
+      const { data } = await axios.get('/api/profile', {
+        headers: {
+          Authorization: `Bearer ${getToken()}`
+        }
+      })
+      setUserProfile(data)
+      console.log(data)
+    } catch (error) {
+      setProfileError(error.message)
     }
-    getUserProfile()
-  }, [])
+  }
+
+  async function getUserChat() {
+    try {
+      const { data } = await axios.get('/api/chats', {
+        headers: {
+          Authorization: `Bearer ${getToken()}`
+        }
+      })
+      setUserChat(data)
+      console.log(data)
+    } catch (error) {
+      setChatError(error.message)
+    }
+  }
 
   useEffect(() => {
-    async function getUserChat() {
-      try {
-        const { data } = await axios.get('/api/chats', {
-          headers: {
-            Authorization: `Bearer ${VITE_ACCESS_TOKEN}`
-          }
-        })
-        setUserChat(data)
-        console.log(data)
-      } catch (error) {
-        setChatError(error.message)
-      }
-    }
+    getUserProfile()
     getUserChat()
   }, [])
 
-  function handleClick() {
-    setIsFlipped(!isFlipped)
-  }
-
-  console.log()
+  console.log(userChat)
 
   return (
-    <>
-      <h1>Welcome to your page, {userProfile.firstName}!</h1>
-      {/* <div className='container'>
-        <div className={`flip-card ${isFlipped ? 'flipped' : ''}`}>
-          <div className='flip-card-inner'>
-            <div className='card-content'>
-              <h2>Hello</h2>
-              <button onClick={handleClick}>Turn</button>
-            </div>
-            <div className='flip-card-back'>
-              <div className='card-content'>
-                <h2>bye</h2>
-                <button onClick={handleClick}>Turn</button>
+    <div>
+      {userProfile && userChat ?
+        <div className='container' style={{height: '100vh', width: '100vh'}}>
+          <div className='card-wrapper'>
+            <ReactCardFlip isFlipped={flipUserCard}>
+              <div className='user-profile' style={{height: '600px', width: '200px'}}>
+                <dl>
+                  <dt>Full Name:</dt>
+                  <dd>{userProfile.firstName} {userProfile.lastName}</dd>
+                  <dt>Age:</dt>
+                  <dd>{userProfile.age}</dd>
+                  <dt>Email:</dt>
+                  <dd>{userProfile.email}</dd>
+                  <dt>Location:</dt>
+                  <dd>{userProfile.location}</dd>
+                </dl>
+                <button onClick={() => setFlipUserCard(!flipUserCard)}>Edit Profile</button>
               </div>
-            </div>
+              <div className='update-profile' style={{height: '600px', width: '200px'}}>
+
+                <button onClick={() => setFlipUserCard(!flipUserCard)}>Save Profile</button>
+              </div>
+            </ReactCardFlip>
+            {userProfile.pupsCreated.length ?
+              userProfile.pupsCreated.map(pup => {
+                
+              })
+              // <ReactCardFlip isFlipped={flipPupCard}>
+              //   <div className='single-dog'>
+
+              //     <button onClick={() => setFlipPupCard(!flipPupCard)}>Edit Profile</button>
+              //   </div>
+              //   <div className='update-dog'>
+
+              //     <button onClick={() => setFlipPupCard(!flipPupCard)}>Save Profile</button>
+              //   </div>
+              // </ReactCardFlip>
+              :
+              <h2>add pups...</h2>
+            }
+            <ReactCardFlip isFlipped={flipChatCard}>
+              <div className='all-chats'>
+                {/* {userChat.length ?
+
+                  :
+                  <h2>You don't have any matches yet...</h2>
+                } */}
+                <button onClick={() => setFlipChatCard(!flipChatCard)}></button>
+              </div>
+              <div className='single-chat'>
+
+                <button onClick={() => setFlipChatCard(!flipChatCard)}></button>
+              </div>
+            </ReactCardFlip>
           </div>
         </div>
-      </div> */}
-      <button onClick={() => setOptionalToggle(!optionalToggle)}>click</button>
-      <ReactFlipCard
-        flipByProp={optionalToggle}
-        flipTrigger={'disabled'}
-        frontStyle={styles.card}
-        backStyle={styles.card}
-        frontComponent={
-          <div className='user-details'>
-            {/* <h2>Your Details</h2>
-            <dl>
-              <dt>First Name</dt>
-              <dd>{userProfile.firstName}</dd>
-            </dl> */}
-            <h2>hello</h2>
-            <ul>
-              <li><span>First Name:</span> {userProfile.firstName}</li>
-            </ul>
-            <button onClick={() => setOptionalToggle(!optionalToggle)}>Turn</button>
-          </div>
-        }
-        backComponent={
-          <div className='update-user'>
-            {/* <button onClick={() => setOptionalToggle(!optionalToggle)}>Turn back</button> */}
-            hello
-          </div>
-        }
-      />
-    </>
-
+        :
+        profileError || chatError ?
+          <p className='text-danger'>{profileError || chatError}</p>
+          :
+          <h2>Loading...</h2>
+      }
+    </div>
   )
 }
