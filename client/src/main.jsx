@@ -7,8 +7,11 @@ import Home from './components/pages/Home.jsx'
 import Register from './components/pages/Register.jsx'
 import Login from './components/pages/Login.jsx'
 import Profile from './components/pages/Profile.jsx'
+import BrowsePups from './components/pages/BrowsePups.jsx'
 
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles/main.scss'
+import 'bootstrap/dist/js/bootstrap.bundle.js'
 
 // Router
 const router = createBrowserRouter([
@@ -32,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: 'profile',
         element: <Profile />
+      },
+      {
+        path: 'browsePups',
+        element: <BrowsePups />
       }
     ]
   }
