@@ -51,7 +51,7 @@ export default function Profile() {
   }, [])
 
   function handlePupFlip() {
-    if ()
+    console.log('hello')
   }
 
   console.log(userChat)
