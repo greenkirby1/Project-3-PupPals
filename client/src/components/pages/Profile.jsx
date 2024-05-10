@@ -50,15 +50,19 @@ export default function Profile() {
     getUserChat()
   }, [])
 
+  function handlePupFlip() {
+    if ()
+  }
+
   console.log(userChat)
 
   return (
     <div>
       {userProfile && userChat ?
-        <div className='container' style={{height: '100vh', width: '100vh'}}>
+        <div className='container' style={{ height: '100vh', width: '100vh' }}>
           <div className='card-wrapper'>
             <ReactCardFlip isFlipped={flipUserCard}>
-              <div className='user-profile' style={{height: '600px', width: '200px'}}>
+              <div className='user-profile' style={{ height: '600px', width: '200px' }}>
                 <dl>
                   <dt>Full Name:</dt>
                   <dd>{userProfile.firstName} {userProfile.lastName}</dd>
@@ -71,25 +75,38 @@ export default function Profile() {
                 </dl>
                 <button onClick={() => setFlipUserCard(!flipUserCard)}>Edit Profile</button>
               </div>
-              <div className='update-profile' style={{height: '600px', width: '200px'}}>
-
+              <div className='update-profile' style={{ height: '600px', width: '200px' }}>
+                <h2>user update form here</h2>
                 <button onClick={() => setFlipUserCard(!flipUserCard)}>Save Profile</button>
               </div>
             </ReactCardFlip>
             {userProfile.pupsCreated.length ?
-              userProfile.pupsCreated.map(pup => {
-                
-              })
-              // <ReactCardFlip isFlipped={flipPupCard}>
-              //   <div className='single-dog'>
-
-              //     <button onClick={() => setFlipPupCard(!flipPupCard)}>Edit Profile</button>
-              //   </div>
-              //   <div className='update-dog'>
-
-              //     <button onClick={() => setFlipPupCard(!flipPupCard)}>Save Profile</button>
-              //   </div>
-              // </ReactCardFlip>
+              userProfile.pupsCreated.map(({ _id, pupName, image, gender, birthday, breed, bio, dislikes, favorites, neutered, owner }) => (
+                <ReactCardFlip key={_id} isFlipped={flipPupCard}>
+                  <div className='single-pup'>
+                    <div className='wrapper-one'>
+                      <div className='top-wrapper'>
+                        <img src={image} alt={`${_id}-${owner}`} />
+                        <div className='top-wrapper'><span>Gender:</span> {gender}</div>
+                        <div><span>Neutered/Spayed:</span> {neutered ? 'Yes' : 'No'}</div>
+                      </div>
+                      <div className='top-wrapper'>
+                        <div><span>Name:</span> {pupName}</div>
+                        <div><span>Birthday:</span> {birthday}</div>
+                        <div><span>Bio:</span> {bio}</div>
+                      </div>
+                    </div>
+                    <div><span>Breed:</span> {breed}</div>
+                    <div><span>Favourites:</span> {favorites.join(', ').toLowerCase()}</div>
+                    <div><span>Dislikes:</span> {dislikes.join(', ').toLowerCase()}</div>
+                    <button onClick={() => setFlipPupCard(!flipPupCard)}>Edit Profile</button>
+                  </div>
+                  <div className='update-pup'>
+                    <h2>pup update form here</h2>
+                    <button onClick={() => setFlipPupCard(!flipPupCard)}>Save Profile</button>
+                  </div>
+                </ReactCardFlip>
+              ))
               :
               <h2>add pups...</h2>
             }
