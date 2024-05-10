@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 //Imports for Bootstrap
 import Container from 'react-bootstrap/Container'
@@ -28,44 +27,44 @@ export default function Home() {
   return (
     <div className='text-center' style={{ fontFamily: 'Arial, sans-serif' }}>
       <Container fluid>
-      <Row className='justify-content-center'>
-        <Col xs={12}>
-          <div
-            className='hero-image'
-            style={{
-              backgroundImage: 'placeholder2.jpg',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              height: '400px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              border: '2px solid grey',
-            }}
-          >
-            <div className='hero-text'>
-              <h1
-                className='text-white'
-                style={{
-                  fontFamily: 'Georgia, serif',
-                  fontSize: '3rem',
-                  backgroundColor: '#FDE49E',
-                  padding: '10px',
-                }}
-              >
-                PupPals
-              </h1>
-              <p className='text-dark' style={{ fontSize: '1 rem' }}>
-                An app for matching pups
-              </p>
+        <Row className='justify-content-center'>
+          <Col xs={12}>
+            <div
+              className='hero-image'
+              style={{
+                backgroundImage: 'placeholder2.jpg',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                height: '400px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: '2px solid grey',
+              }}
+            >
+              <div className='hero-text'>
+                <h1
+                  className='text-white'
+                  style={{
+                    fontFamily: 'Georgia, serif',
+                    fontSize: '3rem',
+                    backgroundColor: '#FDE49E',
+                    padding: '10px',
+                  }}
+                >
+                  PupPals
+                </h1>
+                <p className='text-dark' style={{ fontSize: '1 rem' }}>
+                  An app for matching pups
+                </p>
+              </div>
             </div>
-          </div>
           </Col>
         </Row>
-        <Row className='justify-content-center'style={{ marginTop: '100px' }}>
-          <Col xs={12} md={4}>
-            <Card className='h-100'>
+        <Row className='justify-content-center' style={{ marginTop: '100px' }}>
+          <Col xs={12} md={6} lg={4} className='mb-4'>
+            <Card className='h-100' style={{ padding: '20px' }}>
               <Card.Body>
                 <Card.Title>About PupPals</Card.Title>
                 <Card.Text>
@@ -74,8 +73,8 @@ export default function Home() {
               </Card.Body>
             </Card>
           </Col>
-          <Col xs={12} md={4}>
-            <Card className='h-100'>
+          <Col xs={12} md={6} lg={4} className='mb-4'>
+            <Card className='h-100' style={{ padding: '20px' }}>
               <Card.Body>
                 <Card.Title>Blank Component</Card.Title>
                 <Card.Text>
@@ -84,8 +83,8 @@ export default function Home() {
               </Card.Body>
             </Card>
           </Col>
-          <Col xs={12} md={4}>
-            <Card className='h-100'>
+          <Col xs={12} md={6} lg={4} className='mb-4'>
+            <Card className='h-100' style={{ padding: '20px' }}>
               <Card.Body>
                 <Card.Title>Our Pups</Card.Title>
                 <Carousel>
