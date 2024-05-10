@@ -1,7 +1,7 @@
 import ReactCardFlip from 'react-card-flip'
 import { useState } from 'react'
 
-export default function UserCard({
+export default function PupCard({
   _id,
   pupName,
   image,
@@ -18,7 +18,7 @@ export default function UserCard({
   const [flipPupCard, setFlipPupCard] = useState(false)
 
   return (
-    <ReactCardFlip key={_id} isFlipped={flipPupCard}>
+    <ReactCardFlip isFlipped={flipPupCard}>
       <div className='single-pup'>
         <div className='wrapper-one'>
           <div className='top-wrapper'>

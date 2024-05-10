@@ -5,8 +5,8 @@ import Pup from '../models/pup.js'
 import pupData from '../database/data/pups.js'
 import User from '../models/user.js'
 import userData from '../database/data/users.js'
-import Chat from '../models/chatLog.js'
-import chatData from '../database/data/chatLogs.js'
+import Chat from '../models/chat.js'
+import chatData from '../database/data/chats.js'
 
 
 async function seedData() {
@@ -39,24 +39,40 @@ async function seedData() {
     // creating pup data now so pup id exists for later
     const createdPups = await Pup.create(pupsWithOwners)
     console.log(`🌱 ${createdPups.length} pups added.`)
-    console.log(createdPups)
 
     // adds random pup id to betweenPups field in each chat and pup id to the messages
     const chatsBetweenPups = chatData.map(chat => {
       const pupIdArr = []
+      const ownerIdArr = []
       for (let i = 0; i < 2; i++) {
         const pupId = createdPups[Math.floor(Math.random() * createdPups.length)]._id
+        createdPups.forEach(pup => {
+          const isEqual = pupId.equals(pup._id)
+          if (isEqual) {
+            ownerIdArr.push(pup.owner)
+            console.log('owner Id', ownerIdArr)
+          }
+        })
         pupIdArr.push(pupId)
+        console.log('pup', pupIdArr)
+        // console.log(ownerIdArr)
       }
       // console.log(pupIdArr)
-      const { chatLog } = chat
-      // console.log(chatLog)
-      const messagesWithPupId = chatLog.map(msg => {
+      const { messages } = chat
+      // console.log(messages)
+      const messagesWithPupInfo = messages.map(msg => {
         const randomId = pupIdArr[Math.floor(Math.random() * pupIdArr.length)]
-        // console.log(randomId)
-        return { ...msg, pup: randomId }
+        let pupIcon
+        createdPups.forEach(pup => {
+          const isEqual = randomId.equals(pup._id)
+          if (isEqual) {
+            pupIcon = pup.image
+          }
+          // console.log(randomId)
+        })
+        return { ...msg, pup: { _id: randomId, image: pupIcon } }
       })
-      return { ...chat, chatLog: messagesWithPupId, betweenPups: pupIdArr }
+      return { ...chat, messages: messagesWithPupInfo, pups: pupIdArr, owners: ownerIdArr }
     })
 
     // adds chat seed data into database

@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from "react"
 import axios from 'axios'
 import { getToken } from "../../lib/auth"
-import Form from "../subcomponents/Form"
 import ReactCardFlip from 'react-card-flip'
-import ReactFlipCard from 'reactjs-flip-card'
-import e from "express"
+import Form from "../subcomponents/Form"
+import PupCard from '../elements/PupCard'
+import UserCard from "../elements/UserCard"
+
 
 export default function Profile() {
 
@@ -13,8 +14,6 @@ export default function Profile() {
   const [userChat, setUserChat] = useState()
   const [profileError, setProfileError] = useState('')
   const [chatError, setChatError] = useState('')
-  const [flipUserCard, setFlipUserCard] = useState(false)
-  const [flipPupCard, setFlipPupCard] = useState(false)
   const [flipChatCard, setFlipChatCard] = useState(false)
 
   // * API Calls
@@ -36,7 +35,7 @@ export default function Profile() {
     try {
       const { data } = await axios.get('/api/chats', {
         headers: {
-          
+
           Authorization: `Bearer ${getToken()}`
         }
       })
@@ -52,11 +51,6 @@ export default function Profile() {
     getUserChat()
   }, [])
 
-  function handlePupFlip(e) {
-    e.preventDefault()
-    setFlipPupCard(!flipPupCard)
-  }
-
   console.log(userChat)
 
   return (
@@ -64,62 +58,37 @@ export default function Profile() {
       {userProfile && userChat ?
         <div className='container' style={{ height: '100vh', width: '100vh' }}>
           <div className='card-wrapper'>
-            <ReactCardFlip isFlipped={flipUserCard}>
-              <div className='user-profile' style={{ height: '600px', width: '200px' }}>
-                <dl>
-                  <dt>Full Name:</dt>
-                  <dd>{userProfile.firstName} {userProfile.lastName}</dd>
-                  <dt>Age:</dt>
-                  <dd>{userProfile.age}</dd>
-                  <dt>Email:</dt>
-                  <dd>{userProfile.email}</dd>
-                  <dt>Location:</dt>
-                  <dd>{userProfile.location}</dd>
-                </dl>
-                <button onClick={() => setFlipUserCard(!flipUserCard)}>Edit Profile</button>
-              </div>
-              <div className='update-profile' style={{ height: '600px', width: '200px' }}>
-                <h2>user update form here</h2>
-                <button onClick={() => setFlipUserCard(!flipUserCard)}>Save Profile</button>
-              </div>
-            </ReactCardFlip>
-            {userProfile.pupsCreated.length ?
-              userProfile.pupsCreated.map(({ _id, pupName, image, gender, birthday, breed, bio, dislikes, favorites, neutered, owner }) => (
-                <ReactCardFlip key={_id} isFlipped={flipPupCard}>
-                  <div className='single-pup'>
-                    <div className='wrapper-one'>
-                      <div className='top-wrapper'>
-                        <img src={image} alt={`${_id}-${owner}`} />
-                        <div className='top-wrapper'><span>Gender:</span> {gender}</div>
-                        <div><span>Neutered/Spayed:</span> {neutered ? 'Yes' : 'No'}</div>
-                      </div>
-                      <div className='top-wrapper'>
-                        <div><span>Name:</span> {pupName}</div>
-                        <div><span>Birthday:</span> {birthday}</div>
-                        <div><span>Bio:</span> {bio}</div>
-                      </div>
-                    </div>
-                    <div><span>Breed:</span> {breed}</div>
-                    <div><span>Favourites:</span> {favorites.join(', ').toLowerCase()}</div>
-                    <div><span>Dislikes:</span> {dislikes.join(', ').toLowerCase()}</div>
-                    <button onClick={() => setFlipPupCard(!flipPupCard)}>Edit Profile</button>
-                  </div>
-                  <div className='update-pup'>
-                    <h2>pup update form here</h2>
-                    <button onClick={() => setFlipPupCard(!flipPupCard)}>Save Profile</button>
-                  </div>
-                </ReactCardFlip>
-              ))
-              :
-              <h2>add pups...</h2>
-            }
+            <UserCard userProfile={userProfile} />
+            <div className='pup-card-wrapper'>
+              {userProfile.pupsCreated.length ?
+                userProfile.pupsCreated.map(({ _id, pupName, image, gender, birthday, breed, bio, dislikes, favorites, neutered, owner }) => (
+                  <PupCard
+                    key={_id}
+                    pupName={pupName}
+                    image={image}
+                    gender={gender}
+                    birthday={birthday}
+                    breed={breed}
+                    bio={bio}
+                    dislikes={dislikes}
+                    favorites={favorites}
+                    neutered={neutered}
+                    owner={owner}
+                  />
+                ))
+                :
+                <h2>add pups...</h2>
+              }
+            </div>
             <ReactCardFlip isFlipped={flipChatCard}>
               <div className='all-chats'>
-                {/* {userChat.length ?
-
+                {userChat.length ?
+                  userChat.map(({ _id, createdAt, messages }) => (
+                    <></>
+                  ))
                   :
-                  <h2>You don't have any matches yet...</h2>
-                } */}
+                  <h2>You do not have any matches yet...</h2>
+                }
                 <button onClick={() => setFlipChatCard(!flipChatCard)}></button>
               </div>
               <div className='single-chat'>
