@@ -1,3 +1,5 @@
+import CreatePup from '../subcomponents/CreatePup.jsx'
+
 export default function Profile() {
 
   // API Calls
@@ -5,5 +7,9 @@ export default function Profile() {
   // api/chats 123
   // api/chats/1 1
 
-  return <h1>Profile</h1>
+  return (
+    <>
+      <CreatePup />
+    </>
+  )
 }

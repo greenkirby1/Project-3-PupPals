@@ -20,7 +20,7 @@ export default function Login() {
 
   return (
     <div className="form-page">
-      <h1>Login</h1>
+      <h1>Login with your email address</h1>
       <Form request={handleLogin} fields={fields} submit="Login" />
     </div>
   )

@@ -1,10 +1,11 @@
 import { Fragment, useEffect, useState } from 'react'
+import Creatable from 'react-select/creatable'
 
 export default function Form({ submit, fields, request, onLoad }) {
 
   const fieldsReduced = Object.fromEntries(
-    Object.entries(fields).map(([key, value]) => [key, value === 'multi' ? [] : ''])
-  );
+    Object.entries(fields).map(([key, value]) => [key, value.type === 'multi' ? [] : ''])
+  )
 
   // ! State
   const [formData, setFormData] = useState(fieldsReduced)
@@ -16,6 +17,7 @@ export default function Form({ submit, fields, request, onLoad }) {
     e.preventDefault()
     try {
       await request(formData)
+      console.log(typeof {formData})
     } catch (error) {
       console.log(error)
       console.log(error.response.data)
@@ -23,10 +25,23 @@ export default function Form({ submit, fields, request, onLoad }) {
     }
   }
 
-  function handleChange(e) {
-    const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
-    setError('')
+  const handleChange = (fieldName) => {
+    return (event) => {
+      const { value } = event.target;
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [fieldName]: value,
+      }))
+      setError('')
+    }
+  }
+
+  const handleInputChange = (fieldName, event) => {
+    const { value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [fieldName]: value,
+    }))
   }
 
   // ! Effects
@@ -47,23 +62,66 @@ export default function Form({ submit, fields, request, onLoad }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      {Object.entries(fields).map(([fieldName, fieldType]) => {
-        const fieldNameCaps = fieldName[0].toUpperCase() + fieldName.slice(1)
+      {Object.entries(fields).map(([fieldName, fieldData]) => {
+        const fieldNameCaps = fieldName
+          .replace(/([A-Z[])/g, ' $1')
+          .replace(/^./, function (str) { return str.toUpperCase() })
         return (
           <Fragment key={fieldName}>
             <label htmlFor={fieldName}>{fieldNameCaps}</label>
-            <input
-              type={fieldType}
-              id={fieldName}
-              name={fieldName}
-              value={formData[fieldName] || ''}
-              onChange={handleChange}
-              placeholder={fieldName}
-            />
+            {/*text input default*/}
+            {fieldData.type !== 'select' && fieldData.type !== 'multi' && (
+              <input
+                type={fieldData.type}
+                id={fieldName}
+                name={fieldName}
+                value={formData[fieldName] || ''}
+                onChange={(e) => handleInputChange(fieldName, e)}
+                placeholder={fieldData.placeholder || fieldName}
+              />
+            )}
+
+            {/* if type is for select */}
+            {fieldData.type === 'select' && (
+              <select
+                name={fieldName}
+                id={fieldName}
+                value={formData[fieldName] || ''}
+                onChange={(e) => handleChange(fieldName)(e)}
+              >
+                <option value="">{fieldNameCaps}</option>
+                {fieldData.options.map((option, idx) => (
+                  <option key={idx} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            )}
+
+
+
+            {/*if type is multi select*/}
+            {fieldData.type === 'multi' && (
+              <Creatable
+                onCreateOption={(value) => {
+                  setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    [fieldName]: [...prevFormData[fieldName], value],
+                  }))
+                }}
+                onChange={handleChange(fieldName)}
+                value={formData[fieldName].map((value) => ({
+                  value,
+                  label: value,
+                }))}
+                isMulti={true}
+              />)}
+
           </Fragment>
         )
       })}
       <button type="submit">{submit}</button>
+      
     </form>
   )
 }

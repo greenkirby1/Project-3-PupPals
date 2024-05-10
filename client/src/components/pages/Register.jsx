@@ -4,28 +4,46 @@ import Form from '../subcomponents/Form.jsx'
 
 export default function Register() {
 
-const navigate = useNavigate()
+  const navigate = useNavigate()
 
-async function handleRegister(formData){
-  await axios.post('/api/register', formData)
-  console.log(formData)
-  navigate('/login')
-}
+  async function handleRegister(formData) {
+    await axios.post('/api/register', formData)
+    console.log(formData)
+    navigate('/login')
+  }
 
   const fields = {
-    firstName: 'text',
-    lastName: 'text',
-    email: 'email',
-    password: 'password',
+    firstName: {
+      type: 'text',
+      placeholder: 'your first name'
+    },
+    lastName: {
+      type: 'text',
+      placeholder: 'your last name'
+    },
+    email: {
+      type: 'email',
+      placeholder: 'example@email.com'
+    },
     location: 'text',
-    age: 'number',
-    passwordConfirmation: 'password'
+    age: {
+      type: 'number',
+      placeholder: 'adults only'
+    },
+    password: {
+      type: 'password',
+      placeholder: '***********'
+    },
+    passwordConfirmation: {
+      type: 'password',
+      placeholder: '***********'
+    }
   }
 
   return (
     <div className="form-page">
-      <h1>Register</h1>
-      <Form request={handleRegister} fields={fields} submit="Register" />
+      <h1>Sign Up with your email address</h1>
+      <Form request={handleRegister} fields={fields} submit="Sign Up" />
     </div>
   )
 }
