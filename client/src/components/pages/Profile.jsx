@@ -7,6 +7,7 @@ import PupCard from '../elements/PupCard'
 import UserCard from "../elements/UserCard"
 
 
+
 export default function Profile() {
 
   // * States
@@ -16,13 +17,17 @@ export default function Profile() {
   const [chatError, setChatError] = useState('')
   const [flipChatCard, setFlipChatCard] = useState(false)
   const [currentChat, setCurrentChat] = useState()
+  const [msg, setMsg] = useState({
+    message:'',
+    pup:{}
+  })
 
   // * API Calls
   async function getUserProfile() {
     try {
       const { data } = await axios.get('/api/profile', {
         headers: {
-          Authorization: `Bearer ${getToken()}`
+          Authorization: `Bearer ${getToken()}`,
         }
       })
       setUserProfile(data)
@@ -56,6 +61,20 @@ export default function Profile() {
     // console.log(chatId)
     const matchedChat = userChat.find(chat => chat._id === chatId)
     setCurrentChat(matchedChat)
+  }
+
+  function handleChange(e) {
+    setMsg({ ...msg, message: e.target.value, pup: { messages.pup, image } })
+  }
+
+  async function handleSend(e) {
+    e.preventDefault()
+    const { data } = await axios.post(`/api/chats/${currentChat._id}`, msg, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    })
+    console.log('sent to', currentChat._id)
   }
 
   return (
@@ -108,20 +127,39 @@ export default function Profile() {
               </div>
               <div className='single-chat'>
                 {currentChat ?
-                  currentChat.messages.length ?
-                    currentChat.messages.map(({ message, pup: { _id, image }, createdAt }, idx) => (
-                      <div key={idx}>
-                        <img src={image} alt={_id} />
-                        {message}
-                        <br />
-                        Sent at {createdAt}
-                      </div>
-                    ))
-                    :
-                    <h2>Start chatting!</h2>
+                  <div>
+                    {currentChat.messages.length > 0 ?
+                      currentChat.messages.map(({ message, pup: { _id, image }, createdAt }, idx) => (
+                        <div key={idx}>
+                          <img src={image} alt={_id} />
+                          {message}
+                          <br />
+                          Sent at {createdAt}
+                        </div>
+                      ))
+                      :
+                      <h2>Start chatting!</h2>
+                    }
+                    <form className='send-message' onSubmit={handleSend}>
+                      <label hidden htmlFor='msg'>Message</label>
+                      <input
+                        type='text'
+                        id='msg'
+                        name='msg'
+                        required
+                        minLength='1'
+                        maxLength='100'
+                        placeholder='Send a message...'
+                        value={msg}
+                        onChange={handleChange}
+                      />
+                      <button type='submit'>Send</button>
+                    </form>
+                  </div>
                   :
                   <h2>Cannot load chat</h2>
                 }
+
                 <button onClick={() => setFlipChatCard(!flipChatCard)}>Back to All Chats</button>
               </div>
             </ReactCardFlip>
