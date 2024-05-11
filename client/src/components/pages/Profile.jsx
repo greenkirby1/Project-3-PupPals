@@ -17,17 +17,14 @@ export default function Profile() {
   const [chatError, setChatError] = useState('')
   const [flipChatCard, setFlipChatCard] = useState(false)
   const [currentChat, setCurrentChat] = useState()
-  const [msg, setMsg] = useState({
-    message:'',
-    pup:{}
-  })
+  const [msg, setMsg] = useState('')
 
   // * API Calls
   async function getUserProfile() {
     try {
       const { data } = await axios.get('/api/profile', {
         headers: {
-          Authorization: `Bearer ${getToken()}`,
+          Authorization: `Bearer ${getToken()}`
         }
       })
       setUserProfile(data)
@@ -58,13 +55,14 @@ export default function Profile() {
   }, [])
 
   function findCurrentChat(chatId) {
-    // console.log(chatId)
+    console.log(chatId)
     const matchedChat = userChat.find(chat => chat._id === chatId)
     setCurrentChat(matchedChat)
   }
+  
 
   function handleChange(e) {
-    setMsg({ ...msg, message: e.target.value, pup: { messages.pup, image } })
+    setMsg(e.target.value)
   }
 
   async function handleSend(e) {
@@ -127,11 +125,12 @@ export default function Profile() {
               </div>
               <div className='single-chat'>
                 {currentChat ?
+                  // console.log(currentChat)
                   <div>
                     {currentChat.messages.length > 0 ?
                       currentChat.messages.map(({ message, pup: { _id, image }, createdAt }, idx) => (
                         <div key={idx}>
-                          <img src={image} alt={_id} />
+                          <img src={image} alt={message} />
                           {message}
                           <br />
                           Sent at {createdAt}

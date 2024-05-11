@@ -23,10 +23,8 @@ export default function ChatCard({ userChat }) {
   async function handleSend(msg) {
     const { data } = await axios.post(`/api/chat/${currentChat}`, msg, {
       headers: {
-        Authorization: `Bearer ${getToken()}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify()
+        Authorization: `Bearer ${getToken()}`
+      }
     })
   }
 
