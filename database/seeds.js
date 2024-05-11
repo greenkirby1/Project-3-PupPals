@@ -76,16 +76,17 @@ async function seedData() {
       const messagesWithPupInfo = messages.map(msg => {
         // retreievs random id from the array of 2 pup ids
         const randomId = pupIdArr[Math.floor(Math.random() * pupIdArr.length)]
-        let pupIcon
         // check for match in created pups to find the image for matched pup
-        createdPups.forEach(pup => {
-          if (randomId.equals(pup._id)) {
-            pupIcon = pup.image
-          }
-        })
+        const matchedPup = createdPups.find(pup => randomId === pup._id)
+        let pupIcon
+        if (matchedPup) {
+          pupIcon = matchedPup.image
+        }
         // add random id and matched pup image to single message
+        // console.log({ ...msg, pup: { _id: randomId, image: pupIcon } })
         return { ...msg, pup: { _id: randomId, image: pupIcon } }
       })
+      console.log(messagesWithPupInfo)
       // add messages with info back into chat along with 2 pup ids and 2 user ids
       return { ...chat, messages: messagesWithPupInfo, pups: pupIdArr, users: userIdArr }
     })

@@ -15,6 +15,7 @@ export default function Profile() {
   const [profileError, setProfileError] = useState('')
   const [chatError, setChatError] = useState('')
   const [flipChatCard, setFlipChatCard] = useState(false)
+  const [currentChat, setCurrentChat] = useState()
 
   // * API Calls
   async function getUserProfile() {
@@ -25,7 +26,7 @@ export default function Profile() {
         }
       })
       setUserProfile(data)
-      console.log(data)
+      // console.log(data)
     } catch (error) {
       setProfileError(error.message)
     }
@@ -40,7 +41,7 @@ export default function Profile() {
         }
       })
       setUserChat(data)
-      console.log(data)
+      // console.log(data)
     } catch (error) {
       setChatError(error.message)
     }
@@ -51,7 +52,11 @@ export default function Profile() {
     getUserChat()
   }, [])
 
-  console.log(userChat)
+  function findCurrentChat(chatId) {
+    // console.log(chatId)
+    const matchedChat = userChat.find(chat => chat._id === chatId)
+    setCurrentChat(matchedChat)
+  }
 
   return (
     <div>
@@ -64,6 +69,7 @@ export default function Profile() {
                 userProfile.pupsCreated.map(({ _id, pupName, image, gender, birthday, breed, bio, dislikes, favorites, neutered, owner }) => (
                   <PupCard
                     key={_id}
+                    _id={_id}
                     pupName={pupName}
                     image={image}
                     gender={gender}
@@ -83,17 +89,40 @@ export default function Profile() {
             <ReactCardFlip isFlipped={flipChatCard}>
               <div className='all-chats'>
                 {userChat.length ?
-                  userChat.map(({ _id, createdAt, messages }) => (
-                    <></>
+                  userChat.map(({ _id, messages, users, pups, createdAt, updatedAt }) => (
+                    <button
+                      key={_id}
+                      onClick={() => {
+                        setFlipChatCard(!flipChatCard)
+                        findCurrentChat(_id)
+                      }}
+                    >
+                      {messages[messages.length - 1].message}
+                      <br />
+                      Sent at {updatedAt}
+                    </button>
                   ))
                   :
                   <h2>You do not have any matches yet...</h2>
                 }
-                <button onClick={() => setFlipChatCard(!flipChatCard)}></button>
               </div>
               <div className='single-chat'>
-
-                <button onClick={() => setFlipChatCard(!flipChatCard)}></button>
+                {currentChat ?
+                  currentChat.messages.length ?
+                    currentChat.messages.map(({ message, pup: { _id, image }, createdAt }, idx) => (
+                      <div key={idx}>
+                        <img src={image} alt={_id} />
+                        {message}
+                        <br />
+                        Sent at {createdAt}
+                      </div>
+                    ))
+                    :
+                    <h2>Start chatting!</h2>
+                  :
+                  <h2>Cannot load chat</h2>
+                }
+                <button onClick={() => setFlipChatCard(!flipChatCard)}>Back to All Chats</button>
               </div>
             </ReactCardFlip>
           </div>

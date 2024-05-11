@@ -15,6 +15,8 @@ export default function PupCard({
   owner
 }) {
 
+  console.log(_id)
+
   const [flipPupCard, setFlipPupCard] = useState(false)
 
   return (
