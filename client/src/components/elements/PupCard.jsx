@@ -12,34 +12,35 @@ export default function PupCard({
   dislikes,
   favorites,
   neutered,
-  owner
+  owner,
+  styles
 }) {
 
   const [flipPupCard, setFlipPupCard] = useState(false)
 
   return (
     <ReactCardFlip isFlipped={flipPupCard}>
-      <div className='single-pup'>
+      <div className='pup-front' style={styles.card}>
         <div className='wrapper-one'>
           <div className='top-wrapper'>
             <img src={image} alt={`${_id}-${owner}`} />
-            <div className='top-wrapper'><span>Gender:</span> {gender}</div>
-            <div><span>Neutered/Spayed:</span> {neutered ? 'Yes' : 'No'}</div>
+            <div className='info-box'><span>Gender:</span> {gender}</div>
+            <div className='info-box'><span>Neutered/Spayed:</span> {neutered ? 'Yes' : 'No'}</div>
           </div>
           <div className='top-wrapper'>
-            <div><span>Name:</span> {pupName}</div>
-            <div><span>Birthday:</span> {birthday}</div>
-            <div><span>Bio:</span> {bio}</div>
+            <div className='info-box'><span>Name:</span> {pupName}</div>
+            <div className='info-box'><span>Birthday:</span> {birthday}</div>
+            <div className='info-box'><span>Bio:</span> {bio}</div>
           </div>
         </div>
-        <div><span>Breed:</span> {breed}</div>
-        <div><span>Favourites:</span> {favorites.join(', ').toLowerCase()}</div>
-        <div><span>Dislikes:</span> {dislikes.join(', ').toLowerCase()}</div>
-        <button onClick={() => setFlipPupCard(!flipPupCard)}>Edit Profile</button>
+        <div className='info-box'><span>Breed:</span> {breed}</div>
+        <div className='info-box'><span>Favourites:</span> {favorites.join(', ').toLowerCase()}</div>
+        <div className='info-box'><span>Dislikes:</span> {dislikes.join(', ').toLowerCase()}</div>
+        <button style={styles.flipBtn} onClick={() => setFlipPupCard(!flipPupCard)}>Edit Profile</button>
       </div>
-      <div className='update-pup'>
+      <div className='pup-back' style={styles.card}>
         <h2>pup update form here</h2>
-        <button onClick={() => setFlipPupCard(!flipPupCard)}>Save Profile</button>
+        <button style={styles.flipBtn} onClick={() => setFlipPupCard(!flipPupCard)}>Save Profile</button>
       </div>
     </ReactCardFlip>
   )

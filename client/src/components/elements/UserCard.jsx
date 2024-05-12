@@ -1,13 +1,13 @@
 import ReactCardFlip from 'react-card-flip'
 import { useState } from 'react'
 
-export default function UserCard({ userProfile }) {
+export default function UserCard({ userProfile, styles }) {
 
   const [flipUserCard, setFlipUserCard] = useState(false)
 
   return (
     <ReactCardFlip isFlipped={flipUserCard}>
-      <div className='user-profile' style={{ height: '600px', width: '200px' }}>
+      <div className='user-front' style={styles.card}>
         <dl>
           <dt>Full Name:</dt>
           <dd>{userProfile.firstName} {userProfile.lastName}</dd>
@@ -20,7 +20,7 @@ export default function UserCard({ userProfile }) {
         </dl>
         <button onClick={() => setFlipUserCard(!flipUserCard)}>Edit Profile</button>
       </div>
-      <div className='update-profile' style={{ height: '600px', width: '200px' }}>
+      <div className='user-back' style={styles.card}>
         <h2>user update form here</h2>
         <button onClick={() => setFlipUserCard(!flipUserCard)}>Save Profile</button>
       </div>

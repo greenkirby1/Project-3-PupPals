@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from "react"
 import axios from 'axios'
 import { getToken } from "../../lib/auth"
-import ReactCardFlip from 'react-card-flip'
 import Form from "../subcomponents/Form"
 import PupCard from '../elements/PupCard'
 import UserCard from "../elements/UserCard"
+import ChatCard from "../elements/ChatCard"
 
 
 
@@ -15,9 +15,33 @@ export default function Profile() {
   const [userChat, setUserChat] = useState()
   const [profileError, setProfileError] = useState('')
   const [chatError, setChatError] = useState('')
-  const [flipChatCard, setFlipChatCard] = useState(false)
-  const [currentChat, setCurrentChat] = useState()
-  const [msg, setMsg] = useState('')
+
+  // * Inline Styles
+  const styles = {
+    card: {
+      margin: '0.8rem',
+      maxHeight: '46vmin',
+      minWidth: '450px',
+      padding: '1rem',
+      borderRadius: '10px',
+      backgroundColor: 'white'
+    },
+    flexColumn: {
+      display: 'flex',
+      flexDirection: 'column'
+    },
+    flexNormal: {
+      display: 'flex'
+    },
+    flipBtn: {
+      backgroundColor: '#998976',
+      border: '1px solid #998976',
+      borderRadius: '10px',
+      color: 'white',
+      fontWeight: 'bold',
+      padding: '0.3rem 1rem'
+    }
+  }
 
   // * API Calls
   async function getUserProfile() {
@@ -54,33 +78,15 @@ export default function Profile() {
     getUserChat()
   }, [])
 
-  function findCurrentChat(chatId) {
-    console.log(chatId)
-    const matchedChat = userChat.find(chat => chat._id === chatId)
-    setCurrentChat(matchedChat)
-  }
-  
-
-  function handleChange(e) {
-    setMsg(e.target.value)
-  }
-
-  async function handleSend(e) {
-    e.preventDefault()
-    const { data } = await axios.post(`/api/chats/${currentChat._id}`, msg, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`
-      }
-    })
-    console.log('sent to', currentChat._id)
-  }
-
   return (
     <div>
       {userProfile && userChat ?
-        <div className='container' style={{ height: '100vh', width: '100vh' }}>
+        <div className='container'>
           <div className='card-wrapper'>
-            <UserCard userProfile={userProfile} />
+            <UserCard 
+              userProfile={userProfile} 
+              styles={styles}
+            />
             <div className='pup-card-wrapper'>
               {userProfile.pupsCreated.length ?
                 userProfile.pupsCreated.map(({ _id, pupName, image, gender, birthday, breed, bio, dislikes, favorites, neutered, owner }) => (
@@ -97,71 +103,17 @@ export default function Profile() {
                     favorites={favorites}
                     neutered={neutered}
                     owner={owner}
+                    styles={styles}
                   />
                 ))
                 :
                 <h2>add pups...</h2>
               }
             </div>
-            <ReactCardFlip isFlipped={flipChatCard}>
-              <div className='all-chats'>
-                {userChat.length ?
-                  userChat.map(({ _id, messages, users, pups, createdAt, updatedAt }) => (
-                    <button
-                      key={_id}
-                      onClick={() => {
-                        setFlipChatCard(!flipChatCard)
-                        findCurrentChat(_id)
-                      }}
-                    >
-                      {messages[messages.length - 1].message}
-                      <br />
-                      Sent at {updatedAt}
-                    </button>
-                  ))
-                  :
-                  <h2>You do not have any matches yet...</h2>
-                }
-              </div>
-              <div className='single-chat'>
-                {currentChat ?
-                  // console.log(currentChat)
-                  <div>
-                    {currentChat.messages.length > 0 ?
-                      currentChat.messages.map(({ message, pup: { _id, image }, createdAt }, idx) => (
-                        <div key={idx}>
-                          <img src={image} alt={message} />
-                          {message}
-                          <br />
-                          Sent at {createdAt}
-                        </div>
-                      ))
-                      :
-                      <h2>Start chatting!</h2>
-                    }
-                    <form className='send-message' onSubmit={handleSend}>
-                      <label hidden htmlFor='msg'>Message</label>
-                      <input
-                        type='text'
-                        id='msg'
-                        name='msg'
-                        required
-                        minLength='1'
-                        maxLength='100'
-                        placeholder='Send a message...'
-                        value={msg}
-                        onChange={handleChange}
-                      />
-                      <button type='submit'>Send</button>
-                    </form>
-                  </div>
-                  :
-                  <h2>Cannot load chat</h2>
-                }
-
-                <button onClick={() => setFlipChatCard(!flipChatCard)}>Back to All Chats</button>
-              </div>
-            </ReactCardFlip>
+            <ChatCard 
+              userChat={userChat}
+              styles={styles}
+            />
           </div>
         </div>
         :
