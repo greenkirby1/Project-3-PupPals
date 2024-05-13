@@ -10,7 +10,8 @@ const pupSchema = new mongoose.Schema({
   neutered: { type: Boolean, default: false },
   favorites: [String],
   dislikes: [String],
-  owner: { type: mongoose.ObjectId, ref: 'User', required: true }
+  owner: { type: mongoose.ObjectId, ref: 'User', required: true }, 
+  bonesThrownBy: [ String ]
 })
 
 export default mongoose.model('Pup', pupSchema)
