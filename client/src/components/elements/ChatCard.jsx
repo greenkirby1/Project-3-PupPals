@@ -4,7 +4,7 @@ import axios from 'axios'
 import SingleChatBtn from './SingleChatBtn'
 import { getToken } from '../../lib/auth'
 
-export default function ChatCard({ userChat, userProfile, styles }) {
+export default function ChatCard({ userChat, userProfile, styles, getUserChat }) {
 
   const [flipChatCard, setFlipChatCard] = useState(false)
   const [currentChat, setCurrentChat] = useState()
@@ -22,8 +22,12 @@ export default function ChatCard({ userChat, userProfile, styles }) {
 
   function findCurrentPup(pups) {
     const matchedPup = userProfile.pupsCreated.find(pup => {
-      const foundPup = pups.find(pupId => pupId === pup._id)
-      setCurrentPup(foundPup)
+      console.log(pup)
+      pups.forEach(pupId => {
+        if (pupId === pup._id) {
+          setCurrentPup(pupId)
+        }
+      })
     })
     // console.log(matchedPup)
   }
@@ -41,6 +45,7 @@ export default function ChatCard({ userChat, userProfile, styles }) {
       }
     })
     setMsg({ ...msg, message: '', pup: '' })
+    getUserChat()
   }
 
   return (
@@ -72,10 +77,10 @@ export default function ChatCard({ userChat, userProfile, styles }) {
               currentChat.messages.map(({ message, pup, createdAt }, idx) => {
                 return (
                   <div key={idx}>
-                    <img src={pup.image} alt={message} />
+                    <img src={pup.image} alt={pup.image} />
                     {message}
                     <br />
-                    Sent at {createdAt}
+                    Sent at {new Date(createdAt).toDateString()}
                   </div>
                 )
 
