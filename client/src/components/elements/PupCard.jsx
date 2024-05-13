@@ -23,19 +23,19 @@ export default function PupCard({
       <div className='pup-front' style={styles.card}>
         <div className='wrapper-one'>
           <div className='top-wrapper'>
-            <img src={image} alt={`${_id}-${owner}`} />
-            <div className='info-box'><span>Gender:</span> {gender}</div>
-            <div className='info-box'><span>Neutered/Spayed:</span> {neutered ? 'Yes' : 'No'}</div>
+            <img className='pup-image' src={image} alt={`${_id}-${owner}`} />
+            <div className='info-box'><span>Gender:</span><br />{gender}</div>
+            <div className='info-box'><span>Neutered/Spayed:</span><br />{neutered ? 'Yes' : 'No'}</div>
           </div>
           <div className='top-wrapper'>
-            <div className='info-box'><span>Name:</span> {pupName}</div>
-            <div className='info-box'><span>Birthday:</span> {birthday}</div>
-            <div className='info-box'><span>Bio:</span> {bio}</div>
+            <div className='info-box'><span>Name:</span><br />{pupName}</div>
+            <div className='info-box'><span>Birthday:</span><br />{birthday}</div>
+            <div className='info-box'><span>Bio:</span><br />{bio}</div>
           </div>
         </div>
-        <div className='info-box'><span>Breed:</span> {breed}</div>
-        <div className='info-box'><span>Favourites:</span> {favorites.join(', ').toLowerCase()}</div>
-        <div className='info-box'><span>Dislikes:</span> {dislikes.join(', ').toLowerCase()}</div>
+        <div className='info-box'><span>Breed:</span><br />{breed}</div>
+        <div className='info-box'><span>Favourites:</span><br />{favorites.join(', ').toLowerCase()}</div>
+        <div className='info-box'><span>Dislikes:</span><br />{dislikes.join(', ').toLowerCase()}</div>
         <button style={styles.flipBtn} onClick={() => setFlipPupCard(!flipPupCard)}>Edit Profile</button>
       </div>
       <div className='pup-back' style={styles.card}>

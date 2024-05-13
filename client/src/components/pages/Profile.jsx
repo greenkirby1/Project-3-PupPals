@@ -20,11 +20,14 @@ export default function Profile() {
   const styles = {
     card: {
       margin: '0.8rem',
-      maxHeight: '46vmin',
-      minWidth: '450px',
       padding: '1rem',
       borderRadius: '10px',
-      backgroundColor: 'white'
+      backgroundColor: 'white',
+      maxWidth: '448px',
+    },
+    pupSize: {
+      maxHeight: '46vmin',
+      Width: '450px',
     },
     flexColumn: {
       display: 'flex',
@@ -39,7 +42,8 @@ export default function Profile() {
       borderRadius: '10px',
       color: 'white',
       fontWeight: 'bold',
-      padding: '0.3rem 1rem'
+      padding: '0.3rem 1rem',
+      margin: '0.5rem'
     }
   }
 
@@ -96,7 +100,8 @@ export default function Profile() {
   return (
     <div>
       {userProfile && userChat ?
-        <div className='container'>
+        <div className='page-container'>
+          <h1>Welcome to your page, {userProfile.firstName}!</h1>
           <div className='card-wrapper'>
             <UserCard
               userProfile={userProfile}

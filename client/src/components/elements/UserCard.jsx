@@ -18,11 +18,11 @@ export default function UserCard({ userProfile, styles }) {
           <dt>Location:</dt>
           <dd>{userProfile.location}</dd>
         </dl>
-        <button onClick={() => setFlipUserCard(!flipUserCard)}>Edit Profile</button>
+        <button style={styles.flipBtn} onClick={() => setFlipUserCard(!flipUserCard)}>Edit Profile</button>
       </div>
       <div className='user-back' style={styles.card}>
         <h2>user update form here</h2>
-        <button onClick={() => setFlipUserCard(!flipUserCard)}>Save Profile</button>
+        <button style={styles.flipBtn} onClick={() => setFlipUserCard(!flipUserCard)}>Save Profile</button>
       </div>
     </ReactCardFlip>
   )
