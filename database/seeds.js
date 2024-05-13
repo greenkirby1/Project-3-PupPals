@@ -84,9 +84,10 @@ async function seedData() {
         }
         // add random id and matched pup image to single message
         // console.log({ ...msg, pup: { _id: randomId, image: pupIcon } })
-        return { ...msg, pup: { _id: randomId, image: pupIcon } }
+        return { ...msg, pup: randomId }
       })
-      console.log(messagesWithPupInfo)
+      // console.log(messagesWithPupInfo)
+      
       // add messages with info back into chat along with 2 pup ids and 2 user ids
       return { ...chat, messages: messagesWithPupInfo, pups: pupIdArr, users: userIdArr }
     })

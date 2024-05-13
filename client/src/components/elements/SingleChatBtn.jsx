@@ -1,10 +1,12 @@
 
 export default function SingleChat({ 
   findCurrentChat, 
+  findCurrentPup, 
   flipChatCard, 
   setFlipChatCard, 
   _id, 
   messages, 
+  pups,
   updatedAt 
 }) {
 
@@ -13,6 +15,7 @@ export default function SingleChat({
       onClick={() => {
         setFlipChatCard(!flipChatCard)
         findCurrentChat(_id)
+        findCurrentPup(pups)
       }}
     >
       {messages[messages.length - 1].message}

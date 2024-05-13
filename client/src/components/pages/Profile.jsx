@@ -67,6 +67,7 @@ export default function Profile() {
         }
       })
       setUserChat(data)
+      console.log(data)
       // console.log(data)
     } catch (error) {
       setChatError(error.message)
@@ -112,6 +113,7 @@ export default function Profile() {
             </div>
             <ChatCard 
               userChat={userChat}
+              userProfile={userProfile}
               styles={styles}
             />
           </div>

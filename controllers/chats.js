@@ -9,7 +9,7 @@ import { sendError } from '../lib/common.js'
 export const chatIndex = async (req, res) => {
   try {
     console.log('showing all chats for this user')
-    const allChats = await Chat.find({ users: req.currentUser._id })
+    const allChats = await Chat.find({ users: req.currentUser._id }).populate('messages.pup', 'image')
     if (!allChats) {
       return res.status(404).json({ message: 'Start chatting with your matches!' })
     }
@@ -19,24 +19,24 @@ export const chatIndex = async (req, res) => {
   }
 }
 
-// * Single Chat view (secureRoute)
-// For: display single chat
-// Method: GET
-// Path: /api/chats/:chatId
-export const chatSingle = async (req, res) => {
-  try {
-    console.log('showing single chat for user')
-    const { chatId } = req.params
-    console.log(chatId)
-    const foundChat = await Chat.findById(chatId).populate('messages.pup', 'image')
-    if (!foundChat) {
-      return res.status(404).json({ message: 'Sorry! Chat not found.' })
-    }
-    return res.json(foundChat)
-  } catch (error) {
-    sendError(error, res)
-  }
-}
+// // * Single Chat view (secureRoute)
+// // For: display single chat
+// // Method: GET
+// // Path: /api/chats/:chatId
+// export const chatSingle = async (req, res) => {
+//   try {
+//     console.log('showing single chat for user')
+//     const { chatId } = req.params
+//     console.log(chatId)
+//     const foundChat = await Chat.findById(chatId).populate('messages.pup', 'image')
+//     if (!foundChat) {
+//       return res.status(404).json({ message: 'Sorry! Chat not found.' })
+//     }
+//     return res.json(foundChat)
+//   } catch (error) {
+//     sendError(error, res)
+//   }
+// }
 
 // * Chat input (secureRoute)
 // For: Sending a message

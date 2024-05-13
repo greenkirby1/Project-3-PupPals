@@ -4,11 +4,15 @@ import axios from 'axios'
 import SingleChatBtn from './SingleChatBtn'
 import { getToken } from '../../lib/auth'
 
-export default function ChatCard({ userChat, styles }) {
+export default function ChatCard({ userChat, userProfile, styles }) {
 
   const [flipChatCard, setFlipChatCard] = useState(false)
   const [currentChat, setCurrentChat] = useState()
-  const [msg, setMsg] = useState('')
+  const [currentPup, setCurrentPup] = useState('')
+  const [msg, setMsg] = useState({
+    message: '',
+    pup: ''
+  })
 
   function findCurrentChat(chatId) {
     // console.log(chatId)
@@ -16,8 +20,17 @@ export default function ChatCard({ userChat, styles }) {
     setCurrentChat(matchedChat)
   }
 
+  function findCurrentPup(pups) {
+    const matchedPup = userProfile.pupsCreated.find(pup => {
+      const foundPup = pups.find(pupId => pupId === pup._id)
+      setCurrentPup(foundPup)
+    })
+    // console.log(matchedPup)
+  }
+
+
   function handleChange(e) {
-    setMsg(e.target.value)
+    setMsg({ ...msg, message: e.target.value, pup: currentPup })
   }
 
   async function handleSend(e) {
@@ -27,7 +40,7 @@ export default function ChatCard({ userChat, styles }) {
         Authorization: `Bearer ${getToken()}`
       }
     })
-    console.log('sent to', currentChat._id)
+    setMsg({ ...msg, message: '', pup: '' })
   }
 
   return (
@@ -35,13 +48,15 @@ export default function ChatCard({ userChat, styles }) {
       <div className='chat-front' style={styles.card}>
         {userChat.length ?
           userChat.map(({ _id, messages, users, pups, createdAt, updatedAt }) => (
-            <SingleChatBtn 
+            <SingleChatBtn
               key={_id}
               findCurrentChat={findCurrentChat}
+              findCurrentPup={findCurrentPup}
               flipChatCard={flipChatCard}
               setFlipChatCard={setFlipChatCard}
               _id={_id}
               messages={messages}
+              pups={pups}
               updatedAt={updatedAt}
             />
           ))
@@ -54,14 +69,17 @@ export default function ChatCard({ userChat, styles }) {
           // console.log(currentChat)
           <div>
             {currentChat.messages.length > 0 ?
-              currentChat.messages.map(({ message, pup: { _id, image }, createdAt }, idx) => (
-                <div key={idx}>
-                  <img src={image} alt={message} />
-                  {message}
-                  <br />
-                  Sent at {createdAt}
-                </div>
-              ))
+              currentChat.messages.map(({ message, pup, createdAt }, idx) => {
+                return (
+                  <div key={idx}>
+                    <img src={pup.image} alt={message} />
+                    {message}
+                    <br />
+                    Sent at {createdAt}
+                  </div>
+                )
+
+              })
               :
               <h2>Start chatting!</h2>
             }
@@ -75,7 +93,7 @@ export default function ChatCard({ userChat, styles }) {
                 minLength='1'
                 maxLength='100'
                 placeholder='Send a message...'
-                value={msg}
+                value={msg.message}
                 onChange={handleChange}
               />
               <button type='submit'>Send</button>
