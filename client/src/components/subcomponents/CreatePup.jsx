@@ -45,7 +45,6 @@ export default function CreatePup(){
   
 
   async function handleCreate(formData){
-    console.log('handle create:', formData)
     console.log('Type of name:', typeof formData.pupName)
     console.log('Type of bio:', typeof formData.bio)
     console.log('Type of breed:', typeof formData.breed)

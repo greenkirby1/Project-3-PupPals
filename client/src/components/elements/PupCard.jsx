@@ -1,5 +1,6 @@
 import ReactCardFlip from 'react-card-flip'
 import { useState } from 'react'
+import UpdatePup from '../subcomponents/UpdatePup.jsx'
 
 export default function PupCard({
   _id,
@@ -39,7 +40,7 @@ export default function PupCard({
         <button style={styles.flipBtn} onClick={() => setFlipPupCard(!flipPupCard)}>Edit Profile</button>
       </div>
       <div className='pup-back' style={styles.card}>
-        <h2>pup update form here</h2>
+        <UpdatePup _id={_id}/>
         <button style={styles.flipBtn} onClick={() => setFlipPupCard(!flipPupCard)}>Save Profile</button>
       </div>
     </ReactCardFlip>

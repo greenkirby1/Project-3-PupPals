@@ -1,5 +1,6 @@
 import ReactCardFlip from 'react-card-flip'
 import { useState } from 'react'
+import UpdateProfile from '../subcomponents/UpdateProfile.jsx'
 
 export default function UserCard({ userProfile, styles }) {
 
@@ -21,7 +22,7 @@ export default function UserCard({ userProfile, styles }) {
         <button onClick={() => setFlipUserCard(!flipUserCard)}>Edit Profile</button>
       </div>
       <div className='user-back' style={styles.card}>
-        <h2>user update form here</h2>
+        <UpdateProfile userProfile={userProfile} />
         <button onClick={() => setFlipUserCard(!flipUserCard)}>Save Profile</button>
       </div>
     </ReactCardFlip>

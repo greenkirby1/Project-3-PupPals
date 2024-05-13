@@ -22,8 +22,8 @@ export default function FormComponent({ submit, fields, request, onLoad }) {
     try {
       await request(formData)
     } catch (error) {
-      console.log(error)
-      console.log(error.response.data)
+      // console.log(error)
+      // console.log(error.response.data)
       setError(error.response.data)
     }
   }
@@ -55,7 +55,8 @@ export default function FormComponent({ submit, fields, request, onLoad }) {
   useEffect(() => {
     async function fillFields() {
       try {
-        const { data } = await onLoad()
+        const data = await onLoad()
+        console.log('this is fillFields data:', data)
         setFormData(data)
       } catch (error) {
         console.log(error)
@@ -63,13 +64,14 @@ export default function FormComponent({ submit, fields, request, onLoad }) {
       }
     }
     if (onLoad) {
+      console.log('hit onLoad')
       fillFields()
     }
   }, [onLoad])
 
   return (
     <form onSubmit={handleSubmit}>
-      <Container class="w-50 p-5 d-flex align-items-center" style={{ backgroundColor: 'white' }}>
+      <Container className="w-50 p-5 d-flex align-items-center" style={{ backgroundColor: 'white' }}>
         {Object.entries(fields).map(([fieldName, fieldData]) => {
           const fieldNameCaps = fieldName
             .replace(/([A-Z[])/g, ' $1')

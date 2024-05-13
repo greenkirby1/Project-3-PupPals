@@ -1,16 +1,9 @@
 import { useState, useEffect, useCallback } from "react"
 import axios from 'axios'
 import { getToken } from "../../lib/auth"
-import Form from "../subcomponents/Form"
 import PupCard from '../elements/PupCard'
 import UserCard from "../elements/UserCard"
 import ChatCard from "../elements/ChatCard"
-
-
-
-import CreatePup from '../subcomponents/CreatePup.jsx'
-import UpdatePup from '../subcomponents/UpdatePup.jsx'
-import UpdateProfile from '../subcomponents/UpdateProfile.jsx'
 
 export default function Profile() {
 
@@ -127,17 +120,5 @@ export default function Profile() {
           <h2>Loading...</h2>
       }
     </div>
-  )
-  // API Calls
-  // api/profile
-  // api/chats 123
-  // api/chats/1 1
-
-  return (
-    <>
-      <CreatePup />
-      <UpdatePup />
-      <UpdateProfile />
-    </>
   )
 }

@@ -1,9 +1,9 @@
+
 import FormComponent from './FormComponent.jsx'
 import { getToken } from '../../lib/auth'
-import { useParams } from 'react-router-dom'
 import axios from 'axios'
 
-export default function UpdateProfile(){
+export default function UpdateProfile({ userProfile }) {
 
   const fields = {
     firstName: {
@@ -20,24 +20,29 @@ export default function UpdateProfile(){
     },
     location: 'text',
   }
-    
 
-  const { userId } = useParams()
 
   async function handleProfileUpdate(formData) {
-    await axios.put(`/api/profile/${userId}`, formData, {
+    await axios.put(`/api/profile`, formData, {
       headers: {
         Authorization: `Bearer ${getToken()}`
       }
     })
-      console.log(formData)
-    }
+  }
+
+  function loadFields(){
+    console.log('this is in loadFields:', userProfile)
+    // need to get the data from profile
+    return userProfile
+  }
+
+  
 
 
   return (
     <div className="form-page">
-    <h1>Update your Profile</h1>
-    <FormComponent request={handleProfileUpdate} fields={fields} submit="Update Profile" />
-  </div>
+      <h1>Update your Profile</h1>
+      <FormComponent request={handleProfileUpdate} fields={fields} submit="Update Profile" onLoad={loadFields} />
+    </div>
   )
 }
