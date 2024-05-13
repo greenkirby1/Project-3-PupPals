@@ -42,7 +42,27 @@ const PupCard = ({ pup, onMatch, onNext }) => {
         <div className="card back">
           <div className="card-body">
             <h3 className="card-title">{pup.pupName}</h3>
-            <p className="card-text">{pup.bio}</p>
+            <p><strong>Birthday:</strong> {pup.birthday}</p>
+            <p><strong>Breed:</strong> {pup.breed}</p>
+            <p><strong>Gender:</strong> {pup.gender}</p>
+            <p><strong>Neutered:</strong> {pup.neutered ? 'Yes' : 'No'}</p>
+            <p><strong>Bio:</strong> {pup.bio}</p>
+            <div>
+              <h4>Favorites:</h4>
+              <ul>
+                {pup.favorites.map((favorite, index) => (
+                  <li key={index}>{favorite}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4>Dislikes:</h4>
+              <ul>
+                {pup.dislikes.map((dislike, index) => (
+                  <li key={index}>{dislike}</li>
+                ))}
+              </ul>
+            </div>
             <button className="btn btn-info" onClick={handleInfoClick}>
               📖
             </button>
@@ -52,14 +72,12 @@ const PupCard = ({ pup, onMatch, onNext }) => {
     </div>
   );
 };
-
-
-
 export default function BrowsePups() {
   const [currentPupIndex, setCurrentPupIndex] = useState(0);
   const [matches, setMatches] = useState([]);
   const [pups, setPups] = useState([]);
   const [error, setError] = useState('');
+  const [matchHappened, setMatchHappened] = useState(false);
 
   useEffect(() => {
     async function fetchPups() {
@@ -79,32 +97,48 @@ export default function BrowsePups() {
     fetchPups();
   }, []);
 
-  const handleMatch = (pup) => {
-    setMatches([...matches, pup]);
-    setPups((prevPups) => prevPups.filter((p) => p._id !== pup._id));
-    setCurrentPupIndex(0);
+  const handleBoneThrown = async (pup) => {
+    try {
+      const { data } = await axios.put(`/api/pups/${pup._id}`, {
+        bonesThrownBy: [...pup.bonesThrownBy, getToken().sub]
+      }, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`
+        }
+      });
+  
+      setPups((prevPups) => {
+        const updatedPups = prevPups.filter((p) => p._id !== data._id);
+        setCurrentPupIndex((prevIndex) => (prevIndex >= updatedPups.length ? 0 : prevIndex));
+        return updatedPups;
+      });
+  
+      if (data.bonesThrownBy.includes(getToken().sub) && pup.bonesThrownBy.includes(getToken().sub)) {
+        setMatches((prevMatches) => [...prevMatches, data]);
+        setMatchHappened(true);
+      }
+    } catch (error) {
+      console.log('Error:', error);
+      setError(error.message);
+    }
   };
-
 
   const handleNext = () => {
     setCurrentPupIndex((prevIndex) => (prevIndex + 1) % pups.length);
   };
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (pups.length === 0) {
-    return <div>No more pups to display</div>;
-  }
-
   return (
     <div>
+      {matchHappened && (
+        <div className="banner">
+          <h2>YOU HAVE A MATCH!</h2>
+        </div>
+      )}
       {pups.length > 0 ? (
         <>
           <PupCard
             pup={pups[currentPupIndex]}
-            onMatch={handleMatch}
+            onMatch={handleBoneThrown}
             onNext={handleNext}
           />
           <h2>Matches:</h2>
