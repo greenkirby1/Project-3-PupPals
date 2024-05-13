@@ -85,12 +85,24 @@ export const updateProfile = async (req, res) => {
   }
 }
 
-// Getting all Users for testing purposes - DELETE ONCE USED
-export const getUsers = async (req, res) => {
+// * Throwing Bones in Browse Pups Page (Liking Pup)
+export const throwBones = async (req, res) => {
   try {
-    const user = await User.find()
-    res.json(user)
+    const targetProfile = await User.findById() // <- put in user id
+    Object.assign(BoneThrownAt, req.body)
+    await targetProfile.save()
+    return res.json(targetProfile)
   } catch (error) {
     sendError(error, res)
   }
 }
+
+// Getting all Users for testing purposes - DELETE ONCE USED
+// export const getUsers = async (req, res) => {
+//   try {
+//     const user = await User.find()
+//     res.json(user)
+//   } catch (error) {
+//     sendError(error, res)
+//   }
+// }

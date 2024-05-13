@@ -37,6 +37,16 @@ export const chatIndex = async (req, res) => {
 //     sendError(error, res)
 //   }
 // }
+// * Create Chat Match
+export const createMatch = async (req, res) => {
+  try {
+    console.log('❤️ creating chat with match')
+    const newChat = await Chat.create(req.body)
+    return res.status(201).json(newChat)
+  } catch (error) {
+    sendError(error, res)
+  }
+}
 
 // * Chat input (secureRoute)
 // For: Sending a message

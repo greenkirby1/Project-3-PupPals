@@ -20,7 +20,7 @@ export default function SingleChat({
     >
       {messages[messages.length - 1].message}
       <br />
-      Sent at {updatedAt}
+      Sent at {new Date(updatedAt).toDateString()}
     </button>
   )
 }
