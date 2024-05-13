@@ -1,4 +1,4 @@
-import Form from '../subcomponents/Form.jsx'
+import FormComponent from '../subcomponents/FormComponent.jsx'
 import axios from 'axios'
 import { setToken } from '../../lib/auth.js'
 import { useNavigate } from 'react-router-dom'
@@ -20,8 +20,8 @@ export default function Login() {
 
   return (
     <div className="form-page">
-      <h1>Login with your email address</h1>
-      <Form request={handleLogin} fields={fields} submit="Login" />
+      <p style={{ textAlign: 'center', fontSize: '20px' }}><span style={{ fontWeight: '500', fontSize: '25px' }}>Login</span> with your email address</p>
+      <FormComponent request={handleLogin} fields={fields} submit="Login" />
     </div>
   )
 }

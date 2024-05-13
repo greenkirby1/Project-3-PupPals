@@ -1,4 +1,4 @@
-import Form from './Form.jsx'
+import FormComponent from './FormComponent.jsx'
 import { getToken } from '../../lib/auth'
 import axios from 'axios'
 
@@ -64,8 +64,8 @@ export default function CreatePup(){
 
   return (
     <div className="form-component">
-    <h1>Create Your Pup</h1>
-    <Form request={handleCreate} fields={fields} submit="Upload Pup"/>
+    <h1>Add your pup</h1>
+    <FormComponent request={handleCreate} fields={fields} submit="Upload Pup"/>
   </div>
   )
 

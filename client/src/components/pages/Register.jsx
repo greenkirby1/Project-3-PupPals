@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import Form from '../subcomponents/Form.jsx'
+import FormComponent from '../subcomponents/FormComponent.jsx'
 
 export default function Register() {
   
@@ -42,8 +42,8 @@ export default function Register() {
 
   return (
     <div className="form-page">
-      <h1>Sign Up with your email address</h1>
-      <Form request={handleRegister} fields={fields} submit="Sign Up" />
+      <p style={{ textAlign: 'center', fontSize: '20px' }}><span style={{ fontWeight: '500', fontSize: '25px' }}>Sign Up</span> with your email address</p>
+      <FormComponent request={handleRegister} fields={fields} submit="Sign Up" />
     </div>
   )
 }

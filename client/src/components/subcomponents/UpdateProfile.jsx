@@ -1,4 +1,4 @@
-import Form from './Form.jsx'
+import FormComponent from './FormComponent.jsx'
 import { getToken } from '../../lib/auth'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
@@ -23,6 +23,7 @@ export default function UpdateProfile(){
     
 
   const { userId } = useParams()
+
   async function handleProfileUpdate(formData) {
     await axios.put(`/api/profile/${userId}`, formData, {
       headers: {
@@ -36,7 +37,7 @@ export default function UpdateProfile(){
   return (
     <div className="form-page">
     <h1>Update your Profile</h1>
-    <Form request={handleProfileUpdate} fields={fields} submit="Update Profile" />
+    <FormComponent request={handleProfileUpdate} fields={fields} submit="Update Profile" />
   </div>
   )
 }

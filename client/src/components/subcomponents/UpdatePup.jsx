@@ -1,4 +1,4 @@
-import Form from './Form.jsx'
+import FormComponent from './FormComponent.jsx'
 import { getToken } from '../../lib/auth'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
@@ -57,7 +57,7 @@ export default function UpdatePup(){
   return (
     <div className="form-page">
     <h1>Update your pup</h1>
-    <Form request={handleUpdate} fields={fields} submit="Update Pup" />
+    <FormComponent request={handleUpdate} fields={fields} submit="Update Pup" />
   </div>
   )
 }
