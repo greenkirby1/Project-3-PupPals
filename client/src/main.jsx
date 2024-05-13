@@ -10,8 +10,8 @@ import Profile from './components/pages/Profile.jsx'
 import BrowsePups from './components/pages/BrowsePups.jsx'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './styles/main.scss'
 import 'bootstrap/dist/js/bootstrap.bundle.js'
+import './styles/main.scss'
 
 // Router
 const router = createBrowserRouter([
