@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import axios from 'axios'
 import { getToken } from "../../lib/auth"
 import PupCard from '../elements/PupCard'
