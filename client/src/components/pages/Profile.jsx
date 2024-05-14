@@ -104,6 +104,7 @@ export default function Profile() {
           <div className='card-wrapper'>
             <UserCard
               userProfile={userProfile}
+              getUserProfile={getUserProfile}
               styles={styles}
             />
             <div className='pup-card-wrapper'>

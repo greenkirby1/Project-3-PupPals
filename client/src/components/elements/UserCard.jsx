@@ -2,7 +2,7 @@ import ReactCardFlip from 'react-card-flip'
 import { useState } from 'react'
 import UpdateProfile from '../subcomponents/UpdateProfile.jsx'
 
-export default function UserCard({ userProfile, styles }) {
+export default function UserCard({ getUserProfile, userProfile, styles }) {
 
   const [flipUserCard, setFlipUserCard] = useState(false)
 
@@ -10,6 +10,7 @@ export default function UserCard({ userProfile, styles }) {
     console.log('hit handle save')
     console.log('Form data:', formData)
     setFlipUserCard(!flipUserCard)
+    getUserProfile()
   }
 
   return (
