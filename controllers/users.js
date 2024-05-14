@@ -93,18 +93,13 @@ export const throwBones = async (req, res) => {
     const userId = req.params.userId;
     const targetProfile = await User.findById(userId)
     const matchedId = targetProfile.bonesThrownBy.find(id => {
-     return id.equals(req.currentUser._id)
+      return id.equals(req.currentUser._id)
     })
     if (!matchedId) {
       targetProfile.bonesThrownBy.push(req.currentUser._id)
-
-    // if (!targetProfile.bonesThrownBy.find(req.currentUser._id)) {
-    //   targetProfile.bonesThrownBy.push(req.currentUser._id);
-    //   await targetProfile.save();
     }
-     await targetProfile.save();
+    await targetProfile.save();
     return res.json(targetProfile)
-    // return res.json({ targetProfile, currentUser: req.currentUser })
   } catch (error) {
     sendError(error, res)
   }

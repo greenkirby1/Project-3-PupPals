@@ -110,7 +110,11 @@ export default function BrowsePups() {
           Authorization: `Bearer ${getToken()}`
         }
       });
+         // Remove the current pup from the list
+    setPups(prevPups => prevPups.filter(p => p._id !== pup._id));
 
+    // Move to the next pup
+    setCurrentPupIndex(prevIndex => prevIndex % (pups.length - 1));
     } catch (error) {
       console.log('Error:', error);
       setError(error.message);
