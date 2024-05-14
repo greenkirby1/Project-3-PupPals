@@ -63,6 +63,7 @@ export const getProfile = async (req, res) => {
     const profile = await User.findById(req.currentUser._id).populate(
       'pupsCreated'
     )
+    console.log(profile)
     return res.json(profile)
   } catch (error) {
     sendError(error, res)
@@ -88,16 +89,27 @@ export const updateProfile = async (req, res) => {
 // * Throwing Bones in Browse Pups Page (Liking Pup)
 export const throwBones = async (req, res) => {
   try {
+    // console.log(req.currentUser)
     const userId = req.params.userId;
-    const targetProfile = await User.findById(userId) // <- put in user id
-    console.log(userId)
-    Object.assign(bonesThrownAt, req.body)
-    await targetProfile.save()
+    const targetProfile = await User.findById(userId)
+    const matchedId = targetProfile.bonesThrownBy.find(id => {
+     return id.equals(req.currentUser._id)
+    })
+    if (!matchedId) {
+      targetProfile.bonesThrownBy.push(req.currentUser._id)
+
+    // if (!targetProfile.bonesThrownBy.find(req.currentUser._id)) {
+    //   targetProfile.bonesThrownBy.push(req.currentUser._id);
+    //   await targetProfile.save();
+    }
+     await targetProfile.save();
     return res.json(targetProfile)
+    // return res.json({ targetProfile, currentUser: req.currentUser })
   } catch (error) {
     sendError(error, res)
   }
 }
+
 
 
 // //*Example trying to see if this works

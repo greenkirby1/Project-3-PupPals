@@ -14,7 +14,8 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   location: { type: String, required: true },
-  age: { type: Number, required: true, min: 18 }
+  age: { type: Number, required: true, min: 18 },
+  bonesThrownBy: [ { type: mongoose.ObjectId, ref: 'User', required: true } ]
 }, {
   // toJSON: {
   //   virtuals: true
@@ -31,6 +32,9 @@ userSchema.set('toJSON', {
   }
 })
 
+userSchema.set('toObject', {
+  virtuals: true
+})
 
 // virtual to show us the pup created by specific user
 userSchema.virtual('pupsCreated', {

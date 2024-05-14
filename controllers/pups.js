@@ -1,4 +1,5 @@
 import Pup from '../models/pup.js'
+import User from '../models/user.js'
 import { Error } from 'mongoose'
 import { sendError, sendUnauthorized } from '../lib/common.js'
 
@@ -10,6 +11,27 @@ export const pupIndex = async (req, res) => {
   try {
     const foundPups = await Pup.find()
     res.json(foundPups)
+  } catch (error) {
+    sendError(error, res)
+  }
+}
+
+export const newPups = async (req, res) => {
+  try {
+    const newUsers = await User.find({
+      _id: {
+        $ne: req.currentUser._id
+      }, 
+      bonesThrownBy:{
+        $nin: [req.currentUser._id]
+      }
+    }).populate('pupsCreated').exec()
+    const pups = []
+    newUsers.forEach(user => {
+      pups.push(...user.pupsCreated)
+    })
+    console.log(pups.length)
+    return res.json(pups)
   } catch (error) {
     sendError(error, res)
   }
