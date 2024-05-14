@@ -21,7 +21,6 @@ export default function SingleChat({
       style={styles.flipBtn}
       onClick={() => {
         setFlipChatCard(!flipChatCard)
-        // findCurrentChat(_id)
         findCurrentPup(pups)
       }}
     >

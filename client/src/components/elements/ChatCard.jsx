@@ -15,7 +15,6 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
   })
 
   function findCurrentChat(chatId) {
-    console.log(chatId)
     const matchedChat = userChat.find(chat => chat._id === chatId)
     setCurrentChat(matchedChat)
   }
@@ -44,11 +43,20 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
         Authorization: `Bearer ${getToken()}`
       }
     })
+    console.log(currentChat)
     setMsg({ ...msg, message: '', pup: '' })
     getUserChat()
   }
 
-  
+  async function deleteChat() {
+    const { data } = await axios.delete(`/api/chats/${currentChat._id}`, {
+      header: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    })
+    setFlipChatCard(!flipChatCard)
+    getUserChat()
+  }
 
   return (
     <ReactCardFlip isFlipped={flipChatCard}>
@@ -75,7 +83,6 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
       </div>
       <div className='chat-back' style={styles.card}>
         {currentChat ?
-          // console.log(currentChat)
           <div>
             {currentChat.messages.length > 0 ?
               currentChat.messages.map(({ message, pup, createdAt }, idx) => {
@@ -108,6 +115,13 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
               />
               <button style={styles.flipBtn} type='submit'>Send</button>
             </form>
+            <button 
+              style={styles.flipBtn} 
+              type='button'
+              onClick={deleteChat}
+            >
+              Delete Chat
+            </button>
           </div>
           :
           <h2>Cannot load chat</h2>

@@ -68,36 +68,6 @@ export default function Profile() {
     }
   }
 
-  // async function getUserChat() {
-  //   try {
-  //     const { data } = await axios.get('/api/chats', {
-  //       headers: {
-
-  //         Authorization: `Bearer ${getToken()}`
-  //       }
-  //     })
-  //     setUserChat(data)
-  //     console.log(data)
-  //     // console.log(data)
-  //   } catch (error) {
-  //     setChatError(error.message)
-  //   }
-  // }
-
-  // const getUserChat = useCallback(async function () {
-  //   try {
-  //     const { data } = await axios.get('/api/chats', {
-  //       headers: {
-
-  //         Authorization: `Bearer ${getToken()}`
-  //       }
-  //     })
-  //     setUserChat(data)
-  //   } catch (error) {
-  //     setChatError(error.message)
-  //   }
-  // }
-
   const getUserChat = useCallback(async function () {
     try {
       const { data } = await axios.get('/api/chats', {
