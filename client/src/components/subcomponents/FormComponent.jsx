@@ -32,6 +32,7 @@ export default function FormComponent({ submit, fields, request, onLoad }) {
   }
 
   const handleUpload = async (e) => {
+    console.log('hit handle upload')
     const form = new FormData()
     form.append('file', e.target.files[0])
     form.append('upload_preset', uploadPreset)
@@ -42,7 +43,6 @@ export default function FormComponent({ submit, fields, request, onLoad }) {
       setError(error.message)
     }
   }
-
   const handleChange = (fieldName) => {
     return (event) => {
       const { value } = event.target
@@ -53,6 +53,16 @@ export default function FormComponent({ submit, fields, request, onLoad }) {
       setFormData((prevFormData) => ({
         ...prevFormData,
         [fieldName]: parsedValue,
+      }))
+      setError('')
+    }
+  }
+
+  const handleMultiChange = (fieldName) => {
+    return (value) => {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [fieldName]: value ? value.map(option => option.value) : [],
       }))
       setError('')
     }
@@ -87,22 +97,31 @@ export default function FormComponent({ submit, fields, request, onLoad }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Container className='w-50 p-5 d-flex align-items-center' style={{ backgroundColor: 'white' }}>
+      <Container className='w-100% p-5 d-flex flex-column' style={{ backgroundColor: 'white', borderRadius: '8px' }}>
         {Object.entries(fields).map(([fieldName, fieldData]) => {
+
           const fieldNameCaps = fieldName
             .replace(/([A-Z[])/g, ' $1')
             .replace(/^./, function (str) { return str.toUpperCase() })
+
+            let value = formData[fieldName]
+            if (fieldName === 'neutered') {
+              value = formData[fieldName] ? 'yes' : 'no'
+            } else {
+              value = formData[fieldName] || ''
+            }
+
           return (
-            <FormGroup className='mb-4' key={fieldName}>
+            <FormGroup className='mb-2' key={fieldName}>
               <FormLabel className='small-label'>{fieldNameCaps}</FormLabel>
 
               
               {/*if type is for upload file*/}
               {fieldData.type === 'file' && (
                 <FormControl
+                type={fieldData.type}
                 name={fieldName}
                 id={fieldName}
-                value={formData[fieldName]}
                 onChange={handleUpload}
                 />
               )}
@@ -113,7 +132,7 @@ export default function FormComponent({ submit, fields, request, onLoad }) {
                 as="select"
                 name={fieldName}
                 id={fieldName}
-                value={formData[fieldName] ? 'yes' : 'no'}
+                value={value}
                 onChange={(e) => handleChange(fieldName)(e)}
                 >
                   <option value="">{fieldNameCaps}</option>
@@ -130,13 +149,13 @@ export default function FormComponent({ submit, fields, request, onLoad }) {
               {/*if type is multi select*/}
               {fieldData.type === 'multi' && (
                 <Creatable
-                onCreateOption={(value) => {
+                onCreateOption={(newValue) => {
                   setFormData((prevFormData) => ({
                     ...prevFormData,
-                    [fieldName]: [...prevFormData[fieldName], value],
+                    [fieldName]: [...prevFormData[fieldName], newValue],
                   }))
                 }}
-                onChange={handleChange(fieldName)}
+                onChange={handleMultiChange(fieldName)}
                 value={formData[fieldName].map((value) => ({
                   value,
                   label: value,

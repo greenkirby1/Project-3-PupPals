@@ -7,7 +7,10 @@ export default function Login() {
 
   const fields = {
     email: 'email',
-    password: 'password'
+    password: {
+      type: 'password',
+      placeholder: '***********'
+    },
   }
 
   const navigate = useNavigate()
