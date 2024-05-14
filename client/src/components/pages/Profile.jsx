@@ -4,7 +4,8 @@ import { getToken } from "../../lib/auth"
 import PupCard from '../elements/PupCard'
 import UserCard from "../elements/UserCard"
 import ChatCard from "../elements/ChatCard"
-import CreatePup from '../subcomponents/CreatePup.jsx'
+import CreatePupCard from '../elements/CreatePupCard.jsx'
+
 
 
 export default function Profile() {
@@ -43,6 +44,12 @@ export default function Profile() {
       fontWeight: 'bold',
       padding: '0.3rem 1rem',
       margin: '0.5rem'
+    },
+    pupImage: {
+      objectFit: 'cover',
+      width: '150px',
+      height: '150px',
+      borderRadius: '10px'
     }
   }
 
@@ -61,21 +68,21 @@ export default function Profile() {
     }
   }
 
-  async function getUserChat() {
-    try {
-      const { data } = await axios.get('/api/chats', {
-        headers: {
+  // async function getUserChat() {
+  //   try {
+  //     const { data } = await axios.get('/api/chats', {
+  //       headers: {
 
-          Authorization: `Bearer ${getToken()}`
-        }
-      })
-      setUserChat(data)
-      console.log(data)
-      // console.log(data)
-    } catch (error) {
-      setChatError(error.message)
-    }
-  }
+  //         Authorization: `Bearer ${getToken()}`
+  //       }
+  //     })
+  //     setUserChat(data)
+  //     console.log(data)
+  //     // console.log(data)
+  //   } catch (error) {
+  //     setChatError(error.message)
+  //   }
+  // }
 
   // const getUserChat = useCallback(async function () {
   //   try {
@@ -91,7 +98,7 @@ export default function Profile() {
   //   }
   // }
 
-  const getUserChat = useCallback(async function() {
+  const getUserChat = useCallback(async function () {
     try {
       const { data } = await axios.get('/api/chats', {
         headers: {
@@ -124,27 +131,30 @@ export default function Profile() {
             <div className='pup-card-wrapper'>
               {userProfile.pupsCreated.length ?
                 userProfile.pupsCreated.map(({ _id, pupName, image, gender, birthday, breed, bio, dislikes, favorites, neutered, owner }) => (
-                  <>
-                    <PupCard
-                      key={_id}
-                      _id={_id}
-                      pupName={pupName}
-                      image={image}
-                      gender={gender}
-                      birthday={birthday}
-                      breed={breed}
-                      bio={bio}
-                      dislikes={dislikes}
-                      favorites={favorites}
-                      neutered={neutered}
-                      owner={owner}
-                      styles={styles}
-                    />
-                    <CreatePup />
-                  </>
+                  <PupCard
+                    key={_id}
+                    _id={_id}
+                    pupName={pupName}
+                    image={image}
+                    gender={gender}
+                    birthday={birthday}
+                    breed={breed}
+                    bio={bio}
+                    dislikes={dislikes}
+                    favorites={favorites}
+                    neutered={neutered}
+                    owner={owner}
+                    styles={styles}
+                  />
                 ))
                 :
-                <CreatePup />
+                <div className='create-pup-wrapper'>
+                  <CreatePupCard
+                    userProfile={userProfile}
+                    getUserProfile={getUserProfile}
+                    styles={styles}
+                  />
+                </div>
               }
             </div>
             <ChatCard

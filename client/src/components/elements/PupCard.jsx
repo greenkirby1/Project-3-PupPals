@@ -24,8 +24,8 @@ export default function PupCard({
       <div className='pup-front' style={styles.card}>
         <div className='wrapper-one'>
           <div className='top-wrapper'>
-            <img className='pup-image' src={image} alt={`${_id}-${owner}`} />
-            <div className='info-box'><span>Gender:</span><br />{gender}</div>
+            <img className='pup-image' src={image} alt={`${_id}-${owner}`} style={ styles.pupImage } />
+            <div className='info-box'><span className='small-label'>Gender:</span><br />{gender}</div>
             <div className='info-box'><span>Neutered/Spayed:</span><br />{neutered ? 'Yes' : 'No'}</div>
           </div>
           <div className='top-wrapper'>

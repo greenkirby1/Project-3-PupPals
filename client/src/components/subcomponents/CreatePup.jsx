@@ -2,7 +2,7 @@ import FormComponent from './FormComponent.jsx'
 import { getToken } from '../../lib/auth'
 import axios from 'axios'
 
-export default function CreatePup(){
+export default function CreatePup({ getUserProfile }){
 
   const fields = {
   pupName: { 
@@ -43,18 +43,26 @@ export default function CreatePup(){
   }
 
   async function handleCreate(formData){
-    await axios.post('/api/pups', formData, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`
-      }
-    })
+    try {
+      await axios.post('/api/pups', formData, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`
+        }
+      })
+      getUserProfile()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   
   return (
     <div className="form-component">
-    <h1>Add your pup</h1>
-    <FormComponent request={handleCreate} fields={fields} submit="Upload Pup"/>
+    <FormComponent 
+      request={handleCreate} 
+      fields={fields} 
+      submit="Upload Pup"
+    />
   </div>
   )
   
