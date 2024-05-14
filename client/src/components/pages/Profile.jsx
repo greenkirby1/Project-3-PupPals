@@ -1,11 +1,10 @@
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect } from "react"
 import axios from 'axios'
 import { getToken } from "../../lib/auth"
-import Form from "../subcomponents/Form"
 import PupCard from '../elements/PupCard'
 import UserCard from "../elements/UserCard"
 import ChatCard from "../elements/ChatCard"
-
+import CreatePup from '../subcomponents/CreatePup.jsx'
 
 
 export default function Profile() {
@@ -110,24 +109,27 @@ export default function Profile() {
             <div className='pup-card-wrapper'>
               {userProfile.pupsCreated.length ?
                 userProfile.pupsCreated.map(({ _id, pupName, image, gender, birthday, breed, bio, dislikes, favorites, neutered, owner }) => (
-                  <PupCard
-                    key={_id}
-                    _id={_id}
-                    pupName={pupName}
-                    image={image}
-                    gender={gender}
-                    birthday={birthday}
-                    breed={breed}
-                    bio={bio}
-                    dislikes={dislikes}
-                    favorites={favorites}
-                    neutered={neutered}
-                    owner={owner}
-                    styles={styles}
-                  />
+                  <>
+                    <PupCard
+                      key={_id}
+                      _id={_id}
+                      pupName={pupName}
+                      image={image}
+                      gender={gender}
+                      birthday={birthday}
+                      breed={breed}
+                      bio={bio}
+                      dislikes={dislikes}
+                      favorites={favorites}
+                      neutered={neutered}
+                      owner={owner}
+                      styles={styles}
+                    />
+                    <CreatePup />
+                  </>
                 ))
                 :
-                <h2>add pups...</h2>
+                <CreatePup />
               }
             </div>
             <ChatCard
