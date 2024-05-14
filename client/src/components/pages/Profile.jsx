@@ -78,7 +78,7 @@ export default function Profile() {
   //   }
   // }
 
-  const getUserChat = useCallback(async function () {
+  const getUserChat = useCallback(async function() {
     try {
       const { data } = await axios.get('/api/chats', {
         headers: {
