@@ -99,22 +99,24 @@ export default function BrowsePups() {
 
   const handleBoneThrown = async (pup) => {
     try {
-      const { data } = await axios.put(`/api/pups/${pup._id}`, {
-        bonesThrownBy: [...pup.bonesThrownBy, getToken().sub]
+      const userId = getToken().sub;
+      console.log('Pup object:', pup);
+      console.log(userId)
+  
+      const { data } = await axios.put(`/api/users/${pup.userId}`, {
+        bonesThrownBy: [...pup.bonesThrownBy, userId],
+        pupId: pup._id
       }, {
         headers: {
           Authorization: `Bearer ${getToken()}`
         }
       });
   
-      setPups((prevPups) => {
-        const updatedPups = prevPups.filter((p) => p._id !== data._id);
-        setCurrentPupIndex((prevIndex) => (prevIndex >= updatedPups.length ? 0 : prevIndex));
-        return updatedPups;
-      });
+      setPups((prevPups) => prevPups.filter((p) => p._id !== pup._id));
+      setCurrentPupIndex(0);
   
-      if (data.bonesThrownBy.includes(getToken().sub) && pup.bonesThrownBy.includes(getToken().sub)) {
-        setMatches((prevMatches) => [...prevMatches, data]);
+      if (data.bonesThrownBy.includes(userId) && pup.bonesThrownBy.includes(userId)) {
+        setMatches((prevMatches) => [...prevMatches, pup]);
         setMatchHappened(true);
       }
     } catch (error) {
@@ -122,6 +124,34 @@ export default function BrowsePups() {
       setError(error.message);
     }
   };
+
+    // try {
+    //   const userId = getToken().sub;
+
+    //   const { data } = await axios.put(`/api/users/${pup.userId}`, {
+    //     bonesThrownBy: [...pup.bonesThrownBy, userId],
+    //     pupId: pup._id
+    //   }, {
+    //     headers: {
+    //       Authorization: `Bearer ${getToken()}`
+    //     }
+    //   });
+
+    //   setPups((prevPups) => prevPups.filter((p) => p._id !== pup._id));
+      //       setCurrentPupIndex((prevIndex) => (prevIndex >= updatedPups.length ? 0 : prevIndex));
+      //       return updatedPups;
+      //     });
+
+      //     if (data.bonesThrownBy.includes(pup._id) && pup.bonesThrownBy.includes(userId)) {
+      //       setMatches((prevMatches) => [...prevMatches, data]);
+      //       setMatchHappened(true);
+      //     }
+      //   } catch (error) {
+      //     console.log('Error:', error);
+      //     setError(error.message);
+      //   }
+      // };
+
 
   const handleNext = () => {
     setCurrentPupIndex((prevIndex) => (prevIndex + 1) % pups.length);

@@ -14,7 +14,7 @@ export const register = async (req, res) => {
     const registeredUser = await User.create(req.body)
     console.log(req.body)
     return res.json({ message: `Welcome, ${registeredUser.firstName}` })
-  } catch (error){
+  } catch (error) {
     sendError(error, res)
   }
 }
@@ -48,7 +48,7 @@ export const login = async (req, res) => {
       message: `Welcome back, ${foundUser.firstName}`,
       token: token
     })
-  } catch (error){
+  } catch (error) {
     sendError(error, res)
   }
 }
@@ -88,14 +88,33 @@ export const updateProfile = async (req, res) => {
 // * Throwing Bones in Browse Pups Page (Liking Pup)
 export const throwBones = async (req, res) => {
   try {
-    const targetProfile = await User.findById() // <- put in user id
-    Object.assign(BoneThrownAt, req.body)
+    const userId = req.params.userId;
+    const targetProfile = await User.findById(userId) // <- put in user id
+    console.log(userId)
+    Object.assign(bonesThrownAt, req.body)
     await targetProfile.save()
     return res.json(targetProfile)
   } catch (error) {
     sendError(error, res)
   }
 }
+
+
+// //*Example trying to see if this works
+// export const throwBones = async (req, res) => {
+//   try {
+//     const userId = req.params.userId;
+//     const throwerId = req.body.bonesThrownBy[req.body.bonesThrownBy.length - 1];
+//     const pupId = req.body.pupId;
+//     const targetProfile = await User.findById(userId);
+//     targetProfile.bonesThrownBy.push({ userId: throwerId, pupId: pupId });
+//     await targetProfile.save();
+
+//     return res.json(targetProfile);
+//   } catch (error) {
+//     sendError(error, res);
+//   }
+// };
 
 // Getting all Users for testing purposes - DELETE ONCE USED
 // export const getUsers = async (req, res) => {
