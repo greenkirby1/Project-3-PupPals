@@ -7,11 +7,13 @@ export default function SingleChat({
   _id, 
   messages, 
   pups,
-  updatedAt 
+  updatedAt,
+  styles 
 }) {
 
   return (
     <button
+      style={styles.flipBtn}
       onClick={() => {
         setFlipChatCard(!flipChatCard)
         findCurrentChat(_id)

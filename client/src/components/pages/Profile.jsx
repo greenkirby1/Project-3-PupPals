@@ -1,11 +1,10 @@
 import { useState, useEffect, useCallback } from "react"
 import axios from 'axios'
 import { getToken } from "../../lib/auth"
-import Form from "../subcomponents/Form"
 import PupCard from '../elements/PupCard'
 import UserCard from "../elements/UserCard"
 import ChatCard from "../elements/ChatCard"
-
+import CreatePup from '../subcomponents/CreatePup.jsx'
 
 
 export default function Profile() {
@@ -20,11 +19,14 @@ export default function Profile() {
   const styles = {
     card: {
       margin: '0.8rem',
-      maxHeight: '46vmin',
-      minWidth: '450px',
       padding: '1rem',
       borderRadius: '10px',
-      backgroundColor: 'white'
+      backgroundColor: 'white',
+      maxWidth: '448px',
+    },
+    pupSize: {
+      maxHeight: '46vmin',
+      Width: '450px',
     },
     flexColumn: {
       display: 'flex',
@@ -39,7 +41,8 @@ export default function Profile() {
       borderRadius: '10px',
       color: 'white',
       fontWeight: 'bold',
-      padding: '0.3rem 1rem'
+      padding: '0.3rem 1rem',
+      margin: '0.5rem'
     }
   }
 
@@ -74,7 +77,7 @@ export default function Profile() {
   //   }
   // }
 
-  const getUserChat = useCallback(async function () {
+  const getUserChat = useCallback(async function() {
     try {
       const { data } = await axios.get('/api/chats', {
         headers: {
@@ -96,7 +99,8 @@ export default function Profile() {
   return (
     <div>
       {userProfile && userChat ?
-        <div className='container'>
+        <div className='page-container'>
+          <h1>Welcome to your page, {userProfile.firstName}!</h1>
           <div className='card-wrapper'>
             <UserCard
               userProfile={userProfile}
@@ -105,24 +109,27 @@ export default function Profile() {
             <div className='pup-card-wrapper'>
               {userProfile.pupsCreated.length ?
                 userProfile.pupsCreated.map(({ _id, pupName, image, gender, birthday, breed, bio, dislikes, favorites, neutered, owner }) => (
-                  <PupCard
-                    key={_id}
-                    _id={_id}
-                    pupName={pupName}
-                    image={image}
-                    gender={gender}
-                    birthday={birthday}
-                    breed={breed}
-                    bio={bio}
-                    dislikes={dislikes}
-                    favorites={favorites}
-                    neutered={neutered}
-                    owner={owner}
-                    styles={styles}
-                  />
+                  <>
+                    <PupCard
+                      key={_id}
+                      _id={_id}
+                      pupName={pupName}
+                      image={image}
+                      gender={gender}
+                      birthday={birthday}
+                      breed={breed}
+                      bio={bio}
+                      dislikes={dislikes}
+                      favorites={favorites}
+                      neutered={neutered}
+                      owner={owner}
+                      styles={styles}
+                    />
+                    <CreatePup />
+                  </>
                 ))
                 :
-                <h2>add pups...</h2>
+                <CreatePup />
               }
             </div>
             <ChatCard
