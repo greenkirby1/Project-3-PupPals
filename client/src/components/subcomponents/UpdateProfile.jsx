@@ -3,7 +3,7 @@ import FormComponent from './FormComponent.jsx'
 import { getToken } from '../../lib/auth'
 import axios from 'axios'
 
-export default function UpdateProfile({ userProfile }) {
+export default function UpdateProfile({ userProfile, flipBack }) {
 
   const fields = {
     firstName: {
@@ -23,26 +23,36 @@ export default function UpdateProfile({ userProfile }) {
 
 
   async function handleProfileUpdate(formData) {
-    await axios.put(`/api/profile`, formData, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`
-      }
-    })
+    try {
+      await axios.put(`/api/profile`, formData, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`
+        }
+      })
+      flipBack()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
-  function loadFields(){
-    console.log('this is in loadFields:', userProfile)
+  function loadFields() {
+    // console.log('this is in loadFields:', userProfile)
     // need to get the data from profile
     return userProfile
   }
 
-  
+
 
 
   return (
-    <div className="form-page">
+    <div className='form-page'>
       <h1>Update your Profile</h1>
-      <FormComponent request={handleProfileUpdate} fields={fields} submit="Update Profile" onLoad={loadFields} />
+      <FormComponent
+        request={handleProfileUpdate}
+        fields={fields}
+        submit='Update Profile'
+        onLoad={loadFields}
+      />
     </div>
   )
 }

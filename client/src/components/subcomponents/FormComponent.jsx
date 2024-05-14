@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Creatable from 'react-select/creatable'
 import { Container, FormGroup, FormLabel, FormControl } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import axios from 'axios'
 
 
 export default function FormComponent({ submit, fields, request, onLoad }) {
@@ -9,22 +10,36 @@ export default function FormComponent({ submit, fields, request, onLoad }) {
   const fieldsReduced = Object.fromEntries(
     Object.entries(fields).map(([key, value]) => [key, value.type === 'multi' ? [] : ''])
   )
+  
+  const uploadPreset = import.meta.env.VITE_UPLOAD_PRESET
+  const uploadUrl = import.meta.env.VITE_CLOUDINARY_URL
+
 
   // ! State
   const [formData, setFormData] = useState(fieldsReduced)
   const [error, setError] = useState('')
 
+
   // ! Event driven functions
   async function handleSubmit(e) {
-    // prevents default form submit behaviour
     e.preventDefault()
     console.log('handle submit:', formData)
     try {
       await request(formData)
     } catch (error) {
-      // console.log(error)
-      // console.log(error.response.data)
       setError(error.response.data)
+    }
+  }
+
+  const handleUpload = async (e) => {
+    const form = new FormData()
+    form.append('file', e.target.files[0])
+    form.append('upload_preset', uploadPreset)
+    try {
+      const { data } = await axios.post(uploadUrl, form)
+      setFormData({ ...formData, image: data.secure_url})
+    } catch (error) {
+      setError(error.message)
     }
   }
 
@@ -43,20 +58,21 @@ export default function FormComponent({ submit, fields, request, onLoad }) {
     }
   }
 
-  const handleInputChange = (fieldName, event) => {
-    const { value } = event.target;
+  const handleInputChange = (fieldName, e) => {
+    const { value } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
       [fieldName]: value,
     }))
   }
 
+
   // ! Effects
   useEffect(() => {
     async function fillFields() {
       try {
         const data = await onLoad()
-        console.log('this is fillFields data:', data)
+        // console.log('this is fillFields data:', data)
         setFormData(data)
       } catch (error) {
         console.log(error)
@@ -64,42 +80,41 @@ export default function FormComponent({ submit, fields, request, onLoad }) {
       }
     }
     if (onLoad) {
-      console.log('hit onLoad')
+      // console.log('hit onLoad')
       fillFields()
     }
   }, [onLoad])
 
   return (
     <form onSubmit={handleSubmit}>
-      <Container className="w-50 p-5 d-flex align-items-center" style={{ backgroundColor: 'white' }}>
+      <Container className='w-50 p-5 d-flex align-items-center' style={{ backgroundColor: 'white' }}>
         {Object.entries(fields).map(([fieldName, fieldData]) => {
           const fieldNameCaps = fieldName
             .replace(/([A-Z[])/g, ' $1')
             .replace(/^./, function (str) { return str.toUpperCase() })
           return (
-            <FormGroup className="mb-4" key={fieldName}>
-              <FormLabel className="small-label">{fieldNameCaps}</FormLabel>
+            <FormGroup className='mb-4' key={fieldName}>
+              <FormLabel className='small-label'>{fieldNameCaps}</FormLabel>
 
-              {/*text input default*/}
-              {fieldData.type !== 'select' && fieldData.type !== 'multi' && (
+              
+              {/*if type is for upload file*/}
+              {fieldData.type === 'file' && (
                 <FormControl
-                  type={fieldData.type}
-                  id={fieldName}
-                  name={fieldName}
-                  value={formData[fieldName] || ''}
-                  onChange={(e) => handleInputChange(fieldName, e)}
-                  placeholder={fieldData.placeholder || fieldName}
+                name={fieldName}
+                id={fieldName}
+                value={formData[fieldName]}
+                onChange={handleUpload}
                 />
               )}
 
               {/* if type is for select */}
               {fieldData.type === 'select' && (
                 <FormControl
-                  as="select"
-                  name={fieldName}
-                  id={fieldName}
-                  value={formData[fieldName] ? 'yes' : 'no'}
-                  onChange={(e) => handleChange(fieldName)(e)}
+                as="select"
+                name={fieldName}
+                id={fieldName}
+                value={formData[fieldName] ? 'yes' : 'no'}
+                onChange={(e) => handleChange(fieldName)(e)}
                 >
                   <option value="">{fieldNameCaps}</option>
                   {fieldData.options.map((option, idx) => (
@@ -115,24 +130,35 @@ export default function FormComponent({ submit, fields, request, onLoad }) {
               {/*if type is multi select*/}
               {fieldData.type === 'multi' && (
                 <Creatable
-                  onCreateOption={(value) => {
-                    setFormData((prevFormData) => ({
-                      ...prevFormData,
-                      [fieldName]: [...prevFormData[fieldName], value],
-                    }))
-                  }}
-                  onChange={handleChange(fieldName)}
-                  value={formData[fieldName].map((value) => ({
-                    value,
-                    label: value,
-                  }))}
-                  isMulti={true}
+                onCreateOption={(value) => {
+                  setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    [fieldName]: [...prevFormData[fieldName], value],
+                  }))
+                }}
+                onChange={handleChange(fieldName)}
+                value={formData[fieldName].map((value) => ({
+                  value,
+                  label: value,
+                }))}
+                isMulti={true}
                 />)}
 
+                {/*text input default*/}
+                {fieldData.type !== 'select' && fieldData.type !== 'multi' && fieldData.type !== 'file' && (
+                  <FormControl
+                    type={fieldData.type}
+                    id={fieldName}
+                    name={fieldName}
+                    value={formData[fieldName] || ''}
+                    onChange={(e) => handleInputChange(fieldName, e)}
+                    placeholder={fieldData.placeholder || fieldName}
+                  />
+                )}
             </FormGroup>
           )
         })}
-      <button className="form-button"type="submit">{submit}</button>
+      <button className='form-button' type='submit'>{submit}</button>
       </Container>
     </form>
   )

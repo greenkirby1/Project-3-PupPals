@@ -4,14 +4,13 @@ import axios from 'axios'
 
 export default function CreatePup(){
 
-
   const fields = {
   pupName: { 
     type: 'text',
     placeholder: 'your pups name here'
   },
   image: {
-    type: 'text',
+    type: 'file',
     placeholder: 'upload an image'
   },
   birthday: {
@@ -42,18 +41,8 @@ export default function CreatePup(){
     placeholder: 'select multi options'
   }
   }
-  
 
   async function handleCreate(formData){
-    console.log('Type of name:', typeof formData.pupName)
-    console.log('Type of bio:', typeof formData.bio)
-    console.log('Type of breed:', typeof formData.breed)
-    console.log('Type of birthday:', typeof formData.birthday)
-    console.log('Type of favorites:', typeof formData.favorites)
-    console.log('Type of dislikes:', typeof formData.dislikes)
-    console.log('Type of image:', typeof formData.image)
-    console.log('Type of gender:', typeof formData.gender)
-    console.log('Type of neuted:', typeof formData.neutered)
     await axios.post('/api/pups', formData, {
       headers: {
         Authorization: `Bearer ${getToken()}`
@@ -61,11 +50,27 @@ export default function CreatePup(){
     })
   }
 
+  
   return (
     <div className="form-component">
     <h1>Add your pup</h1>
     <FormComponent request={handleCreate} fields={fields} submit="Upload Pup"/>
   </div>
   )
-
+  
 }
+
+
+
+
+
+
+// console.log('Type of name:', typeof formData.pupName)
+// console.log('Type of bio:', typeof formData.bio)
+// console.log('Type of breed:', typeof formData.breed)
+// console.log('Type of birthday:', typeof formData.birthday)
+// console.log('Type of favorites:', typeof formData.favorites)
+// console.log('Type of dislikes:', typeof formData.dislikes)
+// console.log('Type of image:', typeof formData.image)
+// console.log('Type of gender:', typeof formData.gender)
+// console.log('Type of neuted:', typeof formData.neutered)

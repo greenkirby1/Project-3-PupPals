@@ -6,6 +6,12 @@ export default function UserCard({ userProfile, styles }) {
 
   const [flipUserCard, setFlipUserCard] = useState(false)
 
+  const flipBack = async (formData) => {
+    console.log('hit handle save')
+    console.log('Form data:', formData)
+    setFlipUserCard(!flipUserCard)
+  }
+
   return (
     <ReactCardFlip isFlipped={flipUserCard}>
       <div className='user-front' style={styles.card}>
@@ -22,8 +28,11 @@ export default function UserCard({ userProfile, styles }) {
         <button onClick={() => setFlipUserCard(!flipUserCard)}>Edit Profile</button>
       </div>
       <div className='user-back' style={styles.card}>
-        <UpdateProfile userProfile={userProfile} />
-        <button onClick={() => setFlipUserCard(!flipUserCard)}>Save Profile</button>
+        <UpdateProfile 
+          userProfile={userProfile}
+          flipBack={flipBack}
+          />
+        <button onClick={() => setFlipUserCard(!flipUserCard)}>Cancel</button>
       </div>
     </ReactCardFlip>
   )
