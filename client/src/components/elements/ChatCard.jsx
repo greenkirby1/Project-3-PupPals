@@ -15,7 +15,7 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
   })
 
   function findCurrentChat(chatId) {
-    // console.log(chatId)
+    console.log(chatId)
     const matchedChat = userChat.find(chat => chat._id === chatId)
     setCurrentChat(matchedChat)
   }
@@ -48,6 +48,8 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
     getUserChat()
   }
 
+  
+
   return (
     <ReactCardFlip isFlipped={flipChatCard}>
       <div className='chat-front' style={styles.card}>
@@ -64,6 +66,7 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
               pups={pups}
               updatedAt={updatedAt}
               styles={styles}
+              userChat={userChat}
             />
           ))
           :
