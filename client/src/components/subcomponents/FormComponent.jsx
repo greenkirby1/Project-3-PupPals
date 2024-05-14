@@ -32,6 +32,7 @@ export default function FormComponent({ submit, fields, request, onLoad }) {
   }
 
   const handleUpload = async (e) => {
+    console.log('hit handle upload')
     const form = new FormData()
     form.append('file', e.target.files[0])
     form.append('upload_preset', uploadPreset)
@@ -100,9 +101,9 @@ export default function FormComponent({ submit, fields, request, onLoad }) {
               {/*if type is for upload file*/}
               {fieldData.type === 'file' && (
                 <FormControl
+                type={fieldData.type}
                 name={fieldName}
                 id={fieldName}
-                value={formData[fieldName]}
                 onChange={handleUpload}
                 />
               )}
