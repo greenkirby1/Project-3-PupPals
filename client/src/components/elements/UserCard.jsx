@@ -15,6 +15,7 @@ export default function UserCard({ userProfile, styles }) {
   return (
     <ReactCardFlip isFlipped={flipUserCard}>
       <div className='user-front' style={styles.card}>
+        <h2>Your Information</h2>
         <dl>
           <dt>Full Name:</dt>
           <dd>{userProfile.firstName} {userProfile.lastName}</dd>

@@ -1,5 +1,5 @@
 import ReactCardFlip from 'react-card-flip'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 import SingleChatBtn from './SingleChatBtn'
 import { getToken } from '../../lib/auth'
