@@ -38,7 +38,7 @@ export default function PupCard({
   return (
     <ReactCardFlip isFlipped={flipPupCard}>
       <div className='pup-front' style={styles.card}>
-        <h2>{pupName}</h2>
+        <h2>{pupName}&apos;s Information</h2>
         <div className='wrapper-one'>
           <div className='top-wrapper'>
             <img className='pup-image' src={image} alt={`${_id}-${owner}`} style={ styles.pupImage } />
