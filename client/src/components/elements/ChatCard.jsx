@@ -63,7 +63,6 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
   return (
     <ReactCardFlip isFlipped={flipChatCard}>
       <div className='chat-front' style={styles.card}>
-        <h2>Your Pup Pals</h2>
         {userChat.length ?
           userChat.map(({ _id, messages, users, pups, createdAt, updatedAt }) => (
             <SingleChatBtn
@@ -81,7 +80,7 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
             />
           ))
           :
-          <h2>You do not have any matches yet...</h2>
+          <h2 className='small-label'>&apos;Browse Pups&apos; to start matching...</h2>
         }
       </div>
       <div className='chat-back' style={styles.card}>

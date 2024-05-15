@@ -27,7 +27,7 @@ export default function Profile() {
     },
     pupSize: {
       maxHeight: '46vmin',
-      Width: '450px',
+      width: '450px',
     },
     flexColumn: {
       display: 'flex',
@@ -37,18 +37,18 @@ export default function Profile() {
       display: 'flex'
     },
     flipBtn: {
-      backgroundColor: '#998976',
-      border: '1px solid #998976',
+      backgroundColor: 'var(--dark-color)',
+      border: 'none',
       borderRadius: '10px',
       color: 'white',
-      fontWeight: 'bold',
-      padding: '0.3rem 1rem',
-      margin: '0.5rem'
+      padding: '6px',
+      width: '80%',
     },
     pupImage: {
+      display: 'flex',
       objectFit: 'cover',
-      width: '150px',
-      height: '150px',
+      width: '200px',
+      height: '200px',
       borderRadius: '10px'
     }
   }
@@ -87,18 +87,28 @@ export default function Profile() {
     getUserChat()
   }, [])
 
+
   return (
     <div>
       {userProfile && userChat ?
         <div className='page-container'>
-          <h1>Welcome to your page, {userProfile.firstName}!</h1>
-          <div className='card-wrapper'>
-            <UserCard
-              userProfile={userProfile}
-              getUserProfile={getUserProfile}
-              styles={styles}
-            />
-            <div className='pup-card-wrapper'>
+          <h1 className='profile-title oleo-script-bold'
+            style={{
+              fontSize: '150px',
+              color: 'white',
+              fontStyle: 'italic',
+            }}>
+            {userProfile.firstName}&apos;s Pals
+          </h1>
+          <div className='card-wrapper' style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start' }}>
+            <div style={{ flex: '1', marginRight: '10px', height: '100%' }}>
+              <UserCard
+                userProfile={userProfile}
+                getUserProfile={getUserProfile}
+                styles={styles}
+              />
+            </div>
+            <div className='pup-card-wrapper' style={{ flex: '2', display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100%' }}>
               {userProfile.pupsCreated.length ?
                 userProfile.pupsCreated.map(({ _id, pupName, image, gender, birthday, breed, bio, dislikes, favorites, neutered, owner }) => (
                   <PupCard
@@ -129,12 +139,14 @@ export default function Profile() {
                 </div>
               }
             </div>
-            <ChatCard
-              userChat={userChat}
-              userProfile={userProfile}
-              styles={styles}
-              getUserChat={getUserChat}
-            />
+            <div style={{ flex: '1', height: '100%' }}>
+              <ChatCard
+                userChat={userChat}
+                userProfile={userProfile}
+                styles={styles}
+                getUserChat={getUserChat}
+              />
+            </div>
           </div>
         </div>
         :
@@ -143,6 +155,6 @@ export default function Profile() {
           :
           <h2>Loading...</h2>
       }
-    </div>
+    </div >
   )
 }

@@ -9,6 +9,7 @@ export default function Navbar() {
   useEffect(() => {
 
   }, [location])
+  
   function handleLogOut() {
     removeToken()
     navigate('/login')
