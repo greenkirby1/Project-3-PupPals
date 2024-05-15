@@ -153,7 +153,7 @@ export default function Profile() {
         profileError || chatError ?
           <p className='text-danger'>{profileError || chatError}</p>
           :
-          <h2>Loading...</h2>
+          <h2 className='oleo-script-regular'>Loading...</h2>
       }
     </div >
   )

@@ -63,6 +63,7 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
   return (
     <ReactCardFlip isFlipped={flipChatCard}>
       <div className='chat-front' style={styles.card}>
+        <h2 className='oleo-script-regular'>Chats with Pals 🐶</h2>
         {userChat.length ?
           userChat.map(({ _id, messages, users, pups, createdAt, updatedAt }) => (
             <SingleChatBtn
@@ -86,7 +87,7 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
       <div className='chat-back' style={styles.card}>
         {currentChat ?
           <div>
-            <h2>Chat with Your Pup Pal</h2>
+            <h2 className='oleo-script-regular'>Chat with Your Pup Pal</h2>
             {currentChat?.messages.length > 0 ?
               currentChat.messages.map(({ message, pup, createdAt }, idx) => {
                 return (
@@ -101,7 +102,7 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
 
               })
               :
-              <h2>Start chatting!</h2>
+              <h2 className='oleo-script-regular'>Start chatting!</h2>
             }
             <form className='send-message' onSubmit={handleSend}>
               <label hidden htmlFor='msg'>Message</label>
@@ -127,7 +128,7 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
             </button>
           </div>
           :
-          <h2>Cannot load chat</h2>
+          <h2 className='oleo-script-regular'>Cannot load chat</h2>
         }
 
         <button style={styles.flipBtn} onClick={() => setFlipChatCard(!flipChatCard)}>Back to All Chats</button>
