@@ -115,6 +115,8 @@ export default function Profile() {
                     neutered={neutered}
                     owner={owner}
                     styles={styles}
+                    userProfile={userProfile}
+                    getUserProfile={getUserProfile}
                   />
                 ))
                 :
