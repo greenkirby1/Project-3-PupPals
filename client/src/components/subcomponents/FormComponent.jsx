@@ -97,7 +97,8 @@ export default function FormComponent({ submit, fields, request, onLoad }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Container className='w-20% p-5 d-flex flex-column' style={{ backgroundColor: 'white', borderRadius: '8px' }}>
+      <Container className='p-5 d-flex flex-column' 
+        style={{ backgroundColor: 'white', borderRadius: '8px', width: '50%', paddingTop: '20px' }}>
         {Object.entries(fields).map(([fieldName, fieldData]) => {
 
           const fieldNameCaps = fieldName

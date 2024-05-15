@@ -20,7 +20,7 @@ export default function Register() {
       location: 'text',
       age: {
         type: 'number',
-        placeholder: 'adults only'
+        placeholder: 'please enter your current age'
       },
       password: {
         type: 'password',
