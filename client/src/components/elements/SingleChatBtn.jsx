@@ -1,20 +1,27 @@
+import { useEffect } from 'react'
 
-export default function SingleChat({ 
-  findCurrentChat, 
-  findCurrentPup, 
-  flipChatCard, 
-  setFlipChatCard, 
-  _id, 
-  messages, 
+
+export default function SingleChat({
+  findCurrentChat,
+  findCurrentPup,
+  flipChatCard,
+  setFlipChatCard,
+  _id,
+  messages,
   pups,
-  updatedAt 
+  updatedAt,
+  styles,
+  userChat
 }) {
+
+  useEffect(() => findCurrentChat(_id), [userChat])
 
   return (
     <button
+      style={styles.flipBtn}
       onClick={() => {
         setFlipChatCard(!flipChatCard)
-        findCurrentChat(_id)
+        // findCurrentChat(_id)
         findCurrentPup(pups)
       }}
     >

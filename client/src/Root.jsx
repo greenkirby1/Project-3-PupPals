@@ -6,12 +6,12 @@ import Footer from './components/subcomponents/Footer'
 export default function Root() {
 
   return (
-    <div>
+    <>
       <Navbar />
       <main>
         <Outlet />
       </main>
       <Footer />
-    </div>
+    </>
   )
 }

@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from "react"
 import axios from 'axios'
 import { getToken } from "../../lib/auth"
-import Form from "../subcomponents/Form"
 import PupCard from '../elements/PupCard'
 import UserCard from "../elements/UserCard"
 import ChatCard from "../elements/ChatCard"
+import CreatePupCard from '../elements/CreatePupCard.jsx'
 
 
 
@@ -20,11 +20,14 @@ export default function Profile() {
   const styles = {
     card: {
       margin: '0.8rem',
-      maxHeight: '46vmin',
-      minWidth: '450px',
       padding: '1rem',
       borderRadius: '10px',
-      backgroundColor: 'white'
+      backgroundColor: 'white',
+      maxWidth: '448px',
+    },
+    pupSize: {
+      maxHeight: '46vmin',
+      Width: '450px',
     },
     flexColumn: {
       display: 'flex',
@@ -39,7 +42,14 @@ export default function Profile() {
       borderRadius: '10px',
       color: 'white',
       fontWeight: 'bold',
-      padding: '0.3rem 1rem'
+      padding: '0.3rem 1rem',
+      margin: '0.5rem'
+    },
+    pupImage: {
+      objectFit: 'cover',
+      width: '150px',
+      height: '150px',
+      borderRadius: '10px'
     }
   }
 
@@ -74,6 +84,20 @@ export default function Profile() {
   //   }
   // }
 
+  // const getUserChat = useCallback(async function () {
+  //   try {
+  //     const { data } = await axios.get('/api/chats', {
+  //       headers: {
+
+  //         Authorization: `Bearer ${getToken()}`
+  //       }
+  //     })
+  //     setUserChat(data)
+  //   } catch (error) {
+  //     setChatError(error.message)
+  //   }
+  // }
+
   const getUserChat = useCallback(async function () {
     try {
       const { data } = await axios.get('/api/chats', {
@@ -91,15 +115,17 @@ export default function Profile() {
   useEffect(() => {
     getUserProfile()
     getUserChat()
-  }, [getUserChat])
+  }, [])
 
   return (
     <div>
       {userProfile && userChat ?
-        <div className='container'>
+        <div className='page-container'>
+          <h1>Welcome to your page, {userProfile.firstName}!</h1>
           <div className='card-wrapper'>
             <UserCard
               userProfile={userProfile}
+              getUserProfile={getUserProfile}
               styles={styles}
             />
             <div className='pup-card-wrapper'>
@@ -122,7 +148,13 @@ export default function Profile() {
                   />
                 ))
                 :
-                <h2>add pups...</h2>
+                <div className='create-pup-wrapper'>
+                  <CreatePupCard
+                    userProfile={userProfile}
+                    getUserProfile={getUserProfile}
+                    styles={styles}
+                  />
+                </div>
               }
             </div>
             <ChatCard

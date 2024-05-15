@@ -15,7 +15,7 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
   })
 
   function findCurrentChat(chatId) {
-    // console.log(chatId)
+    console.log(chatId)
     const matchedChat = userChat.find(chat => chat._id === chatId)
     setCurrentChat(matchedChat)
   }
@@ -48,6 +48,8 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
     getUserChat()
   }
 
+  
+
   return (
     <ReactCardFlip isFlipped={flipChatCard}>
       <div className='chat-front' style={styles.card}>
@@ -63,6 +65,8 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
               messages={messages}
               pups={pups}
               updatedAt={updatedAt}
+              styles={styles}
+              userChat={userChat}
             />
           ))
           :
@@ -76,11 +80,12 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
             {currentChat.messages.length > 0 ?
               currentChat.messages.map(({ message, pup, createdAt }, idx) => {
                 return (
-                  <div key={idx}>
-                    <img src={pup.image} alt={pup.image} />
-                    {message}
-                    <br />
-                    Sent at {new Date(createdAt).toDateString()}
+                  <div className='message-container' key={idx}>
+                    <div className='message'>
+                      <img className='chat-icon' src={pup.image} alt={pup.image} />
+                      {message}
+                    </div>
+                    <div className='message-timestamp'>Sent on {new Date(createdAt).toDateString()}</div>
                   </div>
                 )
 
@@ -101,14 +106,14 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
                 value={msg.message}
                 onChange={handleChange}
               />
-              <button type='submit'>Send</button>
+              <button style={styles.flipBtn} type='submit'>Send</button>
             </form>
           </div>
           :
           <h2>Cannot load chat</h2>
         }
 
-        <button onClick={() => setFlipChatCard(!flipChatCard)}>Back to All Chats</button>
+        <button style={styles.flipBtn} onClick={() => setFlipChatCard(!flipChatCard)}>Back to All Chats</button>
       </div>
     </ReactCardFlip>
   )

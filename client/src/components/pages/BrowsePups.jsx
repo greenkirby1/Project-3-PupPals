@@ -6,6 +6,8 @@ import { getToken } from '../../lib/auth';
 
 const PupCard = ({ pup, onMatch, onNext }) => {
   const [isFlipped, setIsFlipped] = useState(false);
+  // const [isMatchedFlipped, setIsMatchedFlipped] = useState(false)
+  // const [nextFlipped, setNextFlipped] = useState(false)
 
   const handleInfoClick = () => {
     setIsFlipped(!isFlipped);
@@ -13,12 +15,13 @@ const PupCard = ({ pup, onMatch, onNext }) => {
 
   const handleMatchClick = () => {
     onMatch(pup);
-    setIsFlipped(false);
+    setIsFlipped(false)
   };
 
   const handleNextClick = () => {
     onNext();
-    setIsFlipped(false);
+    setIsFlipped(false)
+    
   };
 
   return (
@@ -27,13 +30,13 @@ const PupCard = ({ pup, onMatch, onNext }) => {
         <div className="card front">
           <img src={pup.image || 'placeholder.png'} alt={pup.pupName} className='card-img-top' style={{ height: '400px', objectFit: 'cover' }} />
           <div className="card-body d-flex justify-content-between">
-            <button className="btn btn-info" onClick={handleInfoClick}>
+            <button id='more-info' className="btn btn-info" onClick={handleInfoClick}>
               📖
             </button>
-            <button className="btn btn-success" onClick={handleMatchClick}>
+            <button id='match' className="btn btn-success" onClick={handleMatchClick}>
               🦴
             </button>
-            <button className="btn btn-secondary" onClick={handleNextClick}>
+            <button id='next' className="btn btn-secondary" onClick={handleNextClick}>
               ➡️
             </button>
           </div>
@@ -81,7 +84,7 @@ export default function BrowsePups() {
   useEffect(() => {
     async function fetchPups() {
       try {
-        const { data } = await axios.get('/api/pups', {
+        const { data } = await axios.get('/api/new-pups', {
           headers: {
             Authorization: `Bearer ${getToken()}`
           }
@@ -99,57 +102,24 @@ export default function BrowsePups() {
   const handleBoneThrown = async (pup) => {
     try {
       const userId = getToken().sub;
-      console.log('Pup object:', pup);
-      console.log(userId)
-  
-      const { data } = await axios.put(`/api/users/${pup.userId}`, {
-        bonesThrownBy: [...pup.bonesThrownBy, userId],
-        pupId: pup._id
-      }, {
+
+
+      const { data } = await axios.put(`/api/users/${pup.owner}`, null
+      , {
         headers: {
           Authorization: `Bearer ${getToken()}`
         }
       });
-  
-      setPups((prevPups) => prevPups.filter((p) => p._id !== pup._id));
-      setCurrentPupIndex(0);
-  
-      if (data.bonesThrownBy.includes(userId) && pup.bonesThrownBy.includes(userId)) {
-        setMatches((prevMatches) => [...prevMatches, pup]);
-        setMatchHappened(true);
-      }
+         // Remove the current pup from the list
+    setPups(prevPups => prevPups.filter(p => p._id !== pup._id));
+
+    // Move to the next pup
+    setCurrentPupIndex(prevIndex => prevIndex % (pups.length - 1));
     } catch (error) {
       console.log('Error:', error);
       setError(error.message);
     }
   };
-
-    // try {
-    //   const userId = getToken().sub;
-
-    //   const { data } = await axios.put(`/api/users/${pup.userId}`, {
-    //     bonesThrownBy: [...pup.bonesThrownBy, userId],
-    //     pupId: pup._id
-    //   }, {
-    //     headers: {
-    //       Authorization: `Bearer ${getToken()}`
-    //     }
-    //   });
-
-    //   setPups((prevPups) => prevPups.filter((p) => p._id !== pup._id));
-      //       setCurrentPupIndex((prevIndex) => (prevIndex >= updatedPups.length ? 0 : prevIndex));
-      //       return updatedPups;
-      //     });
-
-      //     if (data.bonesThrownBy.includes(pup._id) && pup.bonesThrownBy.includes(userId)) {
-      //       setMatches((prevMatches) => [...prevMatches, data]);
-      //       setMatchHappened(true);
-      //     }
-      //   } catch (error) {
-      //     console.log('Error:', error);
-      //     setError(error.message);
-      //   }
-      // };
 
 
   const handleNext = () => {
@@ -158,14 +128,15 @@ export default function BrowsePups() {
 
   return (
     <div>
-      {matchHappened && (
+      {/* {matchHappened && (
         <div className="banner">
           <h2>YOU HAVE A MATCH!</h2>
         </div>
-      )}
+      )} */}
       {pups.length > 0 ? (
         <>
           <PupCard
+
             pup={pups[currentPupIndex]}
             onMatch={handleBoneThrown}
             onNext={handleNext}
