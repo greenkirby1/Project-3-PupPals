@@ -14,13 +14,14 @@ export default function SingleChat({
   userChat
 }) {
 
-  useEffect(() => findCurrentChat(_id), [userChat])
+  useEffect(() => {findCurrentChat(_id)}, [userChat, findCurrentChat])
 
   return (
     <button
       style={styles.flipBtn}
       onClick={() => {
         setFlipChatCard(!flipChatCard)
+        findCurrentChat(_id)
         findCurrentPup(pups)
       }}
     >
