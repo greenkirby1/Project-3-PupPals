@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import ReactCardFlip from 'react-card-flip';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-import React from 'react';
 import { getToken } from '../../lib/auth';
 
 const PupCard = ({ pup, onMatch, onNext }) => {
