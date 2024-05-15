@@ -28,7 +28,7 @@ const PupCard = ({ pup, onMatch, onNext }) => {
     <div className="card-container">
       <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
         <div className="card front">
-          <img src={pup.image || 'placeholder.png'} alt={pup.pupName} className='card-img-top' style={{ height: '400px', objectFit: 'cover' }} />
+          <img src={pup.image || 'placeholder.png'} alt={pup.pupName} className='card-img-top' style={{ height: '400px', objectFit: 'contain' }} />
           <div className="card-body d-flex justify-content-between">
             <button id='more-info' className="btn btn-info" onClick={handleInfoClick}>
               📖
