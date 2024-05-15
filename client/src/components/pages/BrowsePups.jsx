@@ -141,7 +141,6 @@ export default function BrowsePups() {
             onMatch={handleBoneThrown}
             onNext={handleNext}
           />
-          <h2>Matches:</h2>
           <ul>
             {matches.map((match, index) => (
               <li key={index}>{match.pupName}</li>
