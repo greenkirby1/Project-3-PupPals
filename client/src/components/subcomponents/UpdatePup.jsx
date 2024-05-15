@@ -58,14 +58,17 @@ export default function UpdatePup({_id, flipBack, userProfile }){
   }
     
 
+console.log(userProfile.pupsCreated[0])
 
-
-  // function loadFields() {
-  //   // console.log('this is in loadFields:', userProfile)
-  //   // need to get the data from profile
-  //   console.log(userProfile.pupsCreated)
-  //   // return userProfile
-  // }
+  function loadFields() {
+    // console.log('this is in loadFields:', userProfile)
+    // need to get the data from profile
+    // console.log(userProfile.pupsCreated)
+    // return userProfile
+    return (userProfile.pupsCreated[0])
+    //   console.log
+    // )
+  }
 
 
   return (
@@ -75,7 +78,7 @@ export default function UpdatePup({_id, flipBack, userProfile }){
       request={handleUpdate} 
       fields={fields} 
       submit="Update Pup"
-      // onLoad={loadFields}
+      onLoad={loadFields}
     />
   </div>
   )
