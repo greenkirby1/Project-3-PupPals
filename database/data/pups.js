@@ -1,7 +1,7 @@
 export default [
   {
     pupName: 'Max',
-    image: 'max.jpg',
+    image: 'https://i.ibb.co/DGtCz3Q/pup1.jpg',
     birthday: '2018-05-15',
     breed: 'Labrador Retriever',
     bio: 'Max is a friendly and energetic Labrador Retriever. He loves playing fetch and going on long walks.',
@@ -12,7 +12,7 @@ export default [
   },
   {
     pupName: 'Luna',
-    image: 'luna.jpg',
+    image: 'https://i.ibb.co/xMp3W6J/pup10.jpg',
     birthday: '2019-09-20',
     breed: 'Golden Retriever',
     bio: 'Luna is a gentle and affectionate Golden Retriever. She enjoys cuddling and being around people.',
@@ -23,7 +23,7 @@ export default [
   },
   {
     pupName: 'Charlie',
-    image: 'charlie.jpg',
+    image: 'https://i.ibb.co/Mcd8jwq/pup11.jpg',
     birthday: '2017-12-10',
     breed: 'Beagle',
     bio: 'Charlie is a curious and playful Beagle. He loves exploring new scents and going on adventures.',
@@ -34,7 +34,7 @@ export default [
   },
   {
     pupName: 'Daisy',
-    image: 'daisy.jpg',
+    image: 'https://i.ibb.co/dGynXhf/pup12.jpg',
     birthday: '2020-03-05',
     breed: 'Poodle',
     bio: 'Daisy is an intelligent and elegant Poodle. She loves learning new tricks and showing off her style.',
@@ -45,7 +45,7 @@ export default [
   },
   {
     pupName: 'Rocky',
-    image: 'rocky.jpg',
+    image: 'https://i.ibb.co/8NZPtZd/pup13.jpg',
     birthday: '2016-08-25',
     breed: 'German Shepherd',
     bio: 'Rocky is a brave and loyal German Shepherd. He takes his job as a protector very seriously.',
@@ -56,7 +56,7 @@ export default [
   },
   {
     pupName: 'Bella',
-    image: 'bella.jpg',
+    image: 'https://i.ibb.co/XX7L2r8/pup14.jpg',
     birthday: '2019-11-30',
     breed: 'Chihuahua',
     bio: 'Bella is a sassy and energetic Chihuahua. She may be small, but she has a big personality.',
@@ -67,7 +67,7 @@ export default [
   },
   {
     pupName: 'Cooper',
-    image: 'cooper.jpg',
+    image: 'https://i.ibb.co/qxyGy72/pup15.jpg',
     birthday: '2018-07-12',
     breed: 'Australian Shepherd',
     bio: 'Cooper is an intelligent and energetic Australian Shepherd. He loves herding and playing frisbee.',
@@ -78,7 +78,7 @@ export default [
   },
   {
     pupName: 'Sadie',
-    image: 'sadie.jpg',
+    image: 'https://i.ibb.co/TtRPM7q/pup16.jpg',
     birthday: '2017-04-18',
     breed: 'Boxer',
     bio: 'Sadie is a playful and friendly Boxer. She loves going on adventures and making new friends.',
@@ -89,7 +89,7 @@ export default [
   },
   {
     pupName: 'Duke',
-    image: 'duke.jpg',
+    image: 'https://i.ibb.co/ZTdSJ0h/pup17.webp',
     birthday: '2016-11-05',
     breed: 'Rottweiler',
     bio: 'Duke is a strong and loyal Rottweiler. He may look intimidating, but he has a heart of gold.',
@@ -100,7 +100,7 @@ export default [
   },
   {
     pupName: 'Lily',
-    image: 'lily.jpg',
+    image: 'https://i.ibb.co/tqYMMqK/pup18.webp',
     birthday: '2019-06-22',
     breed: 'Siberian Husky',
     bio: 'Lily is a beautiful and energetic Siberian Husky. She loves running and playing in the snow.',
@@ -112,7 +112,7 @@ export default [
   {
     pupName: 'Bear',
     image: 'bear.jpg',
-    birthday: '2018-09-01',
+    birthday: 'https://i.ibb.co/N1W6SGz/pup19.jpg',
     breed: 'Newfoundland',
     bio: 'Bear is a gentle giant. He may be big, but he has a calm and loving personality.',
     favorites: ['Swimming', 'Cuddling with his owner'],
@@ -122,7 +122,7 @@ export default [
   },
   {
     pupName: 'Molly',
-    image: 'molly.jpg',
+    image: 'https://i.ibb.co/xs7rcmf/pup20.jpg',
     birthday: '2020-02-14',
     breed: 'Cavalier King Charles Spaniel',
     bio: 'Molly is a sweet and gentle Cavalier King Charles Spaniel. She loves being pampered and cuddled.',
@@ -133,7 +133,7 @@ export default [
   },
   {
     pupName: 'Buddy',
-    image: 'buddy.jpg',
+    image: 'https://i.ibb.co/wRs6P2s/pup2.jpg',
     birthday: '2017-08-29',
     breed: 'Golden Retriever',
     bio: 'Buddy is a friendly and outgoing Golden Retriever. He loves making new friends and playing fetch.',
@@ -144,7 +144,7 @@ export default [
   },
   {
     pupName: 'Lucy',
-    image: 'lucy.jpg',
+    image: 'https://i.ibb.co/K52cR48/pup9.jpg',
     birthday: '2019-03-17',
     breed: 'Corgi',
     bio: 'Lucy is a playful and energetic Corgi. She loves chasing balls and going on adventures.',
@@ -155,7 +155,7 @@ export default [
   },
   {
     pupName: 'Jack',
-    image: 'jack.jpg',
+    image: 'https://i.ibb.co/VmR7Jk7/pup3.jpg',
     birthday: '2016-12-24',
     breed: 'Border Collie',
     bio: 'Jack is a smart and agile Border Collie. He loves herding and playing frisbee.',
@@ -166,7 +166,7 @@ export default [
   },
   {
     pupName: 'Stella',
-    image: 'stella.jpg',
+    image: 'https://i.ibb.co/0n74YB0/pup4.jpg',
     birthday: '2018-06-08',
     breed: 'French Bulldog',
     bio: 'Stella is a charming and playful French Bulldog. She loves being the center of attention.',
@@ -177,7 +177,7 @@ export default [
   },
   {
     pupName: 'Tucker',
-    image: 'tucker.jpg',
+    image: 'https://i.ibb.co/C9MLJgG/pup5.jpg',
     birthday: '2017-11-11',
     breed: 'Bernese Mountain Dog',
     bio: 'Tucker is a gentle and friendly Bernese Mountain Dog. He loves being around people and other dogs.',
@@ -188,7 +188,7 @@ export default [
   },
   {
     pupName: 'Roxy',
-    image: 'roxy.jpg',
+    image: 'https://i.ibb.co/QDQ1XKG/pup6.jpg',
     birthday: '2019-09-03',
     breed: 'Boxer',
     bio: 'Roxy is an energetic and playful Boxer. She loves going on runs and playing with her toys.',
@@ -199,7 +199,7 @@ export default [
   },
   {
     pupName: 'Finn',
-    image: 'finn.jpg',
+    image: 'https://i.ibb.co/4F4SWct/pup7.jpg',
     birthday: '2020-01-28',
     breed: 'Labrador Retriever',
     bio: 'Finn is a curious and friendly Labrador Retriever. He loves exploring new places and making friends.',
@@ -210,7 +210,7 @@ export default [
   },
   {
     pupName: 'Maggie',
-    image: 'maggie.jpg',
+    image: 'https://i.ibb.co/Pwppffc/pup8.jpg',
     birthday: '2018-04-30',
     breed: 'Siberian Husky',
     bio: 'Maggie is a beautiful and independent Siberian Husky. She loves running and exploring the great outdoors.',
