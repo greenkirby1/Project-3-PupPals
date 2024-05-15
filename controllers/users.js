@@ -96,9 +96,10 @@ export const throwBones = async (req, res) => {
       return id.equals(req.currentUser._id)
     })
     if (!matchedId) {
+      console.log('Match occurred between users:', req.currentUser._id, 'and', userId);
       targetProfile.bonesThrownBy.push(req.currentUser._id)
-    }
     await targetProfile.save();
+  }
     return res.json(targetProfile)
   } catch (error) {
     sendError(error, res)
