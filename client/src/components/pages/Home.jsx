@@ -25,46 +25,66 @@ export default function Home() {
   }, [])
 
   return (
-    <div className='text-center' style={{ fontFamily: 'Arial, sans-serif' }}>
-      <Container fluid>
+    <>
+      <Container fluid style={{ height: '100%'}}>
         <Row className='justify-content-center'>
           <Col xs={12}>
             <div
               className='hero-image'
               style={{
-                backgroundImage: 'placeholder2.jpg',
+                // backgroundImage: 'placeholder2.jpg',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                height: '400px',
+                height: '50%',
+                width: '100%',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                border: '2px solid grey',
+                border: 'none',
               }}
             >
-              <div className='hero-text'>
-                <h1
-                  className='text-white'
-                  style={{
-                    fontFamily: 'Georgia, serif',
-                    fontSize: '3rem',
-                    backgroundColor: '#FDE49E',
-                    padding: '10px',
-                  }}
-                >
+              <div className='hero-text' 
+              style={{
+                display: 'flex', 
+                justifyContent: 'center', 
+                flexDirection: 'column',
+                width: '100%',
+                height: '100%'
+                }}>
+                <h1 className='hero-font'
+                style={{
+                  fontFamily: 'oleo-script-bold, sans-serif',
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  fontWeight: 700,
+                  fontSize: '20rem',
+                  padding: 'none',
+                  display: 'flex',
+                  justifyContent: 'center', 
+                  margin: 'none',
+                  height: '100%',
+                  transform: 'translateY(+5%)'
+                }}>
                   PupPals
                 </h1>
-                <p className='text-dark' style={{ fontSize: '1 rem' }}>
+                <p className='text-white' 
+                style={{ 
+                  fontSize: '2rem',
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  marginRight: '20%',
+                  fontStyle: 'italic',
+                  transform: 'translateY(-150%)'
+                }}>
                   An app for matching pups
                 </p>
               </div>
             </div>
           </Col>
         </Row>
-        <Row className='justify-content-center' style={{ marginTop: '100px' }}>
+        <Row className='justify-content-center' style={{ marginTop: '20px' }}>
           <Col xs={12} md={6} lg={4} className='mb-4'>
-            <Card className='h-100' style={{ padding: '20px' }}>
+            <Card className='h-400' style={{ padding: '20px' }}>
               <Card.Body>
                 <Card.Title>About PupPals</Card.Title>
                 <Card.Text>
@@ -74,17 +94,7 @@ export default function Home() {
             </Card>
           </Col>
           <Col xs={12} md={6} lg={4} className='mb-4'>
-            <Card className='h-100' style={{ padding: '20px' }}>
-              <Card.Body>
-                <Card.Title>Blank Component</Card.Title>
-                <Card.Text>
-                  This is a blank component that will be filled in later.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col xs={12} md={6} lg={4} className='mb-4'>
-            <Card className='h-100' style={{ padding: '20px' }}>
+            <Card className='h-200' style={{ padding: '20px' }}>
               <Card.Body>
                 <Card.Title>Our Pups</Card.Title>
                 <Carousel>
@@ -103,6 +113,6 @@ export default function Home() {
           </Col>
         </Row>
       </Container>
-    </div>
+    </>
   )
 }

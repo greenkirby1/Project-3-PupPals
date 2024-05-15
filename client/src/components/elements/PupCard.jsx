@@ -14,10 +14,19 @@ export default function PupCard({
   favorites,
   neutered,
   owner,
-  styles
+  styles,
+  getUserProfile,
+  userProfile
 }) {
 
   const [flipPupCard, setFlipPupCard] = useState(false)
+
+  const flipBack = async (formData) => {
+    console.log('hit handle save')
+    console.log('Form data:', formData)
+    setFlipPupCard(!flipPupCard)
+    getUserProfile()
+  }
 
   return (
     <ReactCardFlip isFlipped={flipPupCard}>
@@ -41,8 +50,12 @@ export default function PupCard({
         <button style={styles.flipBtn} onClick={() => setFlipPupCard(!flipPupCard)}>Edit Profile</button>
       </div>
       <div className='pup-back' style={styles.card}>
-        <UpdatePup _id={_id}/>
-        <button style={styles.flipBtn} onClick={() => setFlipPupCard(!flipPupCard)}>Save Profile</button>
+        <UpdatePup 
+          _id={_id}
+          userProfile={userProfile}
+          flipBack={flipBack}
+        />
+        <button style={styles.flipBtn} onClick={() => setFlipPupCard(!flipPupCard)}>Cancel</button>
       </div>
     </ReactCardFlip>
   )

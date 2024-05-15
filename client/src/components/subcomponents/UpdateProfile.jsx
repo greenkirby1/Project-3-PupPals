@@ -38,6 +38,7 @@ export default function UpdateProfile({ userProfile, flipBack }) {
   function loadFields() {
     // console.log('this is in loadFields:', userProfile)
     // need to get the data from profile
+    // console.log(userProfile)
     return userProfile
   }
 

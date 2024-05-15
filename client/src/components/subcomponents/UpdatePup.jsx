@@ -2,15 +2,30 @@ import FormComponent from '../subcomponents/FormComponent.jsx'
 import { getToken } from '../../lib/auth'
 import axios from 'axios'
 
-export default function UpdatePup({_id}){
+export default function UpdatePup({_id, flipBack, userProfile }){
   // console.log(_id)
 
   const fields = {
+    pupName: { 
+      type: 'text',
+      placeholder: 'your pups name here'
+    },
     image: {
       type: 'file',
       placeholder: 'upload an image'
     },
+    birthday: {
+      type: 'date',
+      placeholder: 'puppy b-day'
+    },
+    breed: 'text',
     bio: 'text',
+    //string
+    gender: {
+      type: 'select',
+      placeholder: 'select gender',
+      options: ['bitch', 'dog']
+    },
     //string needs to be boolean
     neutered: {
       type: 'select',
@@ -36,21 +51,32 @@ export default function UpdatePup({_id}){
           Authorization: `Bearer ${getToken()}`
         }
       })
+      flipBack()
     } catch (error) {
       console.log(error)
     }
   }
     
 
-    // function loadFields(){
-    //   return axios.get(`/api/profile`)
-    // }
+
+
+  // function loadFields() {
+  //   // console.log('this is in loadFields:', userProfile)
+  //   // need to get the data from profile
+  //   console.log(userProfile.pupsCreated)
+  //   // return userProfile
+  // }
 
 
   return (
     <div className="form-page">
     <h1>Update your pup</h1>
-    <FormComponent request={handleUpdate} fields={fields} submit="Update Pup" />
+    <FormComponent 
+      request={handleUpdate} 
+      fields={fields} 
+      submit="Update Pup"
+      // onLoad={loadFields}
+    />
   </div>
   )
 }
