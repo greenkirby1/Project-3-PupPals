@@ -71,7 +71,7 @@ main {
 
 .info-box {
   padding: 0.5rem;
-  margin: 0.5rem;
+  margin: 0 0.5rem 0.5rem 0.5rem;
   max-width: 432px;
   background-color: var(--light-color);
   font-size: 0.8rem;
@@ -125,4 +125,11 @@ dt {
   color: white;
   padding: 6px;
   width: 80%;
+}
+
+.navbar-logo {
+  object-fit: cover;
+  object-position: center;
+  width: 100px;
+  height: 50px;
 }
