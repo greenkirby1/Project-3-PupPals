@@ -9,10 +9,9 @@ export default function CreatePupCard({ styles, userProfile, getUserProfile }){
   return (
     <ReactCardFlip isFlipped={flipCreatePupCard}>
       <div className='create-pup-front' style={styles.card}>
-      <button style={styles.flipBtn} onClick={() => setFlipCreatePupCard(!flipCreatePupCard)}>+</button>
+      <button style={styles.flipBtn} onClick={() => setFlipCreatePupCard(!flipCreatePupCard)}>ADD PUP</button>
       </div>
       <div className='create-pup-back' style={styles.card}>
-        <h2>Upload your pup</h2>
         <CreatePup 
           userProfile={userProfile}
           getUserProfile={getUserProfile}

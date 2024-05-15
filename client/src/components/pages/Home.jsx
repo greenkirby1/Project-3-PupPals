@@ -52,10 +52,9 @@ export default function Home() {
                 width: '100%',
                 height: '100%'
                 }}>
-                <h1 className='hero-font'
+                <h1 className='hero-font oleo-script-bold'
                 style={{
-                  fontFamily: 'oleo-script-bold, sans-serif',
-                  color: 'rgba(255, 255, 255, 0.9)',
+                  color: 'rgba(255, 255, 255)',
                   fontWeight: 700,
                   fontSize: '20rem',
                   padding: 'none',
@@ -99,13 +98,13 @@ export default function Home() {
                 <Card.Title>Our Pups</Card.Title>
                 <Carousel>
                   <Carousel.Item>
-                    <img className='d-block w-100' src='placeholder1.jpg' alt='Placeholder 1' />
+                    <img className='image-carousel d-block w-100' src='https://i.ibb.co/8NZPtZd/pup13.jpg' alt='Placeholder 1' />
                   </Carousel.Item>
                   <Carousel.Item>
-                    <img className='d-block w-100' src='placeholder2.jpg' alt='Placeholder 2' />
+                    <img className='image-carousel d-block w-100' src='https://i.ibb.co/qxyGy72/pup15.jpg' alt='Placeholder 2' />
                   </Carousel.Item>
                   <Carousel.Item>
-                    <img className='d-block w-100' src='placeholder3.jpg' alt='Placeholder 3' />
+                    <img className='image-carousel d-block w-100' src='https://i.ibb.co/TtRPM7q/pup16.jpg' alt='Placeholder 3' />
                   </Carousel.Item>
                 </Carousel>
               </Card.Body>

@@ -49,11 +49,13 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
   }
 
   async function deleteChat() {
+    // console.log(currentChat, currentChat._id)
     const { data } = await axios.delete(`/api/chats/${currentChat._id}`, {
-      header: {
+      headers: {
         Authorization: `Bearer ${getToken()}`
       }
     })
+    setCurrentChat()
     setFlipChatCard(!flipChatCard)
     getUserChat()
   }
@@ -61,7 +63,6 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
   return (
     <ReactCardFlip isFlipped={flipChatCard}>
       <div className='chat-front' style={styles.card}>
-        <h2>Your Pup Pals</h2>
         {userChat.length ?
           userChat.map(({ _id, messages, users, pups, createdAt, updatedAt }) => (
             <SingleChatBtn
@@ -79,14 +80,14 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
             />
           ))
           :
-          <h2>You do not have any matches yet...</h2>
+          <h2 className='small-label'>&apos;Browse Pups&apos; to start matching...</h2>
         }
       </div>
       <div className='chat-back' style={styles.card}>
         {currentChat ?
           <div>
             <h2>Chat with Your Pup Pal</h2>
-            {currentChat.messages.length > 0 ?
+            {currentChat?.messages.length > 0 ?
               currentChat.messages.map(({ message, pup, createdAt }, idx) => {
                 return (
                   <div className='message-container' key={idx}>

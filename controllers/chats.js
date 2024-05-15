@@ -1,6 +1,7 @@
 import Chat from '../models/chat.js'
 import Pup from '../models/pup.js'
-import { sendError } from '../lib/common.js'
+import { sendError, sendUnauthorized } from '../lib/common.js'
+import { Error } from 'mongoose'
 
 // * All Chat view (secureRoute)
 // For: displaying All users chats
@@ -77,19 +78,19 @@ export const deleteMatch = async (req, res) => {
   try {
     console.log('💔 match is being removed')
     const { chatId } = req.params
-    const deleteChat = await Chat.findOneAndDelete({ _id: chatId })
-
-    console.log(deleteChat)
+    const deleteChat = await Chat.findById(chatId)
     
     if (!deleteChat) {
       throw new Error.DocumentNotFoundError('Chat Not Found')
     }
 
-    const matchedUser = deleteChat.users.map(user => {
-      if (!user.equals(req.currentUser._id)) {
-        throw new sendUnauthorized()
-      } 
-    })
+    const matchedUser = deleteChat.users.find(user => user._id.equals(req.currentUser._id))
+
+    console.log('this is the console log ->', matchedUser)
+
+    if (!matchedUser) {
+      return sendUnauthorized(res)
+    }
 
     await deleteChat.deleteOne()
 
