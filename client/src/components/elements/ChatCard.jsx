@@ -49,11 +49,13 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
   }
 
   async function deleteChat() {
+    // console.log(currentChat, currentChat._id)
     const { data } = await axios.delete(`/api/chats/${currentChat._id}`, {
-      header: {
+      headers: {
         Authorization: `Bearer ${getToken()}`
       }
     })
+    setCurrentChat()
     setFlipChatCard(!flipChatCard)
     getUserChat()
   }
@@ -86,7 +88,7 @@ export default function ChatCard({ userChat, userProfile, styles, getUserChat })
         {currentChat ?
           <div>
             <h2>Chat with Your Pup Pal</h2>
-            {currentChat.messages.length > 0 ?
+            {currentChat?.messages.length > 0 ?
               currentChat.messages.map(({ message, pup, createdAt }, idx) => {
                 return (
                   <div className='message-container' key={idx}>
