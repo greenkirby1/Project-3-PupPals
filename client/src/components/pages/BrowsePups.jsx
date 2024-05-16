@@ -1,26 +1,26 @@
-import { useState, useEffect } from 'react';
-import ReactCardFlip from 'react-card-flip';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios';
-import { getToken } from '../../lib/auth';
+import { useState, useEffect } from 'react'
+import ReactCardFlip from 'react-card-flip'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import axios from 'axios'
+import { getToken } from '../../lib/auth'
 
 const PupCard = ({ pup, onMatch, onNext }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(false)
 
   const handleInfoClick = () => {
-    setIsFlipped(!isFlipped);
-  };
+    setIsFlipped(!isFlipped)
+  }
 
   const handleMatchClick = () => {
-    onMatch(pup);
+    onMatch(pup)
     setIsFlipped(false)
-  };
+  }
 
   const handleNextClick = () => {
-    onNext();
+    onNext()
     setIsFlipped(false)
     
-  };
+  }
 
   return (
     <div className="card-container">
@@ -70,13 +70,13 @@ const PupCard = ({ pup, onMatch, onNext }) => {
         </div>
       </ReactCardFlip>
     </div>
-  );
-};
+  )
+}
 export default function BrowsePups() {
-  const [currentPupIndex, setCurrentPupIndex] = useState(0);
-  const [matches, setMatches] = useState([]);
-  const [pups, setPups] = useState([]);
-  const [error, setError] = useState('');
+  const [currentPupIndex, setCurrentPupIndex] = useState(0)
+  const [matches, setMatches] = useState([])
+  const [pups, setPups] = useState([])
+  const [error, setError] = useState('')
   
 
   useEffect(() => {
@@ -87,11 +87,11 @@ export default function BrowsePups() {
             Authorization: `Bearer ${getToken()}`
           }
         });
-        console.log('Fetched pups:', data);
+        console.log('Fetched pups:', data)
         setPups(data);
       } catch (error) {
-        console.log('Error:', error);
-        setError(error.message);
+        console.log('Error:', error)
+        setError(error.message)
       }
     }
     fetchPups();
@@ -99,7 +99,7 @@ export default function BrowsePups() {
 
   const handleBoneThrown = async (pup) => {
     try {
-      const userId = getToken().sub;
+      const userId = getToken().sub
 
 
       const { data } = await axios.put(`/api/users/${pup.owner}`, null
@@ -111,19 +111,19 @@ export default function BrowsePups() {
 
 
          // Remove the current pup from the list
-    setPups(prevPups => prevPups.filter(p => p._id !== pup._id));
+    setPups(prevPups => prevPups.filter(p => p._id !== pup._id))
 
     // Move to the next pup
-    setCurrentPupIndex(prevIndex => prevIndex % (pups.length - 1));
+    setCurrentPupIndex(prevIndex => prevIndex % (pups.length - 1))
     } catch (error) {
-      console.log('Error:', error);
-      setError(error.message);
+      console.log('Error:', error)
+      setError(error.message)
     }
   };
 
 
   const handleNext = () => {
-    setCurrentPupIndex((prevIndex) => (prevIndex + 1) % pups.length);
+    setCurrentPupIndex((prevIndex) => (prevIndex + 1) % pups.length)
   };
 
   return (
@@ -151,5 +151,5 @@ export default function BrowsePups() {
         <h1>No more pups to display</h1>
       )}
     </div>
-  );
+  )
 }

@@ -92,7 +92,7 @@ export const updateProfile = async (req, res) => {
 export const throwBones = async (req, res) => {
   try {
     // console.log(req.currentUser)
-    const userId = req.params.userId;
+    const userId = req.params.userId
     const targetProfile = await User.findById(userId)
     const matchedId = targetProfile.bonesThrownBy.find(id => {
       return id.equals(req.currentUser._id)
@@ -100,14 +100,14 @@ export const throwBones = async (req, res) => {
     if (!matchedId) {
       // console.log('Match occurred between users:', req.currentUser._id, 'and', userId);
       targetProfile.bonesThrownBy.push(req.currentUser._id)
-      await targetProfile.save();
+      await targetProfile.save()
     }
     
     const firstMatch = targetProfile.bonesThrownBy.find(id => {
-      return id.equals(req.currentUser._id);
-    });
+      return id.equals(req.currentUser._id)
+    })
     const secondMatch = req.currentUser.bonesThrownBy.find(id => {
-      return id.equals(userId);
+      return id.equals(userId)
     })
     const currentUserPup = await Pup.findOne({ owner: req.currentUser._id })
     const targetUserPup = await Pup.findOne({ owner: targetProfile._id })
@@ -123,9 +123,9 @@ export const throwBones = async (req, res) => {
       messages: [],
       users: [firstMatch, secondMatch],
       pups: [currentUserPup._id, targetUserPup._id]
-    };
+    }
 
-    const newChat = await Chat.create(chatData);
+    const newChat = await Chat.create(chatData)
 
 
     //   // Create a chat between the matched users
@@ -139,7 +139,7 @@ export const throwBones = async (req, res) => {
     // }
 
     // return res.json(targetProfile, newChat)
-    return res.status(200).json({ targetProfile, newChat });
+    return res.status(200).json({ targetProfile, newChat })
   } catch (error) {
     sendError(error, res)
   }
