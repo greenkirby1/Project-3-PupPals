@@ -30,7 +30,6 @@ export default function SingleChat({
         {messages[messages.length - 1].message}
         <br />
         Sent at {new Date(updatedAt).toDateString()}
-
       </div>
       :
       <div>
