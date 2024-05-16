@@ -117,7 +117,7 @@ export default function FormComponent({ submit, fields, request, onLoad }) {
             .replace(/([A-Z[])/g, ' $1')
             .replace(/^./, function (str) { return str.toUpperCase() })
 
-            (/* get current value for formData, convert neutered field to yes/no OR convert to empty for any other field i.e. bitch/dog */)
+            {/* get current value for formData, convert neutered field to yes/no OR convert to empty for any other field i.e. bitch/dog */}
             let value = formData[fieldName]
             if (fieldName === 'neutered') {
               value = formData[fieldName] ? 'yes' : 'no'

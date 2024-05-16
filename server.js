@@ -5,7 +5,11 @@ import 'dotenv/config'
 // import router from './lib/router.js'
 import router from './lib/router.js'
 
+import path, { dirname } from 'path'
+import { fileURLToPath } from 'url'
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const app = express()
 
@@ -17,6 +21,12 @@ app.use(morgan('dev'))
 
 // * Routes
 app.use('/api', router)
+
+app.use(express.static(path.join(__dirname, 'client', 'dist')))
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
+})
 
 // * Server Startup
 async function startServers() {
