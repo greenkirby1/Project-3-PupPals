@@ -128,11 +128,7 @@ export default function BrowsePups() {
 
   return (
     <div>
-      {/* {matchHappened && (
-        <div className="banner">
-          <h2>YOU HAVE A MATCH!</h2>
-        </div>
-      )} */}
+     
       {pups.length > 0 ? (
         <>
           <PupCard

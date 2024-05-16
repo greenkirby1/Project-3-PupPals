@@ -91,14 +91,14 @@ export const updateProfile = async (req, res) => {
 // * Throwing Bones in Browse Pups Page (Liking Pup)
 export const throwBones = async (req, res) => {
   try {
-    // console.log(req.currentUser)
+   
     const userId = req.params.userId;
     const targetProfile = await User.findById(userId)
     const matchedId = targetProfile.bonesThrownBy.find(id => {
       return id.equals(req.currentUser._id)
     })
     if (!matchedId) {
-      // console.log('Match occurred between users:', req.currentUser._id, 'and', userId);
+      
       targetProfile.bonesThrownBy.push(req.currentUser._id)
       await targetProfile.save();
     }
@@ -115,7 +115,7 @@ export const throwBones = async (req, res) => {
 
 
     if (!firstMatch || !secondMatch) {
-      // console.log('Match occurred between users:', req.currentUser._id, 'and', userId);
+      
       return res.json({ Message: 'No match' })
     }
 
@@ -128,17 +128,7 @@ export const throwBones = async (req, res) => {
     const newChat = await Chat.create(chatData);
 
 
-    //   // Create a chat between the matched users
-    //   try {
-    //     console.log('Chat created successfully:', newChat);
-    //   } catch (error) {
-    //     console.error('Error creating chat:', error);
-    //   }
-    // } else {
-    //   console.log('One or both users do not have any created pups.');
-    // }
 
-    // return res.json(targetProfile, newChat)
     return res.status(200).json({ targetProfile, newChat });
   } catch (error) {
     sendError(error, res)
@@ -147,12 +137,3 @@ export const throwBones = async (req, res) => {
 
 
 
-// Getting all Users for testing purposes - DELETE ONCE USED
-// export const getUsers = async (req, res) => {
-//   try {
-//     const user = await User.find()
-//     res.json(user)
-//   } catch (error) {
-//     sendError(error, res)
-//   }
-// }
