@@ -3,6 +3,8 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 import { sendError, sendUnauthorized } from '../lib/common.js'
+import Chat from '../models/chat.js'
+import Pup from '../models/pup.js'
 
 
 // * Register
@@ -89,18 +91,45 @@ export const updateProfile = async (req, res) => {
 // * Throwing Bones in Browse Pups Page (Liking Pup)
 export const throwBones = async (req, res) => {
   try {
-    // console.log(req.currentUser)
+   
     const userId = req.params.userId;
     const targetProfile = await User.findById(userId)
     const matchedId = targetProfile.bonesThrownBy.find(id => {
       return id.equals(req.currentUser._id)
     })
     if (!matchedId) {
-      console.log('Match occurred between users:', req.currentUser._id, 'and', userId);
+      
       targetProfile.bonesThrownBy.push(req.currentUser._id)
-    await targetProfile.save();
-  }
-    return res.json(targetProfile)
+      await targetProfile.save();
+    }
+    
+    const firstMatch = targetProfile.bonesThrownBy.find(id => {
+      return id.equals(req.currentUser._id);
+    });
+    const secondMatch = req.currentUser.bonesThrownBy.find(id => {
+      return id.equals(userId);
+    })
+    const currentUserPup = await Pup.findOne({ owner: req.currentUser._id })
+    const targetUserPup = await Pup.findOne({ owner: targetProfile._id })
+    console.log(currentUserPup, targetUserPup)
+
+
+    if (!firstMatch || !secondMatch) {
+      
+      return res.json({ Message: 'No match' })
+    }
+
+    const chatData = {
+      messages: [],
+      users: [firstMatch, secondMatch],
+      pups: [currentUserPup._id, targetUserPup._id]
+    };
+
+    const newChat = await Chat.create(chatData);
+
+
+
+    return res.status(200).json({ targetProfile, newChat });
   } catch (error) {
     sendError(error, res)
   }
@@ -108,28 +137,3 @@ export const throwBones = async (req, res) => {
 
 
 
-// //*Example trying to see if this works
-// export const throwBones = async (req, res) => {
-//   try {
-//     const userId = req.params.userId;
-//     const throwerId = req.body.bonesThrownBy[req.body.bonesThrownBy.length - 1];
-//     const pupId = req.body.pupId;
-//     const targetProfile = await User.findById(userId);
-//     targetProfile.bonesThrownBy.push({ userId: throwerId, pupId: pupId });
-//     await targetProfile.save();
-
-//     return res.json(targetProfile);
-//   } catch (error) {
-//     sendError(error, res);
-//   }
-// };
-
-// Getting all Users for testing purposes - DELETE ONCE USED
-// export const getUsers = async (req, res) => {
-//   try {
-//     const user = await User.find()
-//     res.json(user)
-//   } catch (error) {
-//     sendError(error, res)
-//   }
-// }

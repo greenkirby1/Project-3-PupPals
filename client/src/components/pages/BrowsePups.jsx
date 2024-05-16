@@ -6,8 +6,6 @@ import { getToken } from '../../lib/auth';
 
 const PupCard = ({ pup, onMatch, onNext }) => {
   const [isFlipped, setIsFlipped] = useState(false);
-  // const [isMatchedFlipped, setIsMatchedFlipped] = useState(false)
-  // const [nextFlipped, setNextFlipped] = useState(false)
 
   const handleInfoClick = () => {
     setIsFlipped(!isFlipped);
@@ -79,7 +77,7 @@ export default function BrowsePups() {
   const [matches, setMatches] = useState([]);
   const [pups, setPups] = useState([]);
   const [error, setError] = useState('');
-  const [matchHappened, setMatchHappened] = useState(false);
+  
 
   useEffect(() => {
     async function fetchPups() {
@@ -110,6 +108,8 @@ export default function BrowsePups() {
           Authorization: `Bearer ${getToken()}`
         }
       });
+
+
          // Remove the current pup from the list
     setPups(prevPups => prevPups.filter(p => p._id !== pup._id));
 
@@ -128,11 +128,7 @@ export default function BrowsePups() {
 
   return (
     <div>
-      {/* {matchHappened && (
-        <div className="banner">
-          <h2>YOU HAVE A MATCH!</h2>
-        </div>
-      )} */}
+     
       {pups.length > 0 ? (
         <>
           <PupCard
