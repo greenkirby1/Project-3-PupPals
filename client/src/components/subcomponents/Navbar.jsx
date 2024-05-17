@@ -1,6 +1,7 @@
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { isLoggedIn, removeToken } from '../../lib/auth'
 import { useEffect } from 'react'
+import logo from '../../assets/logo.png'
 
 export default function Navbar() {
   const location = useLocation()
@@ -19,7 +20,7 @@ export default function Navbar() {
     <header>
       <nav className='navbar navbar-expand-md bg-body-tertiary'>
         <div className='container'>
-          <Link className='navbar-brand' to='/'><img className="navbar-logo" src="../src/assets/Puppals-logo.PNG" alt="pup pals logo" /></Link>
+          <Link className='navbar-brand' to='/'><img className="navbar-logo" src={logo} alt="pup pals logo" /></Link>
           <button className='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbar-collapse' aria-controls='navbar-collapse' aria-expanded='false' aria-label='Toggle navigation'>
             <span className='navbar-toggler-icon'></span>
           </button>
