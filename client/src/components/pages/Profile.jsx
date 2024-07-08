@@ -109,7 +109,7 @@ export default function Profile() {
               />
             </div>
             <div className='pup-card-wrapper' style={{ flex: '2', display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100%' }}>
-              {userProfile.pupsCreated.length ?
+              erro{userProfile.pupsCreated.length ?
                 userProfile.pupsCreated.map(({ _id, pupName, image, gender, birthday, breed, bio, dislikes, favorites, neutered, owner }) => (
                   <PupCard
                     key={_id}
