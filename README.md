@@ -217,3 +217,82 @@ const deleteMatch = async (req, res) => {
 }
 ```
 
+The creation of new chats only occurs when a match between pups happens. This action is done through users **'throwing a bone'**, which is essentially liking a pup profile. Whenever this action occurs the code simultaneously checks for the presence of the current user ID in other users' `bonesThrownBy` field, to ensure user can only like a profile once. It also checks whether the user ID of the pup profile you just liked is present in current user's `bonesThrownBy` field, if it is then a match is created. The code below executes this:
+
+```js
+const throwBones = async (req, res) => {
+  try {
+   
+    const userId = req.params.userId;
+    const targetProfile = await User.findById(userId)
+    const matchedId = targetProfile.bonesThrownBy.find(id => {
+      return id.equals(req.currentUser._id)
+    })
+    if (!matchedId) {
+      
+      targetProfile.bonesThrownBy.push(req.currentUser._id)
+      await targetProfile.save();
+    }
+    
+    const firstMatch = targetProfile.bonesThrownBy.find(id => {
+      return id.equals(req.currentUser._id);
+    });
+    const secondMatch = req.currentUser.bonesThrownBy.find(id => {
+      return id.equals(userId);
+    })
+    const currentUserPup = await Pup.findOne({ owner: req.currentUser._id })
+    const targetUserPup = await Pup.findOne({ owner: targetProfile._id })
+    console.log(currentUserPup, targetUserPup)
+
+
+    if (!firstMatch || !secondMatch) {
+      
+      return res.json({ Message: 'No match' })
+    }
+
+    const chatData = {
+      messages: [],
+      users: [firstMatch, secondMatch],
+      pups: [currentUserPup._id, targetUserPup._id]
+    };
+
+    const newChat = await Chat.create(chatData);
+
+
+
+    return res.status(200).json({ targetProfile, newChat });
+  } catch (error) {
+    sendError(error, res)
+  }
+}
+```
+
+### Front-End
+For the front-end, I was mainly responsible for the **User Profile Page**. I made sure the API end-points required for this page componenet retrieved the correct information by testing them with Insomnia. I also implemented the **React Card Flip** package across the site, and desgined the hero image in the **Home Page**.
+
+## Reflections
+
+### Challenges
+This being our first full-stack project, personally I felt it was difficult to gauge how much we can get done within the timeframe we were given and we ended up planning too many features. It was also challenging sometimes when trying to figure out whether a code execution should occur in the backend or front-end, this resulted in having to go back and forth between front and back to correct the code. 
+
+Writing the matching and chat feature was challenging, as they are dependent on each other. Initially, we were not sure whether the function to check for a match should be done in front-end or backend. This brought on a lot of confusion, but ultimately we worked out it should all be done through the users controller in backend.
+
+I was also confused by how to properly utitlise the React Callback hook, which took awhile for me to figure out how to retrieve the updated data whenever a user changed their information.
+
+### Wins
+Our team worked very well together, we maintained a good flow of communication throughout the project using Slack. As well as using Trello to update the progress of our given tasks, which allowed us ensure there were no difficult merge conflicts or errors.
+
+The plan we created was very well thought through with detailed concepts and features, we also included useful comments throughtout the code and it made the majority of the project easy to write. It was also easy for any group members to help out or take over a section of the code block if we were stuck.
+
+A big win was definitely figuring out the matching feature, which took a long time to figure out!
+
+### Key Takeaways
+* Effective communication is necessary when working in a group
+* Robustly testing out backend before moving on to the front, so that it causes less error in the future and if an error arises it'd be easier to spot
+* A plan can never be too detailed
+
+## Future Improvements
+* Adding a map API to implement a map feature that show dog-friendly locations and parks 
+* Allow users to filter other pups based on their locations
+* Adding a review for the application, which allows others to view them in the Home Page to help potential users decide whether they want to join
+* Ensure the application has a responsive desgin and allows users to view it on mobile
